@@ -1,0 +1,12 @@
+*.war
+.settings/
+gwt-unitCache/
+~$
+war/vertretungsalarm/
+war/WEB-INF/classes/
+war/WEB-INF/deploy/
+war/WEB-INF/lib/gwt-servlet.jar
+war/WEB-INF/lib/
+*.bak
+*.tmp
+build.xml

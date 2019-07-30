@@ -28,7 +28,6 @@ public class schoolYearSelector extends AbsolutePanel implements Serializable {
 		getElement().getStyle().setProperty("background", "#ECE9FC");
 		getElement().getStyle().setProperty("alignItems", "center");
 		getElement().getStyle().setProperty("justifyContent", "space-evenly");
-		getElement().getStyle().setProperty("flex", "1 1 auto");
 		getElement().getStyle().setProperty("flex", "0.5 1 auto");
 
 		for (int i = 0; i < schoolClassYears.length; i++) {

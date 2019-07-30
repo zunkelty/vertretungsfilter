@@ -26,8 +26,6 @@ public class Vertretungsalarm implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
 
-		startTime = System.currentTimeMillis();
-
 		// Sicherstellen, dass das Gerät eine LocalStorage besitzt
 
 		client_storage = Storage.getLocalStorageIfSupported();
@@ -66,7 +64,6 @@ public class Vertretungsalarm implements EntryPoint {
 
 		}
 
-		Window.alert("Zeit bis hier: " + (System.currentTimeMillis() - startTime));
 	}
 
 	public static String getW***REMOVED***iteName() {

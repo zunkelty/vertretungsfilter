@@ -18,6 +18,7 @@ public class selectableVertretungsalarmButton extends Button implements Serializ
 		setText(text);
 
 		getElement().getStyle().setProperty("borderRadius", "40%");
+		getElement().getStyle().setProperty("outlineOffset", "-10px");
 		getElement().getStyle().setBorderColor("#000000");
 		getElement().getStyle().setBorderWidth(0.5, Unit.PX);
 		getElement().getStyle().setProperty("fontSize", "2.5vh");
@@ -33,7 +34,7 @@ public class selectableVertretungsalarmButton extends Button implements Serializ
 	public void select() {
 		isSelected = true;
 
-		getElement().getStyle().setBorderWidth(4, Unit.PX);
+		getElement().getStyle().setBorderWidth(3, Unit.PX);
 	}
 
 	public void deselect() {

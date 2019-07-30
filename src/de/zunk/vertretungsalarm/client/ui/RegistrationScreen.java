@@ -143,8 +143,6 @@ public class RegistrationScreen extends Screen {
 			Location.replace(Location.createUrlBuilder().setParameter("step", "1").buildString());
 		}
 
-		Window.alert(
-				"Zeit bis Ende Registration Screen: " + (System.currentTimeMillis() - Vertretungsalarm.getStartTime()));
 	}
 
 	public void finishRegistration(String schoolClass) {

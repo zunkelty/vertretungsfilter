@@ -54,7 +54,7 @@ public class Vertretungsalarm implements EntryPoint {
 
 		} else {
 
-			if (client_storage.getItem("isRegistered") == null) {
+			if (client_storage.getItem("schoolClass") == null) {
 				RegistrationScreen screen = new RegistrationScreen();
 				RootPanel.get().add(screen, 0, 0);
 			} else {

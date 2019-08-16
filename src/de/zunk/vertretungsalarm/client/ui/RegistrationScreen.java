@@ -31,8 +31,7 @@ public class RegistrationScreen extends Screen {
 	private ArrayList<Button> schoolYearButtons;
 
 	private String[] possibleClasses = { "5A", "5B", "5C", "5F", "6A", "6B", "6C", "6F", "7A", "7B", "7C", "7F", "8A",
-			"8B", "8C", "8D", "8F", "9A", "9B", "9C", "9F", "10A", "10B", "10C", "10D", "10S", "11A", "11B", "11C",
-			"11S", };
+			"8B", "8C", "8F", "9A", "9B", "9C", "9F", "10A", "10B", "10C", "10D", "10S", "11A", "11B", "11C", "11D" };
 
 	public RegistrationScreen() {
 
@@ -153,7 +152,6 @@ public class RegistrationScreen extends Screen {
 
 			}
 			Vertretungsalarm.getClientStorage().setItem("schoolClass", schoolClass);
-			Vertretungsalarm.getClientStorage().setItem("isRegistered", "true");
 			Window.alert(
 					"Wahnsinn! So schnell? Das wars auch schon.\n\nWir zeigen dir hier ab sofort das Wichtigste für die Klasse "
 							+ Vertretungsalarm.getClientStorage().getItem("schoolClass"));

@@ -83,6 +83,16 @@ public class TopBar extends AbsolutePanel implements Serializable {
 		info.setText(text);
 	}
 
+	public void setMainColor(String color) {
+		info.getElement().getStyle().setProperty("background", color);
+		placeholder.getElement().getStyle().setProperty("background", color);
+	}
+
+	public void setSecondColor(String secondColor) {
+		back.getElement().getStyle().setProperty("background", secondColor);
+		forward.getElement().getStyle().setProperty("background", secondColor);
+	}
+
 	public void addPageBackOption() {
 		back.setVisible(true);
 		if (!forward.isVisible()) {

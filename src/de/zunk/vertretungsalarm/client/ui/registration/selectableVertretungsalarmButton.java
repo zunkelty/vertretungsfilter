@@ -1,4 +1,4 @@
-package de.zunk.vertretungsalarm.client.ui;
+package de.zunk.vertretungsalarm.client.ui.registration;
 
 import java.io.Serializable;
 

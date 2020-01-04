@@ -15,7 +15,7 @@ public class VertretungsEvent implements Serializable {
 	String room;
 	String plannedSubject;
 	String actualSubject;
-	// String info;
+	String info;
 
 	VertretungsDate date;
 
@@ -26,8 +26,7 @@ public class VertretungsEvent implements Serializable {
 	}
 
 	public VertretungsEvent(ArrayList<String> schoolClasses, ArrayList<String> lessons, String plannedTeacher,
-			String actualTeacher, String room, String plannedSubject, String actualSubject,
-			// String info,
+			String actualTeacher, String room, String plannedSubject, String actualSubject, String info,
 			VertretungsDate date) {
 
 		this.schoolClasses = schoolClasses;
@@ -37,8 +36,10 @@ public class VertretungsEvent implements Serializable {
 		this.room = room;
 		this.plannedSubject = plannedSubject;
 		this.actualSubject = actualSubject;
-		// this.info = info;
+		this.info = info;
 		this.date = date;
+
+		System.out.println("LessonsAsString: " + getLessonsAsString());
 
 	}
 
@@ -47,8 +48,8 @@ public class VertretungsEvent implements Serializable {
 		return ("----------------Neues Event:----------------" + "\nKlasse/-n: " + getSchoolClassesAsString()
 				+ "\nStunde: " + getLessonsAsString() + "\nEigentlich Lehrer: " + getPlannedTeacher()
 				+ "\nVertretungslehrer: " + getActualTeacher() + "\nRaum: " + getRoom() + "\nEigentliches Fach: "
-				+ getPlannedSubject() + "\nVertretungsfach: " + getActualSubject() // +"\nInfo: " + getInfo()
-				+ "\nDatum: " + getDate());
+				+ getPlannedSubject() + "\nVertretungsfach: " + getActualSubject() + "\nInfo: " + getInfo()
+				+ "\nDatum: " + getDateAsText());
 
 	}
 
@@ -67,13 +68,20 @@ public class VertretungsEvent implements Serializable {
 	}
 
 	public String getLessonsAsString() {
+
 		String lessonsAsString = "";
 
-		for (String lesson : lessons) {
-			lessonsAsString = lessonsAsString + lesson + " ";
+		if (getLessons().size() == 1) {
+			lessonsAsString = lessons.get(0) + ".";
+		} else if (getLessons().size() >= 2) {
+			for (String lesson : getLessons()) {
+				lessonsAsString = lessonsAsString + lesson + ". / ";
+			}
+			lessonsAsString = lessonsAsString.substring(0, lessonsAsString.length() - 2);
 		}
 
 		return lessonsAsString;
+
 	}
 
 	public ArrayList<String> getLessons() {
@@ -100,11 +108,15 @@ public class VertretungsEvent implements Serializable {
 		return actualSubject;
 	}
 
-	// public String getInfo() {
-	// return info;
-	// }
+	public String getInfo() {
+		return info;
+	}
 
-	private String getDate() {
+	public VertretungsDate getDate() {
+		return date;
+	}
+
+	public String getDateAsText() {
 		return date.toString();
 	}
 }

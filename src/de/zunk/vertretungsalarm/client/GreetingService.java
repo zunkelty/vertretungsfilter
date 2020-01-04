@@ -11,4 +11,5 @@ import de.zunk.vertretungsalarm.shared.Vertretungsplan;
 @RemoteServiceRelativePath("greet")
 public interface GreetingService extends RemoteService {
 	Vertretungsplan getVertretungsplan() throws IllegalArgumentException;
+
 }

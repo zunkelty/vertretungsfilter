@@ -27,6 +27,7 @@ public class TopBar extends AbsolutePanel implements Serializable {
 		getElement().getStyle().setProperty("flexDirection", "row");
 		getElement().getStyle().setProperty("alignItems", "stretch");
 		getElement().getStyle().setProperty("justifyContent", "space-evenly");
+		getElement().getStyle().setProperty("padding", "5px 0px");
 
 		info = new Button("Infoleiste");
 
@@ -81,16 +82,6 @@ public class TopBar extends AbsolutePanel implements Serializable {
 
 	public void setInfoText(String text) {
 		info.setText(text);
-	}
-
-	public void setMainColor(String color) {
-		info.getElement().getStyle().setProperty("background", color);
-		placeholder.getElement().getStyle().setProperty("background", color);
-	}
-
-	public void setSecondColor(String secondColor) {
-		back.getElement().getStyle().setProperty("background", secondColor);
-		forward.getElement().getStyle().setProperty("background", secondColor);
 	}
 
 	public void addPageBackOption() {

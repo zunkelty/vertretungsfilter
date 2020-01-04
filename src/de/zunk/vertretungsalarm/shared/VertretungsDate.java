@@ -45,14 +45,11 @@ public class VertretungsDate implements Serializable {
 
 	@Override
 	public String toString() {
-		return day + "." + month + "." + year;
-	}
 
-	public void setPurpose(String purpose) {
-		this.purpose = purpose;
-	}
+		String day_s = (day < 10 ? "0" : "") + day;
+		String month_s = (month < 10 ? "0" : "") + month;
+		String year_s = year + "";
 
-	public String getPurpose() {
-		return purpose;
+		return day_s + "." + month_s + "." + year_s;
 	}
 }

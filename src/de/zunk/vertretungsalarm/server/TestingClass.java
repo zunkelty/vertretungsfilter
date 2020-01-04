@@ -51,8 +51,9 @@ public class TestingClass implements Serializable {
 
 			date = new VertretungsDate(1, 1, 2019);
 
-			exampleEvents.add(new VertretungsEvent(schoolClasses, lessons, plannedTeacher, actualTeacher, room,
-					plannedSubject, actualSubject, date));
+			// exampleEvents.add(new VertretungsEvent(schoolClasses, lessons,
+			// plannedTeacher, actualTeacher, room,
+			// plannedSubject, actualSubject, info, date));
 		}
 
 		vertretungsplan = new Vertretungsplan(exampleEvents);

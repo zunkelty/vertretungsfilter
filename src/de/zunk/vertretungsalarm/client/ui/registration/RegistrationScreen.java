@@ -1,4 +1,4 @@
-package de.zunk.vertretungsalarm.client.ui;
+package de.zunk.vertretungsalarm.client.ui.registration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +10,9 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 
 import de.zunk.vertretungsalarm.client.Vertretungsalarm;
+import de.zunk.vertretungsalarm.client.ui.OptionsBar;
+import de.zunk.vertretungsalarm.client.ui.Screen;
+import de.zunk.vertretungsalarm.client.ui.TopBar;
 
 public class RegistrationScreen extends Screen {
 

@@ -30,8 +30,8 @@ public class VertretungsalarmService implements Serializable {
 	private static Vertretungsplan vertretungsplan;
 
 	static String scraped_content_example = "DSB"
-			+ "DSB Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 07.06.2019 11:58 7.6.2019 Freitag (Seite 1 / 3) Nachrichten zum Tag Information für die Klasse 6F/6B von LOE/PAD: Treffpunkt: Klassenraum P12/P11. Sportsachen für draußen mitbringen! Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text 5A, 5B, 5C, 5F 1 DIS RIN P10 ENF ENF Mitbetreuung (5F) 3 - 4 GRA --- MA --- 6C 5 WOE --- --- SP --- 6C 6 WOE --- --- SP --- 6F 3 - 4 LAN GRA M3 PH EN 7A, 7B, 7C, 7D 3 - 4 CLS AMM P5 LA LA Aufg. CLS 7A, 7B, 7C, 7D 3 BE GEI P3 SN SN Aufg. BE 7A, 7B, 7C, 7D 3 DIS KUT P9 FR FR Fr-7.6. / 3 Aufg. DIS 7A, 7B, 7C, 7D 4 BE KUT P3 SN SN Aufg. BE 7A, 7B, 7C, 7D 4 DIS VLD P9 FR FR Fr-7.6. / 4 Aufg. DIS 7A 5 - 6 BAU BAU S2 SP SP 7D 5 SLH KAM Mu1 CH MU Do-6.6. / 5 7D 6 SLH KAM Mu1 CH MU Do-6.6. / 6 7F 1 - 2 YOU --- --- SP --- 7F 5 - 6 BE KAE P10 FRf MA 8A, 8B, 8C 5 - 6 DIS --- --- FR --- Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 07.06.2019 11:58 7.6.2019 Freitag (Seite 2 / 3) Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text 8A, 8B, 8C 5 HRU TR P5 SN SN 9B 3 - 4 YOU ZIP Ch1 SP CH 9B 5 - 6 OST --- --- EN --- 9D 5 YOU KML M7 MA EN Fr-7.6. / 6 9D 6 KML --- --- EN --- 9S 1 OST OST M1 DE DE Klassenarbeit Deutsch 9S 2 OST SPT M1 DE DE Klassenarbeit Deutsch 11A, 11B, 11C, 11D 1 BE --- --- SN --- 11A, 11B, 11C, 11D 1 EV --- --- SN --- 11A 2 YAB YAB M4 DE DE Raumänderung beachten 11C 5 SPT MLR N2 EK PO Di-4.6. / 4 11C 6 SPT MLR N2 EK PO Di-4.6. / 3 (12) 1 - 2 BUE --- DE --- (12) 1 - 2 WOE --- BI --- (12) 1 - 2 GRA --- EN --- (12) 1 - 2 WO --- MA --- (12) 1 - 2 HPT --- MA --- (12) 3 - 4 SCH --- GE --- (12) 3 - 4 GEI --- EK --- (12) 3 - 4 MLR --- PO --- Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 07.06.2019 11:58 7.6.2019 Freitag (Seite 3 / 3) Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text (12) 3 - 4 KRL --- BI --- (12) 3 - 4 DIE --- RE --- 2/3 KAM SLH HAL 3 KUT PFE BR BR 4 SLH --- --- BRV --- 4 VLD WES BR BR 4/5 SLH KAM HAL\r\n"
-			+ "DSB Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 07.06.2019 11:58 12.6.2019 Mittwoch (Seite 1 / 2) Nachrichten zum Tag Nachschreibtermin Sek. I: 60-90 Minuten K3 bei KAP 45 Minuten K2 bei KUT Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text 5, 6 7 SPR --- --- AG-SCH --- 5C 1 - 2 CL KML P2 KU EN 6A 5 - 6 LEH --- --- SP --- 7A 5 - 6 ROT NEU P9 MA PH 8A, 8B, 8C, 8F 5 - 6 SPR --- --- WN --- 9A 5 BAU CLS M9 EK EK Aufg. BAU 9A 6 BAU DIE M9 EK EK Aufg. BAU 9D 5 - 6 AMM AMM M7 SP SP 9S 5 SLH --- --- BI --- verlagert auf Do, 5. Std. 9S 6 SLH --- --- BI --- verlagert auf Do, 6. Std. 10B, 10A, 10C, 10S 1 - 2 STG STG K2 SN3 SN3 Klassenarbeit Spanisch 11D 5 - 6 SAN --- --- MA --- 4 ROT --- --- BRV --- 4/5 ROT SLH HGB 4/5 LEH AMM HAL Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 07.06.2019 11:58 12.6.2019 Mittwoch (Seite 2 / 2) Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text 6 CL --- --- SL --- 7 - 8 KAP K3 Nachschreibtermin Sek. I 7 KUT K2 Nachschreibtermin Sek. I Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 07.06.2019 11:58 13.6.2019 Donnerstag (Seite 1 / 2) Nachrichten zum Tag Mensadienst: 10A (KO) Medien-AG (VRA) fällt heute aus. WPK (KML) schreibt heute in M7 Klausur. Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text 5B 1 - 2 CL KML P7 DE EN 6A, 6B, 6C 5 AMM ANG H3 LA LA Aufg. AMM 6A, 6B, 6C 6 AMM PA H3 LA LA Do-13.6. / 6 Aufg. AMM 7B 3 SPR LTB P3 SP EN 7B 4 SPR HPT P3 SP SP 7C 5 ZRT KRL K3 SP KU Fr-14.6. / 5 statt Fr 7C 6 ZRT KRL K3 SP KU Fr-14.6. / 6 statt Fr 8A 1 EI --- --- SP --- 8A 2 EI MEY M6 SP MA 8C 5 - 6 VRA LTB M4 PO PO 9A, 9C, 9D, 9S 8 AMM --- --- LA3 --- 9B 5 OST ZIP Ch2 DE CH Di-18.6. / 8 statt 18.06. 9B 6 OST ZIP Ch2 DE CH Di-18.6. / 9 statt 18.06. 9C 5 - 6 LOE FRI Bi2 BI BI Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 07.06.2019 11:58 13.6.2019 Donnerstag (Seite 2 / 2) Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text 9S 5 CL SLH Bi1 KU BI Mi-12.6. / 5 9S 6 CL SLH Bi1 KU BI Mi-12.6. / 6 10A, 10B, 10S 5 MAG --- --- RE --- Unterrichtsgang 10A, 10B, 10S 5 SPR MLR K2 WN WN Do-13.6. / 5 Aufg. SPR 10A, 10B, 10S 6 MAG --- --- RE --- Unterrichtsgang 10A, 10B, 10S 6 SPR JAN K2 WN WN Aufg. SPR 11A, 11B, 11C, 11D 1 - 2 SPR --- --- WN --- 11B 5 - 6 ROT --- --- BI --- verschoben auf 17.06. 11C 3 ZWE SPT N2 EN EK Fr-14.6. / 6 11C 4 ZWE SPT N2 EN EK Fr-14.6. / 5 0/1 EI ARM EIN 4/5 ZRT EBH HGB 5 MLR MEY BR BR 6 PA HEI BR BR 6/7 SPR ALT ME7 7 BAU --- --- Aufs.7.Std. ---";
+			+ "DSB Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 03.01.2020 11:58 3.1.2020 Freitag (Seite 1 / 3) Nachrichten zum Tag Information für die Klasse 6F/6B von LOE/PAD: Treffpunkt: Klassenraum P12/P11. Sportsachen für draußen mitbringen! Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text 5A, 5B, 5C, 5F 1 DIS RIN P10 ENF ENF Mitbetreuung (5F) 3 - 4 GRA --- MA --- 6C 5 WOE --- --- SP --- 6C 6 WOE --- --- SP --- 6F 3 - 4 LAN GRA M3 PH EN 7A, 7B, 7C, 7D 3 - 4 CLS AMM P5 LA LA Aufg. CLS 7A, 7B, 7C, 7D 3 BE GEI P3 SN SN Aufg. BE 7A, 7B, 7C, 7D 3 DIS KUT P9 FR FR Fr-7.6. / 3 Aufg. DIS 7A, 7B, 7C, 7D 4 BE KUT P3 SN SN Aufg. BE 7A, 7B, 7C, 7D 4 DIS VLD P9 FR FR Fr-7.6. / 4 Aufg. DIS 7A 5 - 6 BAU BAU S2 SP SP 7D 5 SLH KAM Mu1 CH MU Do-6.6. / 5 7D 6 SLH KAM Mu1 CH MU Do-6.6. / 6 7F 1 - 2 YOU --- --- SP --- 7F 5 - 6 BE KAE P10 FRf MA 8A, 8B, 8C 5 - 6 DIS --- --- FR --- Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 03.01.2019 11:58 3.1.2020 Freitag (Seite 2 / 3) Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text 8A, 8B, 8C 5 HRU TR P5 SN SN 9B 3 - 4 YOU ZIP Ch1 SP CH 9B 5 - 6 OST --- --- EN --- 9D 5 YOU KML M7 MA EN Fr-7.6. / 6 9D 6 KML --- --- EN --- 9S 1 OST OST M1 DE DE Klassenarbeit Deutsch 9S 2 OST SPT M1 DE DE Klassenarbeit Deutsch 11A, 11B, 11C, 11D 1 BE --- --- SN --- 11A, 11B, 11C, 11D 1 EV --- --- SN --- 11A 2 YAB YAB M4 DE DE Raumänderung beachten 11C 5 SPT MLR N2 EK PO Di-4.6. / 4 11C 6 SPT MLR N2 EK PO Di-4.6. / 3 (12) 1 - 2 BUE --- DE --- (12) 1 - 2 WOE --- BI --- (12) 1 - 2 GRA --- EN --- (12) 1 - 2 WO --- MA --- (12) 1 - 2 HPT --- MA --- (12) 3 - 4 SCH --- GE --- (12) 3 - 4 GEI --- EK --- (12) 3 - 4 MLR --- PO --- Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 07.06.2019 11:58 3.1.2020 Freitag (Seite 3 / 3) Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text (12) 3 - 4 KRL --- BI --- (12) 3 - 4 DIE --- RE --- 2/3 KAM SLH HAL 3 KUT PFE BR BR 4 SLH --- --- BRV --- 4 VLD WES BR BR 4/5 SLH KAM HAL\\r\\n\"\r\n"
+			+ "DSB Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 03.01.2020 11:58 4.1.2020 Mittwoch (Seite 1 / 2) Nachrichten zum Tag Nachschreibtermin Sek. I: 60-90 Minuten K3 bei KAP 45 Minuten K2 bei KUT Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text 5, 6 7 SPR --- --- AG-SCH --- 5C 1 - 2 CL KML P2 KU EN 6A 5 - 6 LEH --- --- SP --- 7A 5 - 6 ROT NEU P9 MA PH 8A, 8B, 8C, 8F 5 - 6 SPR --- --- WN --- 9A 5 BAU CLS M9 EK EK Aufg. BAU 9A 6 BAU DIE M9 EK EK Aufg. BAU 9D 5 - 6 AMM AMM M7 SP SP 9S 5 SLH --- --- BI --- verlagert auf Do, 5. Std. 9S 6 SLH --- --- BI --- verlagert auf Do, 6. Std. 10B, 10A, 10C, 10S 1 - 2 STG STG K2 SN3 SN3 Klassenarbeit Spanisch 11D 5 - 6 SAN --- --- MA --- 4 ROT --- --- BRV --- 4/5 ROT SLH HGB 4/5 LEH AMM HAL Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 07.06.2019 11:58 4.1.2019 Mittwoch (Seite 2 / 2) Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text 6 CL --- --- SL --- 7 - 8 KAP K3 Nachschreibtermin Sek. I 7 KUT K2 Nachschreibtermin Sek. I Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 07.06.2020 11:58 4.1.2020 Donnerstag (Seite 1 / 2) Nachrichten zum Tag Mensadienst: 10A (KO) Medien-AG (VRA) fällt heute aus. WPK (KML) schreibt heute in M7 Klausur. Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text 11C 1 - 2 CL KML P7 DE EN 6A, 6B, 6C 5 AMM ANG H3 LA LA Aufg. AMM 6A, 6B, 6C 6 AMM PA H3 LA LA Do-13.6. / 6 Aufg. AMM 7B 3 SPR LTB P3 SP EN 7B 4 SPR HPT P3 SP SP 7C 5 ZRT KRL K3 SP KU Fr-14.6. / 5 statt Fr 7C 6 ZRT KRL K3 SP KU Fr-14.6. / 6 statt Fr 8A 1 EI --- --- SP --- 8A 2 EI MEY M6 SP MA 8C 5 - 6 VRA LTB M4 PO PO 9A, 9C, 9D, 9S 8 AMM --- --- LA3 --- 9B 5 OST ZIP Ch2 DE CH Di-18.6. / 8 statt 18.06. 9B 6 OST ZIP Ch2 DE CH Di-18.6. / 9 statt 18.06. 9C 5 - 6 LOE FRI Bi2 BI BI Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 07.06.2019 11:58 5.1.2020 Donnerstag (Seite 2 / 2) Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text 9S 5 CL SLH Bi1 KU BI Mi-12.6. / 5 9S 6 CL SLH Bi1 KU BI Mi-12.6. / 6 10A, 10B, 10S 5 MAG --- --- RE --- Unterrichtsgang 10A, 10B, 10S 5 SPR MLR K2 WN WN Do-13.6. / 5 Aufg. SPR 10A, 10B, 10S 6 MAG --- --- RE --- Unterrichtsgang 10A, 10B, 10S 6 SPR JAN K2 WN WN Aufg. SPR 11A, 11B, 11C, 11D 1 - 2 SPR --- --- WN --- 11B 5 - 6 ROT ROT P11 BI BI verschoben auf 17.06. 11C 3 ZWE SPT N2 EN EK Fr-14.6. / 6 11C 4 ZWE ZWE N2 EN EN Fr-14.6. / 5 0/1 EI ARM EIN 4/5 ZRT EBH HGB 5 MLR MEY BR BR 6 PA HEI BR BR 6/7 SPR ALT ME7 7 BAU --- --- Aufs.7.Std. ---";
 	public static String[] schoolClasses = { "5A", "5B", "5C", "5F", "6A", "6B", "6C", "6F", "7A", "7B", "7C", "7F",
 			"8A", "8B", "8C", "8F", "9A", "9B", "9C", "9F", "10A", "10B", "10C", "10D", "10S", "11A", "11B", "11C",
 			"11D" };
@@ -59,7 +59,7 @@ public class VertretungsalarmService implements Serializable {
 				}
 
 			}
-		}, 0, 30 * 60 * 1000);
+		}, 0, 5 * 60 * 1000);
 	}
 
 	public Vertretungsplan getVertretungsplan() {
@@ -101,6 +101,7 @@ public class VertretungsalarmService implements Serializable {
 					int year = Integer.parseInt(date_split[2]);
 
 					dateForEvents.setDate(day, month, year);
+
 				} else if (isSchoolClassName(snippets[i])) {
 
 					ArrayList<String> schoolClasses = new ArrayList<String>();
@@ -111,7 +112,7 @@ public class VertretungsalarmService implements Serializable {
 					String room = "ZUNK";
 					String plannedSubject = "ZUNK";
 					String actualSubject = "ZUNK";
-					String info = "";
+					String info = "ZUNK";
 
 					VertretungsDate date = new VertretungsDate();
 
@@ -145,10 +146,14 @@ public class VertretungsalarmService implements Serializable {
 					actualSubject = snippets[i];
 					i++;
 
-					for (int j = i; !isSchoolClassName(snippets[j]) && !snippets[j].contains("Untis")
-							&& !snippets[j].contains("Raum") && j <= (i + 7); j++) {
-						info = info + snippets[j] + " ";
-					}
+					// for (int j = i; !isSchoolClassName(snippets[j]) &&
+					// !snippets[j].contains("Untis")
+					// && !snippets[j].contains("Raum") && j <= (i + 7); j++) {
+					// info = info + snippets[j] + " ";
+					// }
+
+					// Hier: Splitten hinter ausgelesenem Event & hinter dem letzten "Nachrichten
+					// zum Tag"; Dann splitten an "Klassen(n) Stunde(n)"
 
 					date.setDate(dateForEvents.getDay(), dateForEvents.getMonth(), dateForEvents.getYear());
 
@@ -156,10 +161,9 @@ public class VertretungsalarmService implements Serializable {
 							&& !actualTeacher.contains("ZUNK") && !room.contains("ZUNK")
 							&& !plannedSubject.contains("ZUNK") && !actualSubject.contains("ZUNK")) {
 
-						allVertretungsEvents.add(new VertretungsEvent(schoolClasses, lessons, plannedTeacher,
-								actualTeacher, room, plannedSubject, actualSubject
-								// , info
-								, date));
+						VertretungsEvent e = new VertretungsEvent(schoolClasses, lessons, plannedTeacher, actualTeacher,
+								room, plannedSubject, actualSubject, info, date);
+						allVertretungsEvents.add(e);
 					}
 				}
 			}
@@ -175,7 +179,6 @@ public class VertretungsalarmService implements Serializable {
 			vertretungsplan = new Vertretungsplan(allVertretungsEvents);
 
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 
 	}
@@ -274,45 +277,5 @@ public class VertretungsalarmService implements Serializable {
 		return null;
 
 	}
-
-	// private static void notifyClients(String messageText, String subjectText,
-	// String recipientAdress) {
-	//
-	// final String username = "vertretungsalarm@gmail.com";
-	// final String password = "YQypXzTHfp^BVY5*2GPP9^LRSp8*G4";
-	//
-	// Properties prop = new Properties();
-	// prop.put("mail.smtp.host", "smtp.gmail.com");
-	// prop.put("mail.smtp.port", "587");
-	// prop.put("mail.smtp.auth", "true");
-	// prop.put("mail.smtp.starttls.enable", "true"); // TLS
-	//
-	// Session session = Session.getInstance(prop, new javax.mail.Authenticator() {
-	//
-	// @Override
-	// protected PasswordAuthentication getPasswordAuthentication() {
-	// return new PasswordAuthentication(username, password);
-	// }
-	//
-	// });
-	//
-	// try {
-	//
-	// Message message = new MimeMessage(session);
-	// message.setFrom(new InternetAddress("vertretungsalarm@gmail.com"));
-	// message.setRecipients(Message.RecipientType.TO,
-	// InternetAddress.parse(recipientAdress));
-	// message.setSubject(subjectText);
-	// message.setText(messageText);
-	//
-	// Transport.send(message);
-	//
-	// System.out.println("Client " + recipientAdress + " notified!");
-	//
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	//
-	// }
 
 }

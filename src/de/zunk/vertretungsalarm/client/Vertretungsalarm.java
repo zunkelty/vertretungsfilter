@@ -6,11 +6,12 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import de.zunk.vertretungsalarm.client.ui.RegistrationScreen;
-import de.zunk.vertretungsalarm.client.ui.VertretungsalarmScreen;
 import de.zunk.vertretungsalarm.client.ui.optionscreens.AboutScreen;
 import de.zunk.vertretungsalarm.client.ui.optionscreens.ImpressumScreen;
 import de.zunk.vertretungsalarm.client.ui.optionscreens.PrivacyScreen;
+import de.zunk.vertretungsalarm.client.ui.optionscreens.SettingsScreen;
+import de.zunk.vertretungsalarm.client.ui.registration.RegistrationScreen;
+import de.zunk.vertretungsalarm.client.ui.vertretungsalarm.VertretungsalarmScreen;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -32,7 +33,7 @@ public class Vertretungsalarm implements EntryPoint {
 
 		if (client_storage == null) {
 			Window.alert("Leider ist dein Gerät nicht für den " + getW***REMOVED***iteName()
-					+ " qualifiziert!\nSag doch einem Admin Bescheid. \n(Error: Storage.isLocalStorageSupported == false)");
+					+ " qualifiziert!\nSag doch einem Admin Bescheid. \n(Grund: Storage.isLocalStorageSupported == false)");
 		}
 
 		// Weiterleiten zur richtigen Stelle der W***REMOVED***ite
@@ -50,6 +51,11 @@ public class Vertretungsalarm implements EntryPoint {
 		} else if (Location.getParameter("page") == "privacy") {
 
 			PrivacyScreen screen = new PrivacyScreen();
+			RootPanel.get().add(screen, 0, 0);
+
+		} else if (Location.getParameter("page") == "settings") {
+
+			SettingsScreen screen = new SettingsScreen();
 			RootPanel.get().add(screen, 0, 0);
 
 		} else {
@@ -74,7 +80,4 @@ public class Vertretungsalarm implements EntryPoint {
 		return client_storage;
 	}
 
-	public static long getStartTime() {
-		return startTime;
-	}
 }

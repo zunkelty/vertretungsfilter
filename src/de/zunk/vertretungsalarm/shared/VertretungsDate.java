@@ -7,7 +7,6 @@ public class VertretungsDate implements Serializable {
 	int day = 0;
 	int month = 0;
 	int year = 0;
-	String purpose = "";
 
 	private static final long serialVersionUID = 1L;
 

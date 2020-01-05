@@ -1,49 +1,18 @@
 package de.zunk.vertretungsalarm.client.ui.vertretungsalarm;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.LinkedHashSet;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.AbsolutePanel;
-import com.google.gwt.user.datepicker.client.CalendarUtil;
 
 import de.zunk.vertretungsalarm.shared.VertretungsEvent;
 
 public class VertretungsplanView extends AbsolutePanel {
 
-	DayView today;
-	DayView tomorrow;
-	DayView afterTomorrow;
-	DayView afterTomorrowDuplicate;
-
-	Date dateToday;
-	Date dateTomorrow;
-	Date dateAfterTomorrow;
-
 	DateTimeFormat dtf;
 
-	ArrayList<VertretungsEvent> eventsForToday;
-	ArrayList<VertretungsEvent> eventsForTomorrow;
-	ArrayList<VertretungsEvent> eventsForAfterTomorrow;
-
 	public VertretungsplanView() {
-
-		dateToday = new Date();
-		dtf = DateTimeFormat.getFormat("dd.MM.yyyy");
-
-		dateTomorrow = new Date();
-		CalendarUtil.addDaysToDate(dateTomorrow, 1);
-
-		dateAfterTomorrow = new Date();
-		CalendarUtil.addDaysToDate(dateAfterTomorrow, 2);
-
-		today = new DayView(dateToday);
-		tomorrow = new DayView(dateTomorrow);
-		afterTomorrow = new DayView(dateAfterTomorrow);
-
-		eventsForToday = new ArrayList<VertretungsEvent>();
-		eventsForTomorrow = new ArrayList<VertretungsEvent>();
-		eventsForAfterTomorrow = new ArrayList<VertretungsEvent>();
 
 		getElement().getStyle().setProperty("display", "flex");
 		getElement().getStyle().setProperty("flexDirection", "column");
@@ -52,26 +21,32 @@ public class VertretungsplanView extends AbsolutePanel {
 		getElement().getStyle().setProperty("justifyContent", "flex-start");
 		getElement().getStyle().setProperty("overflow", "auto");
 
-		add(today);
-		add(tomorrow);
-		add(afterTomorrow);
-
 	}
 
 	protected void presentEvents(ArrayList<VertretungsEvent> userEvents) {
 
-		for (VertretungsEvent event : userEvents) {
-			if (event.getDateAsText().contains(dtf.format(dateToday))) {
-				eventsForToday.add(event);
-			} else if (event.getDateAsText().contains(dtf.format(dateTomorrow))) {
-				eventsForTomorrow.add(event);
-			} else if (event.getDateAsText().contains(dtf.format(dateAfterTomorrow))) {
-				eventsForAfterTomorrow.add(event);
-			}
+		ArrayList<VertretungsEvent> dayEvents = new ArrayList<VertretungsEvent>();
+
+		ArrayList<String> dates = new ArrayList<String>();
+		for (VertretungsEvent vE : userEvents) {
+			dates.add(vE.getDateAsText());
 		}
-		today.presentDayEvents(eventsForToday);
-		tomorrow.presentDayEvents(eventsForTomorrow);
-		afterTomorrow.presentDayEvents(eventsForAfterTomorrow);
+		LinkedHashSet<String> hashSet = new LinkedHashSet<>(dates);
+		dates.clear();
+		dates = new ArrayList<>(hashSet);
+
+		for (String date : dates) {
+			DayView dV = new DayView();
+			for (VertretungsEvent vE : userEvents) {
+				if (vE.getDateAsText() == date) {
+					dayEvents.add(vE);
+					dV.setDate(vE.getDate());
+				}
+			}
+			dV.presentDayEvents(dayEvents);
+			add(dV);
+			dayEvents.clear();
+		}
 
 	}
 

@@ -18,7 +18,7 @@ import de.zunk.vertretungsalarm.client.ui.vertretungsalarm.VertretungsalarmScree
  */
 public class Vertretungsalarm implements EntryPoint {
 
-	public static String name = "Vertretungsfilter";
+	public static String name = "Vertretungsalarm";
 
 	static Storage client_storage;
 
@@ -35,6 +35,12 @@ public class Vertretungsalarm implements EntryPoint {
 			Window.alert("Leider ist dein Gerät nicht für den " + getW***REMOVED***iteName()
 					+ " qualifiziert!\nSag doch einem Admin Bescheid. \n(Grund: Storage.isLocalStorageSupported == false)");
 		}
+		// if (Window.Navigator.getUserAgent().contains("Edge")) {
+		// Window.alert("Möglicherweise kann in deinem Internet Explorer (Edge) der " +
+		// getW***REMOVED***iteName()
+		// + " nicht richtig dargestellt werden. \nWenn etwas falsch aussieht, wechsel
+		// doch auf Google Chrome oder Firefox.");
+		// }
 
 		// Weiterleiten zur richtigen Stelle der W***REMOVED***ite
 
@@ -58,6 +64,11 @@ public class Vertretungsalarm implements EntryPoint {
 			SettingsScreen screen = new SettingsScreen();
 			RootPanel.get().add(screen, 0, 0);
 
+			// } else if (Location.getParameter("page") == "fullscreenEventView") {
+			//
+			// DetailedEventViewScreen screen = new DetailedEventViewScreen();
+			// RootPanel.get().add(screen, 0, 0);
+
 		} else {
 
 			if (client_storage.getItem("schoolClass") == null) {
@@ -67,9 +78,7 @@ public class Vertretungsalarm implements EntryPoint {
 				VertretungsalarmScreen screen = new VertretungsalarmScreen();
 				RootPanel.get().add(screen, 0, 0);
 			}
-
 		}
-
 	}
 
 	public static String getW***REMOVED***iteName() {

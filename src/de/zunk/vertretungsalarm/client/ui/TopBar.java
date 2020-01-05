@@ -19,15 +19,13 @@ public class TopBar extends AbsolutePanel implements Serializable {
 	private Button back;
 	private Button forward;
 
-	private Button placeholder;
-
 	public TopBar() {
 
 		getElement().getStyle().setProperty("display", "flex");
 		getElement().getStyle().setProperty("flexDirection", "row");
-		getElement().getStyle().setProperty("alignItems", "stretch");
-		getElement().getStyle().setProperty("justifyContent", "space-evenly");
-		getElement().getStyle().setProperty("padding", "5px 0px");
+		getElement().getStyle().setProperty("alignItems", "center");
+		getElement().getStyle().setProperty("justifyContent", "space-around");
+		getElement().getStyle().setProperty("padding", "5px");
 
 		info = new Button("Infoleiste");
 
@@ -40,43 +38,42 @@ public class TopBar extends AbsolutePanel implements Serializable {
 		add(info);
 
 		back = new Button("");
+		back.setHeight("6vh");
+		back.setWidth("6vh");
 		back.getElement().getStyle().setProperty("background", "#ECE9FC");
 		back.getElement().getStyle().setProperty("fontFamily", "Roboto");
 		back.getElement().getStyle().setBorderWidth(0, Unit.PX);
 		back.getElement().getStyle().setProperty("fontSize", "2.5vh");
 		back.getElement().getStyle().setProperty("order", "-1");
-		back.getElement().getStyle().setProperty("flex", "0.5 0 auto");
-		back.getElement().getStyle().setProperty("background", "url(icons/back.png) no-repeat left transparent");
+		back.getElement().getStyle().setProperty("flex", "0 0 auto");
+		back.getElement().getStyle().setProperty("outline", "0");
+		back.getElement().getStyle().setProperty("border", "1.5px solid black");
+		back.getElement().getStyle().setProperty("background", "url(icons/back.png) no-repeat center transparent");
 		back.getElement().getStyle().setProperty("backgroundSize", "contain");
 
 		back.addClickHandler(event -> goBack());
 
 		forward = new Button("");
+		forward.setHeight("6vh");
+		forward.setWidth("6vh");
 		forward.getElement().getStyle().setProperty("background", "#ECE9FC");
 		forward.getElement().getStyle().setProperty("fontFamily", "Roboto");
 		forward.getElement().getStyle().setBorderWidth(0, Unit.PX);
 		forward.getElement().getStyle().setProperty("fontSize", "2.5vh");
 		forward.getElement().getStyle().setProperty("order", "2");
-		forward.getElement().getStyle().setProperty("flex", "0.5 0 auto");
-		forward.getElement().getStyle().setProperty("background", "url(icons/forward.png) no-repeat right transparent");
+		forward.getElement().getStyle().setProperty("flex", "0 0 auto");
+		forward.getElement().getStyle().setProperty("outline", "0");
+		forward.getElement().getStyle().setProperty("border", "1.5px solid black");
+		forward.getElement().getStyle().setProperty("background",
+				"url(icons/forward.png) no-repeat center transparent");
 		forward.getElement().getStyle().setProperty("backgroundSize", "contain");
-
-		placeholder = new Button("");
-		placeholder.getElement().getStyle().setProperty("background", "#ECE9FC");
-		placeholder.getElement().getStyle().setProperty("fontFamily", "Roboto");
-		placeholder.getElement().getStyle().setBorderWidth(0, Unit.PX);
-		placeholder.getElement().getStyle().setProperty("fontSize", "2.5vh");
-		placeholder.getElement().getStyle().setProperty("order", "-1");
-		placeholder.getElement().getStyle().setProperty("flex", "0.5 0 auto");
 
 		add(back);
 		add(forward);
 		add(info);
-		add(placeholder);
 
 		back.setVisible(false);
 		forward.setVisible(false);
-		placeholder.setVisible(false);
 
 	}
 
@@ -86,43 +83,19 @@ public class TopBar extends AbsolutePanel implements Serializable {
 
 	public void addPageBackOption() {
 		back.setVisible(true);
-		if (!forward.isVisible()) {
-			placeholder.setVisible(true);
-			placeholder.getElement().getStyle().setProperty("order", "2");
-		} else {
-			placeholder.setVisible(false);
-		}
 	}
 
 	public void addPageForwardOption(ClickHandler handler) {
 		forward.setVisible(true);
-		if (!back.isVisible()) {
-			placeholder.setVisible(true);
-			placeholder.getElement().getStyle().setProperty("order", "-1");
-		} else {
-			placeholder.setVisible(false);
-		}
 		forward.addClickHandler(handler);
 	}
 
 	public void removePageBackOption() {
 		back.setVisible(false);
-		if (forward.isVisible()) {
-			placeholder.setVisible(true);
-			placeholder.getElement().getStyle().setProperty("order", "-1");
-		} else {
-			placeholder.setVisible(false);
-		}
 	}
 
 	public void removePageForwardOption() {
 		forward.setVisible(false);
-		if (back.isVisible()) {
-			placeholder.setVisible(true);
-			placeholder.getElement().getStyle().setProperty("order", "2");
-		} else {
-			placeholder.setVisible(false);
-		}
 	}
 
 	private void goBack() {

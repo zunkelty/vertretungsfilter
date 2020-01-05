@@ -29,7 +29,7 @@ public class OptionsBar extends AbsolutePanel implements Serializable {
 		getElement().getStyle().setProperty("flexDirection", "row");
 		getElement().getStyle().setProperty("background", "#AFE09C");
 		getElement().getStyle().setProperty("alignItems", "center");
-		getElement().getStyle().setProperty("justifyContent", "space-evenly");
+		getElement().getStyle().setProperty("justifyContent", "space-around");
 
 		about.getElement().getStyle().setProperty("fontFamily", "Roboto");
 		about.getElement().getStyle().setProperty("textAlign", "center");

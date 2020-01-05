@@ -1,10 +1,10 @@
 package de.zunk.vertretungsalarm.client.ui.vertretungsalarm;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
+import de.zunk.vertretungsalarm.shared.VertretungsDate;
 import de.zunk.vertretungsalarm.shared.VertretungsEvent;
 
 public class DayView extends AbsolutePanel {
@@ -15,9 +15,9 @@ public class DayView extends AbsolutePanel {
 
 	ArrayList<VertretungsEvent> dayEvents;
 
-	public DayView(Date date) {
+	public DayView() {
 
-		dateLabel = new DateLabel(date);
+		dateLabel = new DateLabel();
 		info = new InfoView("");
 		events = new EventView("");
 
@@ -35,6 +35,14 @@ public class DayView extends AbsolutePanel {
 		add(info);
 		add(events);
 
+	}
+
+	protected VertretungsDate getDate() {
+		return dateLabel.getDate();
+	}
+
+	protected void setDate(VertretungsDate date) {
+		dateLabel.setDate(date);
 	}
 
 	protected void presentDayEvents(ArrayList<VertretungsEvent> dayEvents) {

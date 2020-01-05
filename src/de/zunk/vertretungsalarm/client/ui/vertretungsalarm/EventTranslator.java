@@ -6,7 +6,7 @@ public class EventTranslator {
 
 	String result = "";
 
-	public String translatedEvent(VertretungsEvent e) {
+	public String translateEvent(VertretungsEvent e) {
 
 		// ArrayList<String> lessons = new ArrayList<String>();
 		// lessons.add("1");
@@ -26,12 +26,12 @@ public class EventTranslator {
 
 		} else if (e.getPlannedSubject().contains(e.getActualSubject())
 				&& e.getPlannedTeacher().contains(e.getActualTeacher())) {
-			return e.getLessonsAsString() + "Stunde: " + e.getActualSubject() + " bei " + e.getActualTeacher() + " in "
+			return e.getLessonsAsString() + " Stunde: " + e.getActualSubject() + " bei " + e.getActualTeacher() + " in "
 					+ e.getRoom();
 		} else {
 		}
 		return e.getLessonsAsString() + " Stunde: " + e.getActualSubject() + " statt " + e.getPlannedSubject() + " bei "
-				+ e.getPlannedTeacher();
+				+ e.getActualTeacher();
 	}
 
 }

@@ -11,8 +11,6 @@ public class EventView extends AbsolutePanel {
 
 	ArrayList<VertretungsEvent> eventsToPresent;
 
-	EventTranslator translator = new EventTranslator();
-
 	public EventView(String date) {
 
 		getElement().getStyle().setProperty("display", "flex");
@@ -29,7 +27,8 @@ public class EventView extends AbsolutePanel {
 
 	protected void presentEvents(ArrayList<VertretungsEvent> events) {
 		for (VertretungsEvent vertretungsEvent : events) {
-			Event e = new Event(translator.translatedEvent(vertretungsEvent));
+			// translator.translatedEvent(vertretungsEvent)
+			Event e = new Event(vertretungsEvent);
 			add(e);
 			// Window.alert(vertretungsEvent.toString());
 		}

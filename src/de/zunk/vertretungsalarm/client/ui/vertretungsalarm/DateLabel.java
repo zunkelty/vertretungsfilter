@@ -1,16 +1,17 @@
 package de.zunk.vertretungsalarm.client.ui.vertretungsalarm;
 
-import java.util.Date;
-
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Label;
+
+import de.zunk.vertretungsalarm.shared.VertretungsDate;
 
 public class DateLabel extends AbsolutePanel {
 
 	Label dateLabel;
 
-	public DateLabel(Date date) {
+	VertretungsDate date;
+
+	public DateLabel() {
 
 		getElement().getStyle().setProperty("display", "flex");
 		getElement().getStyle().setProperty("flexDirection", "column");
@@ -19,8 +20,7 @@ public class DateLabel extends AbsolutePanel {
 		getElement().getStyle().setProperty("background", "#AFE09C");
 		getElement().getStyle().setProperty("overflow", "auto");
 
-		DateTimeFormat dtf = DateTimeFormat.getFormat("dd.MM.yyyy");
-		dateLabel = new Label(dtf.format(date));
+		dateLabel = new Label("");
 
 		dateLabel.getElement().getStyle().setProperty("fontSize", "2vh");
 		dateLabel.getElement().getStyle().setProperty("fontFamily", "Roboto");
@@ -28,6 +28,15 @@ public class DateLabel extends AbsolutePanel {
 		dateLabel.getElement().getStyle().setProperty("padding", "0px 10px 2px 0px");
 
 		add(dateLabel);
+	}
+
+	protected void setDate(VertretungsDate date) {
+		this.date = date;
+		dateLabel.setText(date.toString());
+	}
+
+	public VertretungsDate getDate() {
+		return date;
 	}
 
 }

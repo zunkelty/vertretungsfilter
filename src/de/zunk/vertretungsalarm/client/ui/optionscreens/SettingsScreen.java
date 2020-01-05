@@ -55,6 +55,7 @@ public class SettingsScreen extends Screen {
 
 		// Reset Button
 		Button reset = new Button("Zurücksetzen");
+		reset.getElement().getStyle().setProperty("flex", "0.05 1 auto");
 		reset.addClickHandler(new ClickHandler() {
 
 			@Override

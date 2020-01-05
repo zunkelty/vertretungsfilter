@@ -6,11 +6,80 @@
 
 <html>
   <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  
+  	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
-    <link type="text/css" rel="stylesheet" href="Vertretungsalarm.css">
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="cache-control" content="no-store" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" /> 
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+    <!-- <link type="text/css" rel="stylesheet" href="Vertretungsalarm.css"> -->
     
 	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"> 
+	
+	<style>
+		* {
+			font-family: 'Roboto', sans-serif;
+	
+			-webkit-backface-visibility: hidden; /* fix for fixed position elements on Android 2.2/2.3 */
+
+			-webkit-transform: translateZ(0); /* use 3D transforms to ensure they are hardware-accelerated on ios */ 
+			/* may be required due to 3D transforms: -webkit-font-smoothing: antialiased; */
+
+  			-webkit-box-sizing: border-box; 
+  			-moz-box-sizing: border-box; 
+  			-ms-box-sizing: border-box; 
+  			-o-box-sizing: border-box; 
+  			box-sizing: border-box; 
+  	
+			-webkit-touch-callout: none; 
+			-webkit-user-select: none; 
+			-moz-user-select: none; 
+			-ms-user-select: none; 
+            user-select: none; 
+
+  			margin: 0px;
+  			padding: 0px;
+		}
+
+		html { 
+			height: 100%;
+		}
+		
+		body {
+			position: fixed;
+			overflow: hidden;
+  		}
+
+		:focus {
+			outline:none;
+		}
+		
+		::-moz-focus-inner {
+			border:0;
+		}
+
+		input {
+			-webkit-touch-callout: default; 
+			-webkit-user-select: auto; 
+			-moz-user-select: auto; 
+			-ms-user-select: auto; 
+            user-select: auto; 
+		}
+
+		/* Remove tap highlight on iOS */
+		input, textarea, button, select, label, a {
+			-webkit-tap-highlight-color: rgba(0,0,0,0);
+		}
+	</style>
 
     <title>Vertretungsalarm</title>
     

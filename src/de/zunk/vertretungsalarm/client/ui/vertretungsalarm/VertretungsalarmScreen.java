@@ -24,8 +24,8 @@ public class VertretungsalarmScreen extends Screen {
 
 	TopBar topBar;
 	OptionsBar optionsBar;
-	// VertretungsplanView infoView;
-	VertretungsplanViewExperimental infoView;
+	VertretungsplanView infoView;
+	// VertretungsplanViewExperimental infoView;
 
 	public VertretungsalarmScreen() {
 
@@ -40,8 +40,8 @@ public class VertretungsalarmScreen extends Screen {
 		optionsBar = new OptionsBar();
 		optionsBar.addSettingsOption();
 
-		// infoView = new VertretungsplanView();
-		infoView = new VertretungsplanViewExperimental();
+		infoView = new VertretungsplanView();
+		// infoView = new VertretungsplanViewExperimental();
 
 		greetingService.getVertretungsplan(new AsyncCallback<Vertretungsplan>() {
 

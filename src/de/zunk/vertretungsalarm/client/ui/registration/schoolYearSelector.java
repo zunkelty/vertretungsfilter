@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 
 public class schoolYearSelector extends AbsolutePanel implements Serializable {
 
@@ -27,8 +28,12 @@ public class schoolYearSelector extends AbsolutePanel implements Serializable {
 		getElement().getStyle().setProperty("flexDirection", "column");
 		getElement().getStyle().setProperty("background", "#ECE9FC");
 		getElement().getStyle().setProperty("alignItems", "center");
-		getElement().getStyle().setProperty("justifyContent", "space-evenly");
+		getElement().getStyle().setProperty("justifyContent", "space-between");
 		getElement().getStyle().setProperty("flex", "0.5 1 auto");
+
+		// Für die Darstelung in Edge / IE kann nicht space-evenly verwendet werden und
+		// SimplePanels werden als Lösung verwendet
+		add(new SimplePanel());
 
 		for (int i = 0; i < schoolClassYears.length; i++) {
 			selectableVertretungsalarmButton schoolYearButton;
@@ -41,6 +46,8 @@ public class schoolYearSelector extends AbsolutePanel implements Serializable {
 
 			add(schoolYearButton);
 		}
+
+		add(new SimplePanel());
 
 	}
 

@@ -33,7 +33,6 @@ public class AboutScreen extends Screen {
 		// Info Button
 
 		topBar = new TopBar();
-		topBar.getElement().getStyle().setProperty("flex", "0.025 0 auto");
 
 		// Options Button
 

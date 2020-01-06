@@ -69,8 +69,8 @@ public class VertretungsalarmService implements Serializable {
 	public static void loadVertretungsplan() {
 		try {
 
-			String scraped_content = readVertretungsplan();
-			// String scraped_content = scraped_content_example;
+			// String scraped_content = readVertretungsplan();
+			String scraped_content = scraped_content_example;
 
 			ArrayList<VertretungsEvent> allVertretungsEvents = new ArrayList<>();
 

@@ -1,18 +1,20 @@
 package de.zunk.vertretungsalarm.client.ui.registration;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.http.client.UrlBuilder;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.RootPanel;
 
 import de.zunk.vertretungsalarm.client.Vertretungsalarm;
 import de.zunk.vertretungsalarm.client.ui.OptionsBar;
 import de.zunk.vertretungsalarm.client.ui.Screen;
 import de.zunk.vertretungsalarm.client.ui.TopBar;
+import de.zunk.vertretungsalarm.client.ui.messagebox.Message;
 
 public class RegistrationScreen extends Screen {
 
@@ -33,9 +35,6 @@ public class RegistrationScreen extends Screen {
 
 	private ArrayList<Button> schoolYearButtons;
 
-	private String[] possibleClasses = { "5A", "5B", "5C", "5F", "6A", "6B", "6C", "6F", "7A", "7B", "7C", "7F", "8A",
-			"8B", "8C", "8F", "9A", "9B", "9C", "9F", "10A", "10B", "10C", "10D", "10S", "11A", "11B", "11C", "11D" };
-
 	public RegistrationScreen() {
 
 		// Generelles für den Container
@@ -52,7 +51,6 @@ public class RegistrationScreen extends Screen {
 		// Info Button
 
 		topBar = new TopBar();
-		topBar.getElement().getStyle().setProperty("flex", "0.025 0 auto");
 
 		// Options Button
 
@@ -88,9 +86,9 @@ public class RegistrationScreen extends Screen {
 		teacher.getElement().getStyle().setBorderColor("#000000");
 		teacher.getElement().getStyle().setProperty("fontSize", "10vh");
 		teacher.getElement().getStyle().setProperty("fontFamily", "Roboto");
-		teacher.addClickHandler(event -> Window.alert(
-				"Zurzeit funktioniert der " + Vertretungsalarm.getW***REMOVED***iteName() + " leider \n\nNUR FÜR SCHÜLER\n\nDer "
-						+ Vertretungsalarm.getW***REMOVED***iteName() + " für Lehrer ist aber bereits in Planung."));
+		teacher.addClickHandler(
+				e -> RootPanel.get().add(new Message("Zurzeit gibt es den Vertretungsalarm nur für Schüler",
+						"Der Vertretungsalarm für Lehrer ist aber geplant.", false)));
 
 		// *********************//
 		// ****** Schritt2 *****//
@@ -148,22 +146,17 @@ public class RegistrationScreen extends Screen {
 	}
 
 	public void finishRegistration(String schoolClass) {
-		if (Arrays.asList(possibleClasses).contains(schoolClass)) {
-			try {
-				Vertretungsalarm.getClientStorage().removeItem("schoolClass");
-			} catch (Exception e) {
+		try {
+			Vertretungsalarm.getClientStorage().removeItem("schoolClass");
+		} catch (Exception e) {
 
-			}
-			Vertretungsalarm.getClientStorage().setItem("schoolClass", schoolClass);
-			Window.alert(
-					"Wahnsinn! So schnell? Das wars auch schon.\n\nWir zeigen dir hier ab sofort das Wichtigste für die Klasse "
-							+ Vertretungsalarm.getClientStorage().getItem("schoolClass"));
-			Location.replace(Location.createUrlBuilder().removeParameter("step").buildString());
-		} else {
-			Window.alert("Huch? Die Klasse " + schoolClass
-					+ " existiert gar nicht. Hast du dich vertippt?\n\nWenn du sicher bist, dass es die " + schoolClass
-					+ " doch gibt, dann klicke bitte unten auf Hilfe und melde da den Fehler.");
 		}
+		Vertretungsalarm.getClientStorage().setItem("schoolClass", schoolClass);
+		UrlBuilder builder = Location.createUrlBuilder();
+		builder.setParameter("page", "VertretungsalarmGuide");
+		builder.removeParameter("step");
+		Location.replace(builder.buildString());
+
 	}
 
 }

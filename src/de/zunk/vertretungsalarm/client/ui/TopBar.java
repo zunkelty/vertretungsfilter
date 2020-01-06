@@ -26,6 +26,7 @@ public class TopBar extends AbsolutePanel implements Serializable {
 		getElement().getStyle().setProperty("alignItems", "center");
 		getElement().getStyle().setProperty("justifyContent", "space-around");
 		getElement().getStyle().setProperty("padding", "5px");
+		setHeight("6vh");
 
 		info = new Button("Infoleiste");
 
@@ -42,7 +43,6 @@ public class TopBar extends AbsolutePanel implements Serializable {
 		back.setWidth("6vh");
 		back.getElement().getStyle().setProperty("background", "#ECE9FC");
 		back.getElement().getStyle().setProperty("fontFamily", "Roboto");
-		back.getElement().getStyle().setBorderWidth(0, Unit.PX);
 		back.getElement().getStyle().setProperty("fontSize", "2.5vh");
 		back.getElement().getStyle().setProperty("order", "-1");
 		back.getElement().getStyle().setProperty("flex", "0 0 auto");
@@ -58,7 +58,6 @@ public class TopBar extends AbsolutePanel implements Serializable {
 		forward.setWidth("6vh");
 		forward.getElement().getStyle().setProperty("background", "#ECE9FC");
 		forward.getElement().getStyle().setProperty("fontFamily", "Roboto");
-		forward.getElement().getStyle().setBorderWidth(0, Unit.PX);
 		forward.getElement().getStyle().setProperty("fontSize", "2.5vh");
 		forward.getElement().getStyle().setProperty("order", "2");
 		forward.getElement().getStyle().setProperty("flex", "0 0 auto");

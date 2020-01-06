@@ -6,6 +6,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.RootPanel;
 
 import de.zunk.vertretungsalarm.client.GreetingService;
 import de.zunk.vertretungsalarm.client.GreetingServiceAsync;
@@ -13,6 +14,7 @@ import de.zunk.vertretungsalarm.client.Vertretungsalarm;
 import de.zunk.vertretungsalarm.client.ui.OptionsBar;
 import de.zunk.vertretungsalarm.client.ui.Screen;
 import de.zunk.vertretungsalarm.client.ui.TopBar;
+import de.zunk.vertretungsalarm.client.ui.messagebox.Message;
 import de.zunk.vertretungsalarm.shared.VertretungsEvent;
 import de.zunk.vertretungsalarm.shared.Vertretungsplan;
 
@@ -82,22 +84,8 @@ public class VertretungsalarmScreen extends Screen {
 
 				} else {
 					// NoEvents
+					topBar.setInfoText("Nichts für Dich auf dem Vertretungplan");
 
-					int rand = Random.nextInt(3);
-					switch (rand) {
-					case 0: {
-						topBar.setInfoText("Gähnende Leere auf dem Vertretungsplan");
-					}
-						break;
-					case 1: {
-						topBar.setInfoText("Nichts für dich auf dem Vertretungplan");
-					}
-						break;
-					case 2: {
-						topBar.setInfoText("Alles läuft nach Plan");
-					}
-						break;
-					}
 				}
 
 				add(topBar);
@@ -110,7 +98,8 @@ public class VertretungsalarmScreen extends Screen {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Der Vertretungsplan kann im Moment nicht geladen werden! " + caught);
+				RootPanel.get().add(new Message("Der Vertretungsplan kann im Moment nicht geladen werden!",
+						"Error: " + caught, true));
 			}
 		});
 

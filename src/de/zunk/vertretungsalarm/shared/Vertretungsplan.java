@@ -11,6 +11,8 @@ public class Vertretungsplan implements Serializable {
 
 	private VertretungsTime time;
 
+	private String vertretungsplanAsString;
+
 	public Vertretungsplan() {
 		super();
 	}
@@ -21,12 +23,21 @@ public class Vertretungsplan implements Serializable {
 
 	}
 
+	public Vertretungsplan(String s) {
+		this.vertretungsplanAsString = s;
+	}
+
 	public ArrayList<VertretungsEvent> getVertretungsEvents() {
 		return events;
 	}
 
 	public VertretungsTime getTime() {
 		return time;
+	}
+
+	@Override
+	public String toString() {
+		return vertretungsplanAsString;
 	}
 
 }

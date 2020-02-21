@@ -27,7 +27,7 @@ public class EventTranslator {
 		} else if (e.getPlannedSubject().contains(e.getActualSubject())
 				&& e.getPlannedTeacher().contains(e.getActualTeacher())) {
 			return e.getLessonsAsString() + " Stunde: " + e.getActualSubject() + " bei " + e.getActualTeacher() + " in "
-					+ e.getRoom();
+					+ e.getActualRoom();
 		} else {
 		}
 		return e.getLessonsAsString() + " Stunde: " + e.getActualSubject() + " statt " + e.getPlannedSubject() + " bei "

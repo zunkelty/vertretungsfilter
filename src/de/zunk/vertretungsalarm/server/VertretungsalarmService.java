@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
@@ -19,6 +20,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPasswordInput;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
+import de.zunk.vertretungsalarm.shared.VERTRETUNGS_EVENT_TYPE;
 import de.zunk.vertretungsalarm.shared.VertretungsDate;
 import de.zunk.vertretungsalarm.shared.VertretungsEvent;
 import de.zunk.vertretungsalarm.shared.Vertretungsplan;
@@ -29,9 +31,8 @@ public class VertretungsalarmService implements Serializable {
 
 	private static Vertretungsplan vertretungsplan;
 
-	static String scraped_content_example = "DSB"
-			+ "DSB Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 03.01.2020 11:58 3.1.2020 Freitag (Seite 1 / 3) Nachrichten zum Tag Information für die Klasse 6F/6B von LOE/PAD: Treffpunkt: Klassenraum P12/P11. Sportsachen für draußen mitbringen! Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text 5A, 5B, 5C, 5F 1 DIS RIN P10 ENF ENF Mitbetreuung (5F) 3 - 4 GRA --- MA --- 6C 5 WOE --- --- SP --- 6C 6 WOE --- --- SP --- 6F 3 - 4 LAN GRA M3 PH EN 7A, 7B, 7C, 7D 3 - 4 CLS AMM P5 LA LA Aufg. CLS 7A, 7B, 7C, 7D 3 BE GEI P3 SN SN Aufg. BE 7A, 7B, 7C, 7D 3 DIS KUT P9 FR FR Fr-7.6. / 3 Aufg. DIS 7A, 7B, 7C, 7D 4 BE KUT P3 SN SN Aufg. BE 7A, 7B, 7C, 7D 4 DIS VLD P9 FR FR Fr-7.6. / 4 Aufg. DIS 7A 5 - 6 BAU BAU S2 SP SP 7D 5 SLH KAM Mu1 CH MU Do-6.6. / 5 7D 6 SLH KAM Mu1 CH MU Do-6.6. / 6 7F 1 - 2 YOU --- --- SP --- 7F 5 - 6 BE KAE P10 FRf MA 8A, 8B, 8C 5 - 6 DIS --- --- FR --- Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 03.01.2019 11:58 3.1.2020 Freitag (Seite 2 / 3) Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text 8A, 8B, 8C 5 HRU TR P5 SN SN 9B 3 - 4 YOU ZIP Ch1 SP CH 9B 5 - 6 OST --- --- EN --- 9D 5 YOU KML M7 MA EN Fr-7.6. / 6 9D 6 KML --- --- EN --- 9S 1 OST OST M1 DE DE Klassenarbeit Deutsch 9S 2 OST SPT M1 DE DE Klassenarbeit Deutsch 11A, 11B, 11C, 11D 1 BE --- --- SN --- 11A, 11B, 11C, 11D 1 EV --- --- SN --- 11A 2 YAB YAB M4 DE DE Raumänderung beachten 11C 5 SPT MLR N2 EK PO Di-4.6. / 4 11C 6 SPT MLR N2 EK PO Di-4.6. / 3 (12) 1 - 2 BUE --- DE --- (12) 1 - 2 WOE --- BI --- (12) 1 - 2 GRA --- EN --- (12) 1 - 2 WO --- MA --- (12) 1 - 2 HPT --- MA --- (12) 3 - 4 SCH --- GE --- (12) 3 - 4 GEI --- EK --- (12) 3 - 4 MLR --- PO --- Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 07.06.2019 11:58 3.1.2020 Freitag (Seite 3 / 3) Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text (12) 3 - 4 KRL --- BI --- (12) 3 - 4 DIE --- RE --- 2/3 KAM SLH HAL 3 KUT PFE BR BR 4 SLH --- --- BRV --- 4 VLD WES BR BR 4/5 SLH KAM HAL\\r\\n\"\r\n"
-			+ "DSB Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 03.01.2020 11:58 4.1.2020 Mittwoch (Seite 1 / 2) Nachrichten zum Tag Nachschreibtermin Sek. I: 60-90 Minuten K3 bei KAP 45 Minuten K2 bei KUT Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text 5, 6 7 SPR --- --- AG-SCH --- 5C 1 - 2 CL KML P2 KU EN 6A 5 - 6 LEH --- --- SP --- 7A 5 - 6 ROT NEU P9 MA PH 8A, 8B, 8C, 8F 5 - 6 SPR --- --- WN --- 9A 5 BAU CLS M9 EK EK Aufg. BAU 9A 6 BAU DIE M9 EK EK Aufg. BAU 9D 5 - 6 AMM AMM M7 SP SP 9S 5 SLH --- --- BI --- verlagert auf Do, 5. Std. 9S 6 SLH --- --- BI --- verlagert auf Do, 6. Std. 10B, 10A, 10C, 10S 1 - 2 STG STG K2 SN3 SN3 Klassenarbeit Spanisch 11D 5 - 6 SAN --- --- MA --- 4 ROT --- --- BRV --- 4/5 ROT SLH HGB 4/5 LEH AMM HAL Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 07.06.2019 11:58 4.1.2019 Mittwoch (Seite 2 / 2) Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text 6 CL --- --- SL --- 7 - 8 KAP K3 Nachschreibtermin Sek. I 7 KUT K2 Nachschreibtermin Sek. I Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 07.06.2020 11:58 4.1.2020 Donnerstag (Seite 1 / 2) Nachrichten zum Tag Mensadienst: 10A (KO) Medien-AG (VRA) fällt heute aus. WPK (KML) schreibt heute in M7 Klausur. Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text 11C 1 - 2 CL KML P7 DE EN 6A, 6B, 6C 5 AMM ANG H3 LA LA Aufg. AMM 6A, 6B, 6C 6 AMM PA H3 LA LA Do-13.6. / 6 Aufg. AMM 7B 3 SPR LTB P3 SP EN 7B 4 SPR HPT P3 SP SP 7C 5 ZRT KRL K3 SP KU Fr-14.6. / 5 statt Fr 7C 6 ZRT KRL K3 SP KU Fr-14.6. / 6 statt Fr 8A 1 EI --- --- SP --- 8A 2 EI MEY M6 SP MA 8C 5 - 6 VRA LTB M4 PO PO 9A, 9C, 9D, 9S 8 AMM --- --- LA3 --- 9B 5 OST ZIP Ch2 DE CH Di-18.6. / 8 statt 18.06. 9B 6 OST ZIP Ch2 DE CH Di-18.6. / 9 statt 18.06. 9C 5 - 6 LOE FRI Bi2 BI BI Untis 2020 Elsa-Brändström-Schule D-30173 Hannover, Hilde-Schneider-Allee 30 Stundenplan 2018/2019 gülig ab 01.04.2019 Stand: 07.06.2019 11:58 5.1.2020 Donnerstag (Seite 2 / 2) Klasse(n) Stunde (Lehrer) Vertreter Raum (Fach) Fach Vertr. von Text 9S 5 CL SLH Bi1 KU BI Mi-12.6. / 5 9S 6 CL SLH Bi1 KU BI Mi-12.6. / 6 10A, 10B, 10S 5 MAG --- --- RE --- Unterrichtsgang 10A, 10B, 10S 5 SPR MLR K2 WN WN Do-13.6. / 5 Aufg. SPR 10A, 10B, 10S 6 MAG --- --- RE --- Unterrichtsgang 10A, 10B, 10S 6 SPR JAN K2 WN WN Aufg. SPR 11A, 11B, 11C, 11D 1 - 2 SPR --- --- WN --- 11B 5 - 6 ROT ROT P11 BI BI verschoben auf 17.06. 11C 3 ZWE SPT N2 EN EK Fr-14.6. / 6 11C 4 ZWE ZWE N2 EN EN Fr-14.6. / 5 0/1 EI ARM EIN 4/5 ZRT EBH HGB 5 MLR MEY BR BR 6 PA HEI BR BR 6/7 SPR ALT ME7 7 BAU --- --- Aufs.7.Std. ---";
+	String scraped_content_example;
+
 	public static String[] schoolClasses = { "5A", "5B", "5C", "5F", "6A", "6B", "6C", "6F", "7A", "7B", "7C", "7F",
 			"8A", "8B", "8C", "8F", "9A", "9B", "9C", "9F", "10A", "10B", "10C", "10D", "10S", "11A", "11B", "11C",
 			"11D" };
@@ -67,120 +68,215 @@ public class VertretungsalarmService implements Serializable {
 	}
 
 	public static void loadVertretungsplan() {
-		try {
 
-			// String scraped_content = readVertretungsplan();
-			String scraped_content = scraped_content_example;
+		String scraped_content = readVertretungsplan();
 
-			ArrayList<VertretungsEvent> allVertretungsEvents = new ArrayList<>();
+		// System.out.println(scraped_content);
 
-			// Aufbereitung des gescrapten Inhalts zur Weiterverarbeitung
+		ArrayList<VertretungsEvent> allVertretungsEvents = new ArrayList<>();
 
-			String[] snippets = scraped_content.split(" ");
+		// Aufbereitung des gescrapten Inhalts zur Weiterverarbeitung
 
-			for (int i = 0; i < snippets.length; i++) {
+		String[] snippets = scraped_content.split(" ");
 
-				snippets[i] = snippets[i].replaceAll("[\\s\\(\\),]", "");
+		for (int i = 0; i < snippets.length; i++) {
 
-			}
+			snippets[i] = snippets[i].replaceAll("[\\s\\(\\),]", "");
 
-			// for (String string : snippets) {
-			// System.out.println("-->" + string + "<--");
-			// }
+		}
 
-			// Einzelne Schnipsel werden ausgelesen, verstanden und als VertretungsEvents
-			// abgespeichert
+		// for (String string : snippets) {
+		// System.out.println("Snippets:");
+		// System.out.println("-->" + string + "<--");
+		// }
 
-			for (int i = 0; i < snippets.length; i++) {
+		// Einzelne Schnipsel werden ausgelesen, verstanden und als VertretungsEvents
+		// abgespeichert
 
-				if (isVertretungsDate(snippets[i])) {
-					String[] date_split = snippets[i].split("\\.", 3);
+		for (int i = 0; i < snippets.length; i++) {
 
-					int day = Integer.parseInt(date_split[0]);
-					int month = Integer.parseInt(date_split[1]);
-					int year = Integer.parseInt(date_split[2]);
+			if (isVertretungsDate(snippets[i])) {
 
-					dateForEvents.setDate(day, month, year);
+				String[] date_split = snippets[i].split("\\.", 3);
 
-				} else if (isSchoolClassName(snippets[i])) {
+				int day = Integer.parseInt(date_split[0]);
+				int month = Integer.parseInt(date_split[1]);
+				int year = Integer.parseInt(date_split[2]);
+
+				dateForEvents.setDate(day, month, year);
+
+			} else if (isEventId(snippets[i])) {
+				try {
+
+					int j = i;
 
 					ArrayList<String> schoolClasses = new ArrayList<String>();
 					ArrayList<String> lessons = new ArrayList<String>();
 
+					VERTRETUNGS_EVENT_TYPE type = VERTRETUNGS_EVENT_TYPE.UNDEFINED;
 					String plannedTeacher = "ZUNK";
 					String actualTeacher = "ZUNK";
-					String room = "ZUNK";
+					String plannedRoom = "ZUNK";
+					String actualRoom = "ZUNK";
 					String plannedSubject = "ZUNK";
 					String actualSubject = "ZUNK";
-					String info = "ZUNK";
+					String additionalText = "";
 
 					VertretungsDate date = new VertretungsDate();
 
-					// Speichern der genannten Schulklasse / -n
+					j++;
 
-					while (isSchoolClassName(snippets[i])) {
-						schoolClasses.add(snippets[i]);
-						i++;
+					String type_s = "";
+					while (isEventType(snippets[j])) {
+						if (type == VERTRETUNGS_EVENT_TYPE.UNDEFINED) {
+							type_s = snippets[j];
+						} else {
+							type_s = type_s + " " + snippets[j];
+						}
+						j++;
 					}
+
+					type = getEventTypeFromString(type_s);
+
+					j++;
 
 					// Speichern der genannten Schulstunde / -n
-					if (isLessonName(snippets[i]) && snippets[i + 1] != "-" && !isLessonName(snippets[i + 2])) {
-						lessons.add(snippets[i]);
-						i++;
-					} else if (isLessonName(snippets[i]) && isLessonName(snippets[i + 2])) {
-						lessons.add(snippets[i]);
-						i++;
-						i++;
-						lessons.add(snippets[i]);
-						i++;
+
+					if (isLessonName(snippets[j]) && snippets[j + 1] != "-" && !isLessonName(snippets[j + 2])) {
+						lessons.add(snippets[j]);
+						j++;
+					} else if (isLessonName(snippets[j]) && isLessonName(snippets[j + 2])) {
+						lessons.add(snippets[j]);
+						j++;
+						j++;
+						lessons.add(snippets[j]);
+						j++;
 					}
 
-					plannedTeacher = snippets[i];
-					i++;
-					actualTeacher = snippets[i];
-					i++;
-					room = snippets[i];
-					i++;
-					plannedSubject = snippets[i];
-					i++;
-					actualSubject = snippets[i];
-					i++;
+					// Speichern der genannten Schulklasse / -n
+					while (isSchoolClassName(snippets[j])) {
+						schoolClasses.add(snippets[j]);
+						j++;
+					}
 
-					// for (int j = i; !isSchoolClassName(snippets[j]) &&
-					// !snippets[j].contains("Untis")
-					// && !snippets[j].contains("Raum") && j <= (i + 7); j++) {
-					// info = info + snippets[j] + " ";
-					// }
+					boolean isNotHappening = false;
 
-					// Hier: Splitten hinter ausgelesenem Event & hinter dem letzten "Nachrichten
-					// zum Tag"; Dann splitten an "Klassen(n) Stunde(n)"
+					if (snippets[j + 3].contains("Freis.") || snippets[j + 3].contains("Entfall")
+							|| type == VERTRETUNGS_EVENT_TYPE.CANCELED || type == VERTRETUNGS_EVENT_TYPE.FREE) {
+						isNotHappening = true;
+					}
+
+					// Speichern der genannten Lehrer
+					if (isNotHappening) {
+						plannedTeacher = snippets[j];
+						actualTeacher = "---";
+					} else {
+						if (snippets[j].contains("?")) {
+							String[] splitTeachers = snippets[j].split("\\?");
+							plannedTeacher = splitTeachers[0];
+							actualTeacher = splitTeachers[1];
+						} else {
+							plannedTeacher = snippets[j];
+							actualTeacher = snippets[j];
+						}
+					}
+
+					j++;
+
+					// Speichern der genannten Räume
+
+					if (isNotHappening) {
+						plannedRoom = snippets[j];
+						actualRoom = "---";
+					} else {
+						if (snippets[j].contains("?")) {
+							String[] splitRooms = snippets[j].split("\\?");
+							plannedRoom = splitRooms[0];
+							actualRoom = splitRooms[1];
+						} else {
+							plannedRoom = snippets[j];
+							actualRoom = snippets[j];
+						}
+					}
+
+					j++;
+
+					// Speichern der genannten Fächer
+
+					if (isNotHappening) {
+						plannedSubject = snippets[j];
+						actualSubject = "---";
+					} else {
+						if (snippets[j].contains("?")) {
+							String[] splitSubjects = snippets[j].split("\\?");
+							plannedSubject = splitSubjects[0];
+							actualSubject = splitSubjects[1];
+						} else {
+							plannedSubject = snippets[j];
+							actualSubject = snippets[j];
+						}
+					}
+
+					j++;
+
+					while (!isEventId(snippets[j]) && !snippets[j].contains("Untis") && snippets[j] != "x"
+							&& j < snippets.length - 1) {
+						additionalText = additionalText + " " + snippets[j];
+						j++;
+					}
 
 					date.setDate(dateForEvents.getDay(), dateForEvents.getMonth(), dateForEvents.getYear());
 
 					if (!schoolClasses.isEmpty() && !lessons.isEmpty() && !plannedTeacher.contains("ZUNK")
-							&& !actualTeacher.contains("ZUNK") && !room.contains("ZUNK")
-							&& !plannedSubject.contains("ZUNK") && !actualSubject.contains("ZUNK")) {
+							&& !actualTeacher.contains("ZUNK") && !plannedRoom.contains("ZUNK")
+							&& !actualRoom.contains("ZUNK") && !plannedSubject.contains("ZUNK")
+							&& !actualSubject.contains("ZUNK")) {
 
-						VertretungsEvent e = new VertretungsEvent(schoolClasses, lessons, plannedTeacher, actualTeacher,
-								room, plannedSubject, actualSubject, info, date);
+						VertretungsEvent e = new VertretungsEvent(schoolClasses, lessons, type, plannedTeacher,
+								actualTeacher, plannedRoom, actualRoom, plannedSubject, actualSubject, additionalText,
+								date);
 						allVertretungsEvents.add(e);
 					}
+
+				} catch (Exception e) {
+					// TODO: handle exception
 				}
+
 			}
-
-			String message = "";
-
-			for (VertretungsEvent vE : allVertretungsEvents) {
-				System.out.println(vE.toString());
-
-				message = message + vE.toString();
-			}
-
-			vertretungsplan = new Vertretungsplan(allVertretungsEvents);
-
-		} catch (Exception e) {
 		}
 
+		String message = "";
+
+		for (VertretungsEvent vE : allVertretungsEvents) {
+			System.out.println(vE.toString());
+			message = message + vE.toString();
+		}
+
+		vertretungsplan = new Vertretungsplan(allVertretungsEvents);
+		// vertretungsplan = new Vertretungsplan(readVertretungsplan());
+	}
+
+	public static boolean isEventType(String s) {
+		for (int i = 0; i < s.length(); i++) {
+			if (!Character.isLetter(s.charAt(i)) && s.charAt(i) != '-' && s.charAt(i) != '.') {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static boolean isEventId(String possibleId) {
+		try {
+			// See if possibleId can be converted to an int
+			Integer.parseInt(possibleId);
+			// See if possibleId is a number with four digits
+			if (possibleId.matches("[0-9]+") && possibleId.length() == 4) {
+				return true;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return false;
 	}
 
 	public static boolean isVertretungsDate(String possibleDateName) {
@@ -215,19 +311,68 @@ public class VertretungsalarmService implements Serializable {
 	}
 
 	public static boolean isLessonName(String possibleLessonName) {
-		if (Arrays.asList(lessons).contains(possibleLessonName) && possibleLessonName != null) {
-			return true;
+		try {
+			if (Integer.parseInt(possibleLessonName) <= 14) {
+				return true;
+			}
+		} catch (Exception e) {
+
 		}
 
 		return false;
 	}
 
 	public static boolean isSchoolClassName(String possibleSchoolClassName) {
-		if (Arrays.asList(schoolClasses).contains(possibleSchoolClassName)) {
-			return true;
+		try {
+			List<String> output = new ArrayList<String>();
+			Matcher match = Pattern.compile("[0-9]+|[a-z]+|[A-Z]+").matcher(possibleSchoolClassName);
+			while (match.find()) {
+				output.add(match.group());
+			}
+			if (output.size() == 2 && output.get(0).matches("[0-9]+") && output.get(0).length() <= 2
+					&& Integer.parseInt(output.get(0)) <= 13 && output.get(1).matches("[a-zA-Z]+")
+					&& output.get(1).length() == 1) {
+				return true;
+			}
+			return false;
+		} catch (Exception e) {
+			return false;
 		}
 
-		return false;
+	}
+
+	public static VERTRETUNGS_EVENT_TYPE getEventTypeFromString(String type_s) {
+		switch (type_s) {
+		case "Entfall": {
+			return VERTRETUNGS_EVENT_TYPE.CANCELED;
+		}
+		case "Raum-Vtr.": {
+			return VERTRETUNGS_EVENT_TYPE.ROOM_CHANGE;
+		}
+		case "Statt-Vertretung": {
+			return VERTRETUNGS_EVENT_TYPE.INSTEAD_OF;
+		}
+		case "Trotz Absenz": {
+			return VERTRETUNGS_EVENT_TYPE.DESPITE_ABSENSE;
+		}
+		case "Verlegung": {
+			return VERTRETUNGS_EVENT_TYPE.MOVING;
+		}
+		case "Lehrertausch": {
+			return VERTRETUNGS_EVENT_TYPE.TEACHER_CHANGE;
+		}
+		case "Vertretung": {
+			return VERTRETUNGS_EVENT_TYPE.SUBSTITUTE;
+		}
+		case "Betreuung": {
+			return VERTRETUNGS_EVENT_TYPE.CARE;
+		}
+		case "Freisetzung": {
+			return VERTRETUNGS_EVENT_TYPE.FREE;
+		}
+		default:
+			return VERTRETUNGS_EVENT_TYPE.UNDEFINED;
+		}
 	}
 
 	private static String readVertretungsplan() {
@@ -260,7 +405,7 @@ public class VertretungsalarmService implements Serializable {
 			// Now submit the form by clicking the button and get back the second page.
 			final HtmlPage pageThree = button.click();
 
-			System.out.println("Ausgelesen! --> " + pageThree.asText() + " <--");
+			// System.out.println("Ausgelesen! --> " + pageThree.asText() + " <--");
 
 			return pageThree.asText();
 

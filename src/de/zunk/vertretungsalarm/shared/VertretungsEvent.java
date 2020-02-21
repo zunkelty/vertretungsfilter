@@ -10,46 +10,47 @@ public class VertretungsEvent implements Serializable {
 	ArrayList<String> schoolClasses;
 	ArrayList<String> lessons;
 
+	VERTRETUNGS_EVENT_TYPE type;
 	String plannedTeacher;
 	String actualTeacher;
-	String room;
+	String plannedRoom;
+	String actualRoom;
 	String plannedSubject;
 	String actualSubject;
-	String info;
+	String additionalText;
 
 	VertretungsDate date;
-
-	// VertretungsDate date = new VertretungsDate();
 
 	public VertretungsEvent() {
 		super();
 	}
 
-	public VertretungsEvent(ArrayList<String> schoolClasses, ArrayList<String> lessons, String plannedTeacher,
-			String actualTeacher, String room, String plannedSubject, String actualSubject, String info,
-			VertretungsDate date) {
+	public VertretungsEvent(ArrayList<String> schoolClasses, ArrayList<String> lessons, VERTRETUNGS_EVENT_TYPE type,
+			String plannedTeacher, String actualTeacher, String plannedRoom, String actualRoom, String plannedSubject,
+			String actualSubject, String additionalText, VertretungsDate date) {
 
 		this.schoolClasses = schoolClasses;
 		this.lessons = lessons;
+		this.type = type;
 		this.plannedTeacher = plannedTeacher;
 		this.actualTeacher = actualTeacher;
-		this.room = room;
+		this.plannedRoom = plannedRoom;
+		this.actualRoom = actualRoom;
 		this.plannedSubject = plannedSubject;
 		this.actualSubject = actualSubject;
-		this.info = info;
+		this.additionalText = additionalText;
 		this.date = date;
-
-		System.out.println("LessonsAsString: " + getLessonsAsString());
 
 	}
 
 	@Override
 	public String toString() {
 		return ("----------------Neues Event:----------------" + "\nKlasse/-n: " + getSchoolClassesAsString()
-				+ "\nStunde: " + getLessonsAsString() + "\nEigentlich Lehrer: " + getPlannedTeacher()
-				+ "\nVertretungslehrer: " + getActualTeacher() + "\nRaum: " + getRoom() + "\nEigentliches Fach: "
-				+ getPlannedSubject() + "\nVertretungsfach: " + getActualSubject() + "\nInfo: " + getInfo()
-				+ "\nDatum: " + getDateAsText());
+				+ "\nStunde: " + getLessonsAsString() + "\nTyp: " + getType() + "\nEigentlich Lehrer: "
+				+ getPlannedTeacher() + "\nVertretungslehrer: " + getActualTeacher() + "\nEigentlich Raum: "
+				+ getPlannedRoom() + "\nVertretungsraum: " + getActualRoom() + "\nEigentliches Fach: "
+				+ getPlannedSubject() + "\nVertretungsfach: " + getActualSubject() + "\nZusatztext: "
+				+ getAdditionalText() + "\nDatum: " + getDateAsText());
 
 	}
 
@@ -88,6 +89,10 @@ public class VertretungsEvent implements Serializable {
 		return lessons;
 	}
 
+	public VERTRETUNGS_EVENT_TYPE getType() {
+		return type;
+	}
+
 	public String getPlannedTeacher() {
 		return plannedTeacher;
 	}
@@ -96,8 +101,12 @@ public class VertretungsEvent implements Serializable {
 		return actualTeacher;
 	}
 
-	public String getRoom() {
-		return room;
+	public String getPlannedRoom() {
+		return plannedRoom;
+	}
+
+	public String getActualRoom() {
+		return actualRoom;
 	}
 
 	public String getPlannedSubject() {
@@ -108,8 +117,8 @@ public class VertretungsEvent implements Serializable {
 		return actualSubject;
 	}
 
-	public String getInfo() {
-		return info;
+	public String getAdditionalText() {
+		return additionalText;
 	}
 
 	public VertretungsDate getDate() {

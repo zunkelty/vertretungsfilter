@@ -45,12 +45,7 @@ public class Event extends Label {
 
 				// Location.replace(builder.buildString());
 
-				RootPanel.get()
-						.add(new Message(vE.getLessonsAsString() + " Stunde/-n am " + vE.getDateAsText() + "\n\n",
-								"Fach: " + vE.getActualSubject() + "\nLehrer: " + vE.getActualTeacher() + "\nRaum: "
-										+ vE.getRoom() + "\n\nGeplantes Fach: " + vE.getPlannedSubject()
-										+ "\nGeplanter Lehrer " + vE.getPlannedTeacher(),
-								false), 0, 0);
+				RootPanel.get().add(new Message("TODO: ", "Neue Eventdetailansicht", false));
 
 			}
 		});

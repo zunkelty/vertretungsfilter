@@ -3,9 +3,7 @@ package de.zunk.vertretungsalarm.client.ui.vertretungsalarm;
 import java.util.ArrayList;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -30,13 +28,13 @@ public class VertretungsalarmScreen extends Screen {
 
 	public VertretungsalarmScreen() {
 
-		Timer timer = new Timer() {
-			@Override
-			public void run() {
-				Location.reload();
-			}
-		};
-		timer.schedule(5 * 60 * 1000);
+		// Timer timer = new Timer() {
+		// @Override
+		// public void run() {
+		// Location.reload();
+		// }
+		// };
+		// timer.schedule(5 * 60 * 1000);
 
 		setPixelSize(Window.getClientWidth(), Window.getClientHeight());
 		getElement().getStyle().setProperty("overflowX", "hidden");
@@ -46,12 +44,11 @@ public class VertretungsalarmScreen extends Screen {
 		getElement().getStyle().setProperty("flexDirection", "column");
 		getElement().getStyle().setProperty("alignItems", "flex-start");
 		getElement().getStyle().setProperty("justifyContent", "flex-start");
+		getElement().getStyle().setProperty("height", Window.getClientHeight() + "px");
 
 		ArrayList<VertretungsEvent> userEvents = new ArrayList<VertretungsEvent>();
 
 		header = new Header();
-
-		infoView = new VertretungsplanView();
 
 		bottom = new BottomBar();
 
@@ -69,15 +66,15 @@ public class VertretungsalarmScreen extends Screen {
 					}
 				}
 
-				infoView.presentEvents(userEvents);
-
-				header.getElement().getStyle().setProperty("alignSelf", "stretch");
-				infoView.getElement().getStyle().setProperty("alignSelf", "stretch");
-				bottom.getElement().getStyle().setProperty("alignSelf", "stretch");
+				infoView = new VertretungsplanView(userEvents);
 
 				add(header);
 				add(infoView);
 				add(bottom);
+
+				header.getElement().getStyle().setProperty("alignSelf", "stretch");
+				infoView.getElement().getStyle().setProperty("alignSelf", "stretch");
+				bottom.getElement().getStyle().setProperty("alignSelf", "stretch");
 
 				resizeComponents();
 
@@ -85,9 +82,25 @@ public class VertretungsalarmScreen extends Screen {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				RootPanel.get().add(new Message("Der Vertretungsplan kann im Moment nicht geladen werden!",
-						"Error: " + caught, true));
+				RootPanel.get()
+						.add(new Message(
+								"Der Vertretungsplan kann im Moment nicht geladen werden! Versuche es später erneut.",
+								"Error: " + caught, true));
 			}
+		});
+
+		greetingService.reloadVertretungsplan(new AsyncCallback<Boolean>() {
+
+			@Override
+			public void onSuccess(Boolean result) {
+
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+
+			}
+
 		});
 
 	}

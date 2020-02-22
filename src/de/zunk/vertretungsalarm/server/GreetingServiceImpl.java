@@ -21,4 +21,10 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	public Vertretungsplan getVertretungsplan() throws IllegalArgumentException {
 		return vertretungsalarmService.getVertretungsplan();
 	}
+
+	@Override
+	public Boolean reloadVertretungsplan() throws IllegalArgumentException {
+		VertretungsalarmService.loadVertretungsplan();
+		return true;
+	}
 }

@@ -18,6 +18,7 @@ public class VertretungsEvent implements Serializable {
 	String plannedSubject;
 	String actualSubject;
 	String additionalText;
+	Boolean isHappening;
 
 	VertretungsDate date;
 
@@ -27,7 +28,7 @@ public class VertretungsEvent implements Serializable {
 
 	public VertretungsEvent(ArrayList<String> schoolClasses, ArrayList<String> lessons, VERTRETUNGS_EVENT_TYPE type,
 			String plannedTeacher, String actualTeacher, String plannedRoom, String actualRoom, String plannedSubject,
-			String actualSubject, String additionalText, VertretungsDate date) {
+			String actualSubject, String additionalText, VertretungsDate date, Boolean isHappening) {
 
 		this.schoolClasses = schoolClasses;
 		this.lessons = lessons;
@@ -40,6 +41,7 @@ public class VertretungsEvent implements Serializable {
 		this.actualSubject = actualSubject;
 		this.additionalText = additionalText;
 		this.date = date;
+		this.isHappening = isHappening;
 
 	}
 
@@ -50,7 +52,7 @@ public class VertretungsEvent implements Serializable {
 				+ getPlannedTeacher() + "\nVertretungslehrer: " + getActualTeacher() + "\nEigentlich Raum: "
 				+ getPlannedRoom() + "\nVertretungsraum: " + getActualRoom() + "\nEigentliches Fach: "
 				+ getPlannedSubject() + "\nVertretungsfach: " + getActualSubject() + "\nZusatztext: "
-				+ getAdditionalText() + "\nDatum: " + getDateAsText());
+				+ getAdditionalText() + "\nDatum: " + getDateAsText() + "\nisHappening: " + isHappening);
 
 	}
 
@@ -127,5 +129,9 @@ public class VertretungsEvent implements Serializable {
 
 	public String getDateAsText() {
 		return date.toString();
+	}
+
+	public Boolean getIsHappening() {
+		return isHappening;
 	}
 }

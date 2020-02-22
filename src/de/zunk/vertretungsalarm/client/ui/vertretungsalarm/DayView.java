@@ -12,15 +12,15 @@ import de.zunk.vertretungsalarm.shared.VertretungsEvent;
 
 public class DayView extends AbsolutePanel {
 
-	@SuppressWarnings("static-access")
-	public void presentEvents(ArrayList<VertretungsEvent> dayEvents) {
+	public DayView(ArrayList<VertretungsEvent> dayEvents) {
 
-		getElement().getStyle().setProperty("display", "flex");
+		getElement().getStyle().setProperty("display", "inline-block");
 		getElement().getStyle().setProperty("flexDirection", "column");
 		getElement().getStyle().setProperty("alignItems", "stretch");
 		getElement().getStyle().setProperty("justifyContent", "flex-start");
 		getElement().getStyle().setProperty("overflow", "hidden");
 		getElement().getStyle().setProperty("paddingLeft", "25px");
+		getElement().getStyle().setProperty("paddingRight", "25px");
 
 		Label dateLabel = new Label();
 
@@ -30,15 +30,14 @@ public class DayView extends AbsolutePanel {
 		dateLabel.getElement().getStyle().setProperty("color", "#3E4158");
 		dateLabel.getElement().getStyle().setProperty("textAlign", "start");
 		dateLabel.getElement().getStyle().setProperty("paddingTop", "30px");
-		dateLabel.getElement().getStyle().setProperty("marginRight", "25px");
+		dateLabel.getElement().getStyle().setProperty("paddingBottom", "12px");
 
 		Date now = new Date();
 		Date date;
-		CalendarUtil c = new CalendarUtil();
 		DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat("dd.MM.yyyy");
 		date = dateTimeFormat.parse(dateLabel.getText());
 
-		switch (c.getDaysBetween(now, date)) {
+		switch (CalendarUtil.getDaysBetween(now, date)) {
 		case -1: {
 			dateLabel.setText("Gestern, " + dayEvents.get(0).getDate().getDay() + "."
 					+ dayEvents.get(0).getDate().getMonth() + ".");
@@ -69,6 +68,10 @@ public class DayView extends AbsolutePanel {
 
 		add(dateLabel);
 
-	}
+		for (VertretungsEvent vertretungsEvent : dayEvents) {
+			EventBox e = new EventBox(vertretungsEvent);
+			add(e);
+		}
 
+	}
 }

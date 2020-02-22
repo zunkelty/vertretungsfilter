@@ -22,20 +22,19 @@ public class VertretungsplanView extends AbsolutePanel {
 	Button noEventsImage;
 	Label noEventsLabel;
 
-	public VertretungsplanView() {
+	public VertretungsplanView(ArrayList<VertretungsEvent> userEvents) {
 
 		getElement().getStyle().setProperty("display", "flex");
 		getElement().getStyle().setProperty("flexDirection", "column");
 		getElement().getStyle().setProperty("background", "#F3F4F8");
 		getElement().getStyle().setProperty("alignItems", "stretch");
 		getElement().getStyle().setProperty("justifyContent", "flex-start");
-		getElement().getStyle().setProperty("overflow", "hidden");
+		getElement().getStyle().setProperty("marginBottom", "20px");
+		getElement().getStyle().setProperty("flexShrink", "0");
 
-	}
+		if (userEvents.size() > 0)
 
-	protected void presentEvents(ArrayList<VertretungsEvent> userEvents) {
-
-		if (userEvents.size() > 0) {
+		{
 
 			ArrayList<VertretungsEvent> dayEvents = new ArrayList<VertretungsEvent>();
 
@@ -48,13 +47,13 @@ public class VertretungsplanView extends AbsolutePanel {
 			dates = new ArrayList<>(hashSet);
 
 			for (String date : dates) {
-				dV = new DayView();
+
 				for (VertretungsEvent vE : userEvents) {
 					if (vE.getDateAsText() == date) {
 						dayEvents.add(vE);
 					}
 				}
-				dV.presentEvents(dayEvents);
+				dV = new DayView(dayEvents);
 				add(dV);
 				dayEvents.clear();
 			}

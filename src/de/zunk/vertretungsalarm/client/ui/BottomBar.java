@@ -16,29 +16,30 @@ public class BottomBar extends AbsolutePanel {
 		getElement().getStyle().setProperty("flexDirection", "column");
 		getElement().getStyle().setProperty("alignItems", "center");
 		getElement().getStyle().setProperty("justifyContent", "space-between");
-		getElement().getStyle().setProperty("padding", "20px 15px");
-		getElement().getStyle().setProperty("minHeight", "150px");
+		getElement().getStyle().setProperty("padding", "10px 0px");
+		getElement().getStyle().setProperty("minHeight", "130px");
+		getElement().getStyle().setProperty("flexShrink", "0");
 		getElement().getStyle().setProperty("background", "#F0C267");
 
 		legal = new Label("Rechtliches");
-		legal.getElement().getStyle().setProperty("font", "25px Ubuntu:300");
+		legal.getElement().getStyle().setProperty("font", "300 15px Ubuntu");
 		legal.getElement().getStyle().setProperty("color", "#3E4158");
-		legal.getElement().getStyle().setProperty("padding", "5px");
+		legal.getElement().getStyle().setProperty("padding", "4px");
 
 		about = new Label("Über");
-		about.getElement().getStyle().setProperty("font", "25px Ubuntu:300");
+		about.getElement().getStyle().setProperty("font", "300 15px Ubuntu");
 		about.getElement().getStyle().setProperty("color", "#3E4158");
-		about.getElement().getStyle().setProperty("padding", "5px");
+		about.getElement().getStyle().setProperty("padding", "4px");
 
 		settings = new Label("Einstellungen");
-		settings.getElement().getStyle().setProperty("font", "25px Ubuntu:300");
+		settings.getElement().getStyle().setProperty("font", "300 15px Ubuntu");
 		settings.getElement().getStyle().setProperty("color", "#3E4158");
-		settings.getElement().getStyle().setProperty("padding", "5px");
+		settings.getElement().getStyle().setProperty("padding", "4px");
 
 		contact = new Label("Kontakt");
-		contact.getElement().getStyle().setProperty("font", "25px Ubuntu:300");
+		contact.getElement().getStyle().setProperty("font", "300 15px Ubuntu");
 		contact.getElement().getStyle().setProperty("color", "#3E4158");
-		contact.getElement().getStyle().setProperty("padding", "5px");
+		contact.getElement().getStyle().setProperty("padding", "4px");
 
 		add(about);
 		add(settings);

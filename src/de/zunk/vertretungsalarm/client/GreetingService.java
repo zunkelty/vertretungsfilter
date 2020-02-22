@@ -12,4 +12,5 @@ import de.zunk.vertretungsalarm.shared.Vertretungsplan;
 public interface GreetingService extends RemoteService {
 	Vertretungsplan getVertretungsplan() throws IllegalArgumentException;
 
+	Boolean reloadVertretungsplan() throws IllegalArgumentException;
 }

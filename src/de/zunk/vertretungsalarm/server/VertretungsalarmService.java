@@ -159,15 +159,15 @@ public class VertretungsalarmService implements Serializable {
 						j++;
 					}
 
-					boolean isNotHappening = false;
+					boolean isHappening = true;
 
 					if (snippets[j + 3].contains("Freis.") || snippets[j + 3].contains("Entfall")
 							|| type == VERTRETUNGS_EVENT_TYPE.CANCELED || type == VERTRETUNGS_EVENT_TYPE.FREE) {
-						isNotHappening = true;
+						isHappening = false;
 					}
 
 					// Speichern der genannten Lehrer
-					if (isNotHappening) {
+					if (!isHappening) {
 						plannedTeacher = snippets[j];
 						actualTeacher = "---";
 					} else {
@@ -185,7 +185,7 @@ public class VertretungsalarmService implements Serializable {
 
 					// Speichern der genannten Räume
 
-					if (isNotHappening) {
+					if (!isHappening) {
 						plannedRoom = snippets[j];
 						actualRoom = "---";
 					} else {
@@ -203,7 +203,7 @@ public class VertretungsalarmService implements Serializable {
 
 					// Speichern der genannten Fächer
 
-					if (isNotHappening) {
+					if (!isHappening) {
 						plannedSubject = snippets[j];
 						actualSubject = "---";
 					} else {
@@ -234,7 +234,7 @@ public class VertretungsalarmService implements Serializable {
 
 						VertretungsEvent e = new VertretungsEvent(schoolClasses, lessons, type, plannedTeacher,
 								actualTeacher, plannedRoom, actualRoom, plannedSubject, actualSubject, additionalText,
-								date);
+								date, isHappening);
 						allVertretungsEvents.add(e);
 					}
 

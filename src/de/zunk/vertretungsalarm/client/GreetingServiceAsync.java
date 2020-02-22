@@ -9,4 +9,6 @@ import de.zunk.vertretungsalarm.shared.Vertretungsplan;
  */
 public interface GreetingServiceAsync {
 	void getVertretungsplan(AsyncCallback<Vertretungsplan> callback);
+
+	void reloadVertretungsplan(AsyncCallback<Boolean> callback);
 }

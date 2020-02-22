@@ -23,7 +23,7 @@ public class Header extends AbsolutePanel {
 		getElement().getStyle().setProperty("maxHeight", "157px");
 
 		HTML title = new HTML("Dein<br><p style=\"font-family: Ubuntu:700\"><b>Vertretungsplan</b>");
-		title.getElement().getStyle().setProperty("font", "30px Ubuntu");
+		title.getElement().getStyle().setProperty("font", "33px Ubuntu");
 		title.getElement().getStyle().setProperty("color", "#FFFFFF");
 		title.getElement().getStyle().setProperty("paddingLeft", "25px");
 		title.getElement().getStyle().setProperty("paddingTop", "15px");

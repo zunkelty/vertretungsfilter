@@ -22,7 +22,7 @@ public class MessageBox extends AbsolutePanel {
 		getElement().getStyle().setProperty("flexDirection", "column");
 		getElement().getStyle().setProperty("alignItems", "stretch");
 		getElement().getStyle().setProperty("justifyContent", "center");
-		getElement().getStyle().setProperty("background", "#ECE9FC");
+		getElement().getStyle().setProperty("background", "#F3F4F8");
 		getElement().getStyle().setProperty("padding", "20px 30px");
 		getElement().getStyle().setProperty("margin", "0px 20px");
 		getElement().getStyle().setProperty("opacity", "1");
@@ -56,7 +56,7 @@ public class MessageBox extends AbsolutePanel {
 			acceptToCloseButton = new Button("OK");
 			acceptToCloseButton.getElement().getStyle().setProperty("fontSize", "1.5vh");
 			acceptToCloseButton.getElement().getStyle().setProperty("color", "black");
-			acceptToCloseButton.getElement().getStyle().setProperty("background", "#AFE09C");
+			acceptToCloseButton.getElement().getStyle().setProperty("background", "#F0C267");
 			acceptToCloseButton.getElement().getStyle().setProperty("marginTop", "30px");
 			acceptToCloseButton.getElement().getStyle().setProperty("padding", "10px");
 			acceptToCloseButton.getElement().getStyle().setProperty("border", "0px");

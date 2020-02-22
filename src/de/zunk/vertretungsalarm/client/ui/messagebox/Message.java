@@ -13,8 +13,7 @@ public class Message extends AbsolutePanel {
 		getElement().getStyle().setProperty("flexDirection", "row");
 		getElement().getStyle().setProperty("alignItems", "center");
 		getElement().getStyle().setProperty("justifyContent", "center");
-		getElement().getStyle().setProperty("background", "rgba(0, 0, 0, .6)");
-		// getElement().getStyle().setProperty("opacity", "0.6");
+		getElement().getStyle().setProperty("background", "rgba(243, 244, 248, .6)");
 
 		setSize(Window.getClientWidth() + "px", Window.getClientHeight() + "px");
 

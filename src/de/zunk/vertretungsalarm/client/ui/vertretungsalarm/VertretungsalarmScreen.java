@@ -3,17 +3,17 @@ package de.zunk.vertretungsalarm.client.ui.vertretungsalarm;
 import java.util.ArrayList;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Random;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.zunk.vertretungsalarm.client.GreetingService;
 import de.zunk.vertretungsalarm.client.GreetingServiceAsync;
 import de.zunk.vertretungsalarm.client.Vertretungsalarm;
-import de.zunk.vertretungsalarm.client.ui.OptionsBar;
+import de.zunk.vertretungsalarm.client.ui.BottomBar;
 import de.zunk.vertretungsalarm.client.ui.Screen;
-import de.zunk.vertretungsalarm.client.ui.TopBar;
 import de.zunk.vertretungsalarm.client.ui.messagebox.Message;
 import de.zunk.vertretungsalarm.shared.VertretungsEvent;
 import de.zunk.vertretungsalarm.shared.Vertretungsplan;
@@ -24,26 +24,36 @@ public class VertretungsalarmScreen extends Screen {
 
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
-	TopBar topBar;
-	OptionsBar optionsBar;
+	Header header;
 	VertretungsplanView infoView;
-	// VertretungsplanViewExperimental infoView;
+	BottomBar bottom;
 
 	public VertretungsalarmScreen() {
 
+		Timer timer = new Timer() {
+			@Override
+			public void run() {
+				Location.reload();
+			}
+		};
+		timer.schedule(5 * 60 * 1000);
+
 		setPixelSize(Window.getClientWidth(), Window.getClientHeight());
-		getElement().getStyle().setProperty("overflow", "auto");
-		getElement().getStyle().setProperty("background", "#ECE9FC");
+		getElement().getStyle().setProperty("overflowX", "hidden");
+		getElement().getStyle().setProperty("overflowY", "scroll");
+		getElement().getStyle().setProperty("background", "#F3F4F8");
+		getElement().getStyle().setProperty("display", "flex");
+		getElement().getStyle().setProperty("flexDirection", "column");
+		getElement().getStyle().setProperty("alignItems", "flex-start");
+		getElement().getStyle().setProperty("justifyContent", "flex-start");
 
 		ArrayList<VertretungsEvent> userEvents = new ArrayList<VertretungsEvent>();
 
-		topBar = new TopBar();
-
-		optionsBar = new OptionsBar();
-		optionsBar.addSettingsOption();
+		header = new Header();
 
 		infoView = new VertretungsplanView();
-		// infoView = new VertretungsplanViewExperimental();
+
+		bottom = new BottomBar();
 
 		greetingService.getVertretungsplan(new AsyncCallback<Vertretungsplan>() {
 
@@ -61,36 +71,13 @@ public class VertretungsalarmScreen extends Screen {
 
 				infoView.presentEvents(userEvents);
 
-				if (userEvents.size() > 0) {
-					// HasEvents
-					int rand = Random.nextInt(3);
-					switch (rand) {
-					case 0: {
-						topBar.setInfoText(
-								"Das ist alles für die " + Vertretungsalarm.getClientStorage().getItem("schoolClass"));
-					}
-						break;
-					case 1: {
-						topBar.setInfoText(
-								"Da gibts was für die " + Vertretungsalarm.getClientStorage().getItem("schoolClass"));
-					}
-						break;
-					case 2: {
-						topBar.setInfoText("Das haben wir für die "
-								+ Vertretungsalarm.getClientStorage().getItem("schoolClass") + " gefunden");
-					}
-						break;
-					}
+				header.getElement().getStyle().setProperty("alignSelf", "stretch");
+				infoView.getElement().getStyle().setProperty("alignSelf", "stretch");
+				bottom.getElement().getStyle().setProperty("alignSelf", "stretch");
 
-				} else {
-					// NoEvents
-					topBar.setInfoText("Nichts für Dich auf dem Vertretungplan");
-
-				}
-
-				add(topBar);
+				add(header);
 				add(infoView);
-				add(optionsBar);
+				add(bottom);
 
 				resizeComponents();
 
@@ -107,6 +94,7 @@ public class VertretungsalarmScreen extends Screen {
 
 	private void resizeComponents() {
 		infoView.getElement().getStyle().setProperty("minHeight",
-				Window.getClientHeight() - topBar.getOffsetHeight() - optionsBar.getOffsetHeight() + "px");
+				Window.getClientHeight() - header.getOffsetHeight() + "px");
 	}
+
 }

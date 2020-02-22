@@ -3,8 +3,9 @@ package de.zunk.vertretungsalarm.client.ui.vertretungsalarm;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
@@ -16,6 +17,8 @@ public class VertretungsplanView extends AbsolutePanel {
 
 	DateTimeFormat dtf;
 
+	DayView dV;
+
 	Button noEventsImage;
 	Label noEventsLabel;
 
@@ -23,18 +26,10 @@ public class VertretungsplanView extends AbsolutePanel {
 
 		getElement().getStyle().setProperty("display", "flex");
 		getElement().getStyle().setProperty("flexDirection", "column");
-		getElement().getStyle().setProperty("background", "#AFE09C");
+		getElement().getStyle().setProperty("background", "#F3F4F8");
 		getElement().getStyle().setProperty("alignItems", "stretch");
 		getElement().getStyle().setProperty("justifyContent", "flex-start");
-		getElement().getStyle().setProperty("overflow", "auto");
-
-		Timer timer = new Timer() {
-			@Override
-			public void run() {
-				Location.reload();
-			}
-		};
-		timer.schedule(5 * 60 * 1000);
+		getElement().getStyle().setProperty("overflow", "hidden");
 
 	}
 
@@ -53,37 +48,46 @@ public class VertretungsplanView extends AbsolutePanel {
 			dates = new ArrayList<>(hashSet);
 
 			for (String date : dates) {
-				DayView dV = new DayView();
+				dV = new DayView();
 				for (VertretungsEvent vE : userEvents) {
 					if (vE.getDateAsText() == date) {
 						dayEvents.add(vE);
-						dV.setDate(vE.getDate());
 					}
 				}
-				dV.presentDayEvents(dayEvents);
+				dV.presentEvents(dayEvents);
 				add(dV);
 				dayEvents.clear();
 			}
-		} else {
-			noEventsImage = new Button("");
-			noEventsImage.setHeight("200px");
-			noEventsImage.getElement().getStyle().setProperty("outline", "0");
-			noEventsImage.getElement().getStyle().setProperty("border", "0px");
-			noEventsImage.getElement().getStyle().setProperty("background",
-					"url(pictures/hasNoEvents.png) no-repeat center transparent");
-			noEventsImage.getElement().getStyle().setProperty("backgroundSize", "contain");
-			noEventsImage.getElement().getStyle().setProperty("margin", "30px 10px");
-			add(noEventsImage);
 
-			noEventsLabel = new Label(
-					"Zurzeit steht für deine Klasse nichts auf dem Vertretungsplan. Der Unterricht findet wie geplant statt.");
-			noEventsLabel.getElement().getStyle().setProperty("fontSize", "2.5vh");
-			// noEventsLabel.getElement().getStyle().setProperty("fontWeight", "bold");
-			noEventsLabel.getElement().getStyle().setProperty("textAlign", "center");
-			noEventsLabel.getElement().getStyle().setProperty("margin", "0px 20px");
-			// noEventsLabel.getElement().getStyle().setProperty("", "");
-			// noEventsLabel.getElement().getStyle().setProperty("", "");
-			add(noEventsLabel);
+		} else {
+
+			Label info;
+			Label reload;
+
+			info = new Label("Zurzeit steht für dich nichts auf dem Vertretungsplan");
+			info.getElement().getStyle().setProperty("font", "18px Ubuntu");
+			info.getElement().getStyle().setProperty("color", "#3E4158");
+			info.getElement().getStyle().setProperty("textAlign", "center");
+			info.getElement().getStyle().setProperty("padding", "20px");
+
+			reload = new Label("Neu laden");
+			reload.getElement().getStyle().setProperty("font", "10px Ubuntu:300");
+			reload.getElement().getStyle().setProperty("fontStyle", "italic");
+			reload.getElement().getStyle().setProperty("color", "#3E4158");
+			reload.getElement().getStyle().setProperty("textAlign", "center");
+			reload.getElement().getStyle().setProperty("padding", "10px");
+
+			reload.addClickHandler(new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					Location.reload();
+				}
+			});
+
+			add(info);
+			add(reload);
+
 		}
 
 	}

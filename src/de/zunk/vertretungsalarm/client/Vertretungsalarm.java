@@ -7,8 +7,6 @@ import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.zunk.vertretungsalarm.client.ui.optionscreens.AboutScreen;
-import de.zunk.vertretungsalarm.client.ui.optionscreens.ImpressumScreen;
-import de.zunk.vertretungsalarm.client.ui.optionscreens.PrivacyScreen;
 import de.zunk.vertretungsalarm.client.ui.optionscreens.SettingsScreen;
 import de.zunk.vertretungsalarm.client.ui.registration.RegistrationScreen;
 import de.zunk.vertretungsalarm.client.ui.vertretungsalarm.VertretungsalarmScreen;
@@ -38,21 +36,10 @@ public class Vertretungsalarm implements EntryPoint {
 
 		// Weiterleiten zur richtigen Stelle der W***REMOVED***ite
 
-		if (Location.getParameter("page") == "legal") {
-
-			ImpressumScreen screen = new ImpressumScreen();
-			RootPanel.get().add(screen, 0, 0);
-
-		} else if (Location.getParameter("page") == "about") {
+		if (Location.getParameter("page") == "about") {
 
 			AboutScreen screen = new AboutScreen();
 			RootPanel.get().add(screen, 0, 0);
-
-		} else if (Location.getParameter("page") == "privacy") {
-
-			PrivacyScreen screen = new PrivacyScreen();
-			RootPanel.get().add(screen, 0, 0);
-
 		} else if (Location.getParameter("page") == "settings") {
 
 			SettingsScreen screen = new SettingsScreen();

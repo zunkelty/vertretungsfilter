@@ -41,7 +41,6 @@ public class EventBox extends AbsolutePanel {
 		title.getElement().getStyle().setProperty("width", "90%");
 
 		Image icon = new Image("icons/vectorpaint.svg");
-		// Image icon = new Image("icons/more_horiz-24px.svg");
 		icon.getElement().getStyle().setProperty("paddingRight", "20px");
 
 		PushButton showDetailView = new PushButton(icon);

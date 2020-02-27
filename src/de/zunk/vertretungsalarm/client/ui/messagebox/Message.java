@@ -3,13 +3,11 @@ package de.zunk.vertretungsalarm.client.ui.messagebox;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
-import de.zunk.vertretungsalarm.client.ui.CloseAction;
-
 public class Message extends AbsolutePanel {
 
 	MessageBox box;
 
-	public Message(String title, String content, boolean hasToBeAccepted, CloseAction closeAction) {
+	public Message(String title, String content, ButtonLayoutOption buttonLayout, CloseAction closeAction) {
 
 		getElement().getStyle().setProperty("display", "flex");
 		getElement().getStyle().setProperty("flexDirection", "row");
@@ -23,7 +21,7 @@ public class Message extends AbsolutePanel {
 		getElement().getStyle().setProperty("justifySelf", "center");
 		getElement().getStyle().setProperty("animation", "fade-in 0.2s");
 
-		box = new MessageBox(title, content, hasToBeAccepted, closeAction);
+		box = new MessageBox(title, content, buttonLayout, closeAction);
 		add(box);
 
 	}

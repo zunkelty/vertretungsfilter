@@ -10,8 +10,6 @@ public class Vertretungsplan implements Serializable {
 	private ArrayList<VertretungsEvent> events;
 	private ArrayList<DayInfo> dayInfos;
 
-	private VertretungsTime time;
-
 	private String vertretungsplanAsString;
 
 	public Vertretungsplan() {
@@ -33,10 +31,6 @@ public class Vertretungsplan implements Serializable {
 
 	public ArrayList<DayInfo> getDayInfos() {
 		return dayInfos;
-	}
-
-	public VertretungsTime getTime() {
-		return time;
 	}
 
 	@Override

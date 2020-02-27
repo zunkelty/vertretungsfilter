@@ -3,8 +3,8 @@ package de.zunk.vertretungsalarm.client.ui.registration;
 import com.google.gwt.user.client.Window;
 
 import de.zunk.vertretungsalarm.client.ui.BottomBar;
+import de.zunk.vertretungsalarm.client.ui.Header;
 import de.zunk.vertretungsalarm.client.ui.Screen;
-import de.zunk.vertretungsalarm.client.ui.vertretungsalarm.Header;
 
 public class RegistrationScreen extends Screen {
 
@@ -26,7 +26,7 @@ public class RegistrationScreen extends Screen {
 		getElement().getStyle().setProperty("justifyContent", "flex-start");
 		getElement().getStyle().setProperty("height", Window.getClientHeight() + "px");
 
-		header = new Header("Wilkommen beim<br><p style=\"font-family: Ubuntu:700\"><b>Vertretungsfilter</b>");
+		header = new Header("Wilkommen beim<br><p style=\"font-family: Ubuntu:700\"><b>Vertretungsfilter</b>", false);
 		regView = new RegistrationView();
 		bottom = new BottomBar();
 

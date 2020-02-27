@@ -3,8 +3,8 @@ package de.zunk.vertretungsalarm.client.ui.registration;
 import com.google.gwt.user.client.Window;
 
 import de.zunk.vertretungsalarm.client.ui.BottomBar;
+import de.zunk.vertretungsalarm.client.ui.Header;
 import de.zunk.vertretungsalarm.client.ui.Screen;
-import de.zunk.vertretungsalarm.client.ui.vertretungsalarm.Header;
 
 public class ImportantNoticeScreen extends Screen {
 
@@ -26,7 +26,7 @@ public class ImportantNoticeScreen extends Screen {
 		getElement().getStyle().setProperty("justifyContent", "flex-start");
 		getElement().getStyle().setProperty("height", Window.getClientHeight() + "px");
 
-		header = new Header("Beachte <b><br>Folgendes:");
+		header = new Header("Beachte <b><br>Folgendes:", false);
 		importantView = new ImportantNoticeView();
 		bottom = new BottomBar();
 

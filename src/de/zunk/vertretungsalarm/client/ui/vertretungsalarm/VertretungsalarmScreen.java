@@ -15,8 +15,10 @@ import de.zunk.vertretungsalarm.client.GreetingService;
 import de.zunk.vertretungsalarm.client.GreetingServiceAsync;
 import de.zunk.vertretungsalarm.client.Vertretungsalarm;
 import de.zunk.vertretungsalarm.client.ui.BottomBar;
-import de.zunk.vertretungsalarm.client.ui.CloseAction;
+import de.zunk.vertretungsalarm.client.ui.Header;
 import de.zunk.vertretungsalarm.client.ui.Screen;
+import de.zunk.vertretungsalarm.client.ui.messagebox.ButtonLayoutOption;
+import de.zunk.vertretungsalarm.client.ui.messagebox.CloseAction;
 import de.zunk.vertretungsalarm.client.ui.messagebox.Message;
 import de.zunk.vertretungsalarm.shared.DayInfo;
 import de.zunk.vertretungsalarm.shared.VertretungsEvent;
@@ -55,7 +57,7 @@ public class VertretungsalarmScreen extends Screen {
 		ArrayList<VertretungsEvent> userEvents = new ArrayList<VertretungsEvent>();
 		ArrayList<DayInfo> dayInfos = new ArrayList<DayInfo>();
 
-		header = new Header("Dein<br><p style=\"font-family: Ubuntu:700\"><b>Vertretungsplan</b>");
+		header = new Header("Dein<br><p style=\"font-family: Ubuntu:700\"><b>Vertretungsplan</b>", false);
 
 		bottom = new BottomBar();
 
@@ -106,7 +108,7 @@ public class VertretungsalarmScreen extends Screen {
 				RootPanel.get()
 						.add(new Message(
 								"Der Vertretungsplan kann im Moment nicht geladen werden! Versuche es später erneut.",
-								"Error: " + caught, true, CloseAction.CLOSE));
+								"Error: " + caught, ButtonLayoutOption.OK, CloseAction.CLOSE));
 			}
 		});
 

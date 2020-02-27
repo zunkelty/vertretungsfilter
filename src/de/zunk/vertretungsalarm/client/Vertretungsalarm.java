@@ -7,6 +7,8 @@ import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.zunk.vertretungsalarm.client.ui.optionscreens.AboutScreen;
+import de.zunk.vertretungsalarm.client.ui.optionscreens.ContactScreen;
+import de.zunk.vertretungsalarm.client.ui.optionscreens.LegalScreen;
 import de.zunk.vertretungsalarm.client.ui.optionscreens.SettingsScreen;
 import de.zunk.vertretungsalarm.client.ui.registration.ImportantNoticeScreen;
 import de.zunk.vertretungsalarm.client.ui.registration.RegistrationScreen;
@@ -37,27 +39,28 @@ public class Vertretungsalarm implements EntryPoint {
 
 		// Weiterleiten zur richtigen Stelle der W***REMOVED***ite
 
-		if (Location.getParameter("page") == "about") {
-
+		if (client_storage.getItem("schoolClass") == null) {
+			RegistrationScreen screen = new RegistrationScreen();
+			RootPanel.get().add(screen, 0, 0);
+		} else if (client_storage.getItem("hasAcceptedImportantNotice") == null) {
+			ImportantNoticeScreen screen = new ImportantNoticeScreen();
+			RootPanel.get().add(screen, 0, 0);
+		} else if (Location.getParameter("page") == "about") {
 			AboutScreen screen = new AboutScreen();
 			RootPanel.get().add(screen, 0, 0);
 		} else if (Location.getParameter("page") == "settings") {
-
 			SettingsScreen screen = new SettingsScreen();
 			RootPanel.get().add(screen, 0, 0);
-
+		} else if (Location.getParameter("page") == "contact") {
+			ContactScreen screen = new ContactScreen();
+			RootPanel.get().add(screen, 0, 0);
+		} else if (Location.getParameter("page") == "legal") {
+			LegalScreen screen = new LegalScreen();
+			RootPanel.get().add(screen, 0, 0);
 		} else {
 
-			if (client_storage.getItem("schoolClass") == null) {
-				RegistrationScreen screen = new RegistrationScreen();
-				RootPanel.get().add(screen, 0, 0);
-			} else if (client_storage.getItem("hasAcceptedImportantNotice") == null) {
-				ImportantNoticeScreen screen = new ImportantNoticeScreen();
-				RootPanel.get().add(screen, 0, 0);
-			} else {
-				VertretungsalarmScreen screen = new VertretungsalarmScreen();
-				RootPanel.get().add(screen, 0, 0);
-			}
+			VertretungsalarmScreen screen = new VertretungsalarmScreen();
+			RootPanel.get().add(screen, 0, 0);
 		}
 	}
 

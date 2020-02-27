@@ -3,16 +3,22 @@ package de.zunk.vertretungsalarm.client.ui.vertretungsalarm;
 import java.util.ArrayList;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.zunk.vertretungsalarm.client.GreetingService;
 import de.zunk.vertretungsalarm.client.GreetingServiceAsync;
 import de.zunk.vertretungsalarm.client.Vertretungsalarm;
 import de.zunk.vertretungsalarm.client.ui.BottomBar;
+import de.zunk.vertretungsalarm.client.ui.CloseAction;
 import de.zunk.vertretungsalarm.client.ui.Screen;
 import de.zunk.vertretungsalarm.client.ui.messagebox.Message;
+import de.zunk.vertretungsalarm.shared.DayInfo;
 import de.zunk.vertretungsalarm.shared.VertretungsEvent;
 import de.zunk.vertretungsalarm.shared.Vertretungsplan;
 
@@ -47,8 +53,9 @@ public class VertretungsalarmScreen extends Screen {
 		getElement().getStyle().setProperty("height", Window.getClientHeight() + "px");
 
 		ArrayList<VertretungsEvent> userEvents = new ArrayList<VertretungsEvent>();
+		ArrayList<DayInfo> dayInfos = new ArrayList<DayInfo>();
 
-		header = new Header();
+		header = new Header("Dein<br><p style=\"font-family: Ubuntu:700\"><b>Vertretungsplan</b>");
 
 		bottom = new BottomBar();
 
@@ -60,13 +67,16 @@ public class VertretungsalarmScreen extends Screen {
 				ArrayList<VertretungsEvent> vertretungs_events = new ArrayList<>();
 				vertretungs_events = vertretungsplan.getVertretungsEvents();
 
+				ArrayList<DayInfo> vertretungs_day_infos = new ArrayList<>();
+				vertretungs_day_infos = vertretungsplan.getDayInfos();
+
 				for (VertretungsEvent event : vertretungs_events) {
 					if (event.getSchoolClasses().contains(Vertretungsalarm.getClientStorage().getItem("schoolClass"))) {
 						userEvents.add(event);
 					}
 				}
 
-				infoView = new VertretungsplanView(userEvents);
+				infoView = new VertretungsplanView(userEvents, vertretungs_day_infos);
 
 				add(header);
 				add(infoView);
@@ -82,25 +92,22 @@ public class VertretungsalarmScreen extends Screen {
 
 			@Override
 			public void onFailure(Throwable caught) {
+				Label reload = new Label("Neu laden");
+				add(reload);
+
+				reload.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						Location.reload();
+					}
+				});
+
 				RootPanel.get()
 						.add(new Message(
 								"Der Vertretungsplan kann im Moment nicht geladen werden! Versuche es später erneut.",
-								"Error: " + caught, true));
+								"Error: " + caught, true, CloseAction.CLOSE));
 			}
-		});
-
-		greetingService.reloadVertretungsplan(new AsyncCallback<Boolean>() {
-
-			@Override
-			public void onSuccess(Boolean result) {
-
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-
-			}
-
 		});
 
 	}

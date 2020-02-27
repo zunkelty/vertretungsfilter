@@ -2,11 +2,15 @@ package de.zunk.vertretungsalarm.client.ui.messagebox;
 
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+
+import de.zunk.vertretungsalarm.client.ui.CloseAction;
 
 public class MessageBox extends AbsolutePanel {
 
@@ -16,7 +20,7 @@ public class MessageBox extends AbsolutePanel {
 	Label tapToCloseLabel;
 	Button acceptToCloseButton;
 
-	public MessageBox(String title, String content, boolean hasToBeAccepted) {
+	public MessageBox(String title, String content, boolean hasToBeAccepted, CloseAction closeAction) {
 
 		getElement().getStyle().setProperty("display", "flex");
 		getElement().getStyle().setProperty("flexDirection", "column");
@@ -43,15 +47,24 @@ public class MessageBox extends AbsolutePanel {
 		add(contentLabel);
 
 		if (!hasToBeAccepted) {
-			tapToCloseLabel = new Label("KLICKEN ZUM SCHLIEßEN");
+			tapToCloseLabel = new Label("TIPPEN ZUM SCHLIEßEN");
 			tapToCloseLabel.getElement().getStyle().setProperty("fontSize", "1.5vh");
 			tapToCloseLabel.getElement().getStyle().setProperty("color", "black");
 			tapToCloseLabel.getElement().getStyle().setProperty("marginTop", "30px");
 			tapToCloseLabel.getElement().getStyle().setProperty("textAlign", "center");
+			tapToCloseLabel.getElement().getStyle().setProperty("background", "#F0C267");
+			tapToCloseLabel.getElement().getStyle().setProperty("borderRadius", "15px");
+			tapToCloseLabel.getElement().getStyle().setProperty("padding", "6px");
 			add(tapToCloseLabel);
 
-			addDomHandler(e -> RootPanel.get().remove(MessageBox.this.getParent().asWidget()),
-					MouseDownEvent.getType());
+			addDomHandler(e -> {
+				if (closeAction == CloseAction.RELOAD || closeAction == CloseAction.CLOSE_AFTER_1_SECOND) {
+					Location.reload();
+				}
+
+				RootPanel.get().remove(MessageBox.this.getParent().asWidget());
+
+			}, MouseDownEvent.getType());
 		} else {
 			acceptToCloseButton = new Button("OK");
 			acceptToCloseButton.getElement().getStyle().setProperty("fontSize", "1.5vh");
@@ -63,6 +76,16 @@ public class MessageBox extends AbsolutePanel {
 			add(acceptToCloseButton);
 
 			acceptToCloseButton.addClickHandler(e -> RootPanel.get().remove(MessageBox.this.getParent().asWidget()));
+		}
+
+		if (closeAction == CloseAction.CLOSE_AFTER_1_SECOND) {
+			Timer t = new Timer() {
+				@Override
+				public void run() {
+					Location.reload();
+				}
+			};
+			t.schedule(1000);
 		}
 
 	}

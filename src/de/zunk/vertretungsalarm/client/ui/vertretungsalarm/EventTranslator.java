@@ -29,8 +29,30 @@ public class EventTranslator {
 		} else if (e.getPlannedTeacher() != e.getActualTeacher() && e.getPlannedRoom() != e.getActualRoom()) {
 			return e.getLessonsAsString() + " Stunde<br>" + matchAbbreviationWithSubject(e.getActualSubject())
 					+ " in Raum " + e.getActualRoom() + " statt in " + e.getPlannedRoom();
+		} else if (e.getPlannedRoom() == e.getActualRoom() && e.getPlannedTeacher() == e.getActualTeacher()
+				&& e.getPlannedSubject() == e.getActualSubject() && e.getAdditionalText() != "") {
+			return e.getLessonsAsString() + " Stunde<br>Raum " + e.getActualRoom() + "<br>(s. Info)";
 		}
 		return e.getLessonsAsString() + " Stunde<br>Raum " + e.getActualRoom();
+	}
+
+	public static String getPlanned(VertretungsEvent e) {
+		String response = "";
+		if (e.getPlannedSubject() != "---") {
+			response = EventTranslator.matchAbbreviationWithSubject(e.getPlannedSubject());
+		}
+		if (e.getPlannedTeacher() != "---") {
+			response += " bei " + e.getPlannedTeacher();
+		}
+		if (e.getPlannedRoom() != "---") {
+			response += " in " + e.getPlannedRoom();
+		}
+		return response;
+	}
+
+	public static String getActual(VertretungsEvent e) {
+		return EventTranslator.matchAbbreviationWithSubject(e.getActualSubject()) + " bei " + e.getActualTeacher()
+				+ " in " + e.getActualRoom();
 	}
 
 	private static String matchAbbreviationWithSubject(String abbr) {

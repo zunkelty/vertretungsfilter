@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 import de.zunk.vertretungsalarm.client.ui.optionscreens.AboutScreen;
 import de.zunk.vertretungsalarm.client.ui.optionscreens.SettingsScreen;
+import de.zunk.vertretungsalarm.client.ui.registration.ImportantNoticeScreen;
 import de.zunk.vertretungsalarm.client.ui.registration.RegistrationScreen;
 import de.zunk.vertretungsalarm.client.ui.vertretungsalarm.VertretungsalarmScreen;
 
@@ -45,15 +46,13 @@ public class Vertretungsalarm implements EntryPoint {
 			SettingsScreen screen = new SettingsScreen();
 			RootPanel.get().add(screen, 0, 0);
 
-			// } else if (Location.getParameter("page") == "fullscreenEventView") {
-			//
-			// DetailedEventViewScreen screen = new DetailedEventViewScreen();
-			// RootPanel.get().add(screen, 0, 0);
-
 		} else {
 
 			if (client_storage.getItem("schoolClass") == null) {
 				RegistrationScreen screen = new RegistrationScreen();
+				RootPanel.get().add(screen, 0, 0);
+			} else if (client_storage.getItem("hasAcceptedImportantNotice") == null) {
+				ImportantNoticeScreen screen = new ImportantNoticeScreen();
 				RootPanel.get().add(screen, 0, 0);
 			} else {
 				VertretungsalarmScreen screen = new VertretungsalarmScreen();

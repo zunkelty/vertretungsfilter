@@ -1,7 +1,12 @@
 package de.zunk.vertretungsalarm.client.ui;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Label;
+
+import de.zunk.vertretungsalarm.client.Vertretungsalarm;
 
 public class BottomBar extends AbsolutePanel {
 
@@ -40,6 +45,15 @@ public class BottomBar extends AbsolutePanel {
 		contact.getElement().getStyle().setProperty("font", "300 15px Ubuntu");
 		contact.getElement().getStyle().setProperty("color", "#3E4158");
 		contact.getElement().getStyle().setProperty("padding", "4px");
+
+		legal.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				Vertretungsalarm.getClientStorage().removeItem("schoolClass");
+				Location.reload();
+			}
+		});
 
 		add(about);
 		add(settings);

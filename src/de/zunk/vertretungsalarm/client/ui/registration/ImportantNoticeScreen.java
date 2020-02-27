@@ -6,15 +6,15 @@ import de.zunk.vertretungsalarm.client.ui.BottomBar;
 import de.zunk.vertretungsalarm.client.ui.Screen;
 import de.zunk.vertretungsalarm.client.ui.vertretungsalarm.Header;
 
-public class RegistrationScreen extends Screen {
+public class ImportantNoticeScreen extends Screen {
 
 	private static final long serialVersionUID = 1L;
 
 	Header header;
-	RegistrationView regView;
+	ImportantNoticeView importantView;
 	BottomBar bottom;
 
-	public RegistrationScreen() {
+	public ImportantNoticeScreen() {
 
 		setPixelSize(Window.getClientWidth(), Window.getClientHeight());
 		getElement().getStyle().setProperty("overflowX", "hidden");
@@ -26,16 +26,16 @@ public class RegistrationScreen extends Screen {
 		getElement().getStyle().setProperty("justifyContent", "flex-start");
 		getElement().getStyle().setProperty("height", Window.getClientHeight() + "px");
 
-		header = new Header("Wilkommen beim<br><p style=\"font-family: Ubuntu:700\"><b>Vertretungsfilter</b>");
-		regView = new RegistrationView();
+		header = new Header("Beachte <b><br>Folgendes:");
+		importantView = new ImportantNoticeView();
 		bottom = new BottomBar();
 
 		add(header);
-		add(regView);
+		add(importantView);
 		add(bottom);
 
 		header.getElement().getStyle().setProperty("alignSelf", "stretch");
-		regView.getElement().getStyle().setProperty("alignSelf", "stretch");
+		importantView.getElement().getStyle().setProperty("alignSelf", "stretch");
 		bottom.getElement().getStyle().setProperty("alignSelf", "stretch");
 
 		resizeComponents();
@@ -43,7 +43,7 @@ public class RegistrationScreen extends Screen {
 	}
 
 	private void resizeComponents() {
-		regView.getElement().getStyle().setProperty("minHeight",
+		importantView.getElement().getStyle().setProperty("minHeight",
 				Window.getClientHeight() - header.getOffsetHeight() + "px");
 	}
 

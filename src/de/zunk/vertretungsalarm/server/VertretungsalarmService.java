@@ -20,6 +20,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPasswordInput;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
+import de.zunk.vertretungsalarm.shared.DayInfo;
 import de.zunk.vertretungsalarm.shared.VERTRETUNGS_EVENT_TYPE;
 import de.zunk.vertretungsalarm.shared.VertretungsDate;
 import de.zunk.vertretungsalarm.shared.VertretungsEvent;
@@ -39,7 +40,8 @@ public class VertretungsalarmService implements Serializable {
 
 	private static String[] lessons = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14" };
 
-	private static VertretungsDate dateForEvents = new VertretungsDate(16, 7, 2019);
+	private static VertretungsDate dateForEvents = new VertretungsDate(16, 10, 2002);
+	private static String dayInfoForEvents = "";
 
 	public static void main(String[] args) {
 		loadVertretungsplan();
@@ -71,9 +73,10 @@ public class VertretungsalarmService implements Serializable {
 
 		String scraped_content = readVertretungsplan();
 
-		// System.out.println(scraped_content);
+		System.out.println(scraped_content);
 
 		ArrayList<VertretungsEvent> allVertretungsEvents = new ArrayList<>();
+		ArrayList<DayInfo> allDayInfos = new ArrayList<>();
 
 		// Aufbereitung des gescrapten Inhalts zur Weiterverarbeitung
 
@@ -81,7 +84,7 @@ public class VertretungsalarmService implements Serializable {
 
 		for (int i = 0; i < snippets.length; i++) {
 
-			snippets[i] = snippets[i].replaceAll("[\\s\\(\\),]", "");
+			snippets[i] = snippets[i].replaceAll("[\\s\\,]", "");
 
 		}
 
@@ -104,6 +107,17 @@ public class VertretungsalarmService implements Serializable {
 				int year = Integer.parseInt(date_split[2]);
 
 				dateForEvents.setDate(day, month, year);
+
+			} else if (snippets[i].contains("Nachrichten") && snippets[i + 1].contains("zum")
+					&& snippets[i + 2].contains("Tag")) {
+
+				i += 3;
+
+				dayInfoForEvents = "";
+				while (!snippets[i].contains("Vtr-Nr.")) {
+					dayInfoForEvents += " " + snippets[i];
+					i++;
+				}
 
 			} else if (isEventId(snippets[i])) {
 				try {
@@ -156,6 +170,10 @@ public class VertretungsalarmService implements Serializable {
 					// Speichern der genannten Schulklasse / -n
 					while (isSchoolClassName(snippets[j])) {
 						schoolClasses.add(snippets[j]);
+						j++;
+					}
+
+					while (snippets[j].matches("-?\\d+(\\.\\d+)?")) {
 						j++;
 					}
 
@@ -219,7 +237,9 @@ public class VertretungsalarmService implements Serializable {
 
 					j++;
 
-					while (!isEventId(snippets[j]) && !snippets[j].contains("Untis") && snippets[j] != "x"
+					// Speichern der Zusatzinformationen
+
+					while (!isEventId(snippets[j]) && !snippets[j].contains("Untis") && !snippets[j].contains("x")
 							&& j < snippets.length - 1) {
 						additionalText = additionalText + " " + snippets[j];
 						j++;
@@ -236,6 +256,9 @@ public class VertretungsalarmService implements Serializable {
 								actualTeacher, plannedRoom, actualRoom, plannedSubject, actualSubject, additionalText,
 								date, isHappening);
 						allVertretungsEvents.add(e);
+
+						DayInfo dayInfo = new DayInfo(dayInfoForEvents, date);
+						allDayInfos.add(dayInfo);
 					}
 
 				} catch (Exception e) {
@@ -245,15 +268,7 @@ public class VertretungsalarmService implements Serializable {
 			}
 		}
 
-		String message = "";
-
-		for (VertretungsEvent vE : allVertretungsEvents) {
-			System.out.println(vE.toString());
-			message = message + vE.toString();
-		}
-
-		vertretungsplan = new Vertretungsplan(allVertretungsEvents);
-		// vertretungsplan = new Vertretungsplan(readVertretungsplan());
+		vertretungsplan = new Vertretungsplan(allVertretungsEvents, allDayInfos);
 	}
 
 	public static boolean isEventType(String s) {

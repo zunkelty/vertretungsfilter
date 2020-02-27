@@ -3,14 +3,12 @@ package de.zunk.vertretungsalarm.client.ui.vertretungsalarm;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 
+import de.zunk.vertretungsalarm.shared.DayInfo;
 import de.zunk.vertretungsalarm.shared.VertretungsEvent;
 
 public class VertretungsplanView extends AbsolutePanel {
@@ -22,7 +20,7 @@ public class VertretungsplanView extends AbsolutePanel {
 	Button noEventsImage;
 	Label noEventsLabel;
 
-	public VertretungsplanView(ArrayList<VertretungsEvent> userEvents) {
+	public VertretungsplanView(ArrayList<VertretungsEvent> userEvents, ArrayList<DayInfo> dayInfos) {
 
 		getElement().getStyle().setProperty("display", "flex");
 		getElement().getStyle().setProperty("flexDirection", "column");
@@ -32,61 +30,39 @@ public class VertretungsplanView extends AbsolutePanel {
 		getElement().getStyle().setProperty("marginBottom", "20px");
 		getElement().getStyle().setProperty("flexShrink", "0");
 
-		if (userEvents.size() > 0)
+		ArrayList<String> dates = new ArrayList<String>();
+		for (VertretungsEvent vE : userEvents) {
+			// dates.add(vE.getDateAsText());
+		}
+		for (DayInfo dayInfo : dayInfos) {
+			dates.add(dayInfo.getDate().toString());
+		}
 
-		{
+		LinkedHashSet<String> datesHashSet = new LinkedHashSet<>(dates);
+		dates.clear();
+		dates = new ArrayList<>(datesHashSet);
 
-			ArrayList<VertretungsEvent> dayEvents = new ArrayList<VertretungsEvent>();
+		ArrayList<VertretungsEvent> dayEvents = new ArrayList<VertretungsEvent>();
 
-			ArrayList<String> dates = new ArrayList<String>();
+		for (String date : dates) {
+
 			for (VertretungsEvent vE : userEvents) {
-				dates.add(vE.getDateAsText());
-			}
-			LinkedHashSet<String> hashSet = new LinkedHashSet<>(dates);
-			dates.clear();
-			dates = new ArrayList<>(hashSet);
-
-			for (String date : dates) {
-
-				for (VertretungsEvent vE : userEvents) {
-					if (vE.getDateAsText() == date) {
-						dayEvents.add(vE);
-					}
+				if (vE.getDateAsText() == date) {
+					dayEvents.add(vE);
 				}
-				dV = new DayView(dayEvents);
-				add(dV);
-				dayEvents.clear();
 			}
 
-		} else {
-
-			Label info;
-			Label reload;
-
-			info = new Label("Zurzeit steht für dich nichts auf dem Vertretungsplan");
-			info.getElement().getStyle().setProperty("font", "18px Ubuntu");
-			info.getElement().getStyle().setProperty("color", "#3E4158");
-			info.getElement().getStyle().setProperty("textAlign", "center");
-			info.getElement().getStyle().setProperty("padding", "20px");
-
-			reload = new Label("Neu laden");
-			reload.getElement().getStyle().setProperty("font", "10px Ubuntu:300");
-			reload.getElement().getStyle().setProperty("fontStyle", "italic");
-			reload.getElement().getStyle().setProperty("color", "#3E4158");
-			reload.getElement().getStyle().setProperty("textAlign", "center");
-			reload.getElement().getStyle().setProperty("padding", "10px");
-
-			reload.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					Location.reload();
+			DayInfo dayInfo = new DayInfo();
+			for (DayInfo info : dayInfos) {
+				if (info.getDate().toString() == date) {
+					dayInfo = info;
+					break;
 				}
-			});
+			}
 
-			add(info);
-			add(reload);
-
+			dV = new DayView(dayEvents, dayInfo);
+			add(dV);
+			dayEvents.clear();
 		}
 
 	}

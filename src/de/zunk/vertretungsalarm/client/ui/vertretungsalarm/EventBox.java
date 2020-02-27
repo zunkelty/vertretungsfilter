@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PushButton;
+import com.google.gwt.user.client.ui.RootPanel;
 
 import de.zunk.vertretungsalarm.shared.VertretungsEvent;
 
@@ -39,7 +40,8 @@ public class EventBox extends AbsolutePanel {
 		title.getElement().getStyle().setProperty("marginRight", "10px");
 		title.getElement().getStyle().setProperty("width", "90%");
 
-		Image icon = new Image("icons/more_horiz-24px.svg");
+		Image icon = new Image("icons/vectorpaint.svg");
+		// Image icon = new Image("icons/more_horiz-24px.svg");
 		icon.getElement().getStyle().setProperty("paddingRight", "20px");
 
 		PushButton showDetailView = new PushButton(icon);
@@ -52,7 +54,8 @@ public class EventBox extends AbsolutePanel {
 		showDetailView.addClickHandler(new ClickHandler() {
 
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onClick(ClickEvent e) {
+				RootPanel.get().add(new EventDetailView(event));
 			}
 		});
 

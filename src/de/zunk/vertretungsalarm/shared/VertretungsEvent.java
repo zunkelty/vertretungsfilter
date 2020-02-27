@@ -134,4 +134,5 @@ public class VertretungsEvent implements Serializable {
 	public Boolean getIsHappening() {
 		return isHappening;
 	}
+
 }

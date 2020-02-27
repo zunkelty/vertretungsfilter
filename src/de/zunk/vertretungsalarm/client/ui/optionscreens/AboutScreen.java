@@ -24,6 +24,9 @@ public class AboutScreen extends Screen {
 	VertretungsalarmButton show;
 	VertretungsalarmBox techStackBox;
 
+	VertretungsalarmBox igBox;
+	VertretungsalarmButton igButton;
+
 	public AboutScreen() {
 
 		setPixelSize(Window.getClientWidth(), Window.getClientHeight());
@@ -41,6 +44,15 @@ public class AboutScreen extends Screen {
 		aboutBox = new VertretungsalarmBox(
 				"<b>Wieso solltest du jeden Tag auf den Vertretungsplan schauen, wenn es den Vertretungsfilter gibt?</b><br><br>Jede Minute checkt der Vertretungsfilter den Vertretungsplan und sucht alles Wichtige raus. Am Ende siehst du nur noch was dich wirklich interessiert, nämlich alle Meldungen zu deiner Schulklasse.<br><br><b>Entwickelt von Sönke Peters");
 		aboutBox.getElement().getStyle().setProperty("padding", "0px 15px");
+
+		igBox = new VertretungsalarmBox("Social Media:");
+		igBox.getElement().getStyle().setProperty("padding", "0px 15px");
+
+		igButton = new VertretungsalarmButton("Sönke auf Instagram");
+		igButton.getElement().getStyle().setProperty("justifySelf", "stretch");
+		igButton.addClickHandler(e -> Window.open("https://www.instagram.com/zunk.p/", "Sönke auf Instagram", ""));
+
+		igBox.add(igButton);
 
 		specsBox = new VertretungsalarmBox("Wie viele Zeilen JAVA, HTML & CSS umfasst der Vertretungsfilter?");
 		specsBox.getElement().getStyle().setProperty("padding", "0px 15px");
@@ -66,6 +78,7 @@ public class AboutScreen extends Screen {
 		settingsView.getElement().getStyle().setProperty("padding", " 30px 25px 12px 25px");
 		settingsView.getElement().getStyle().setProperty("paddingRight", "25px");
 		settingsView.add(aboutBox);
+		settingsView.add(igBox);
 		settingsView.add(specsBox);
 		settingsView.add(techStackBox);
 

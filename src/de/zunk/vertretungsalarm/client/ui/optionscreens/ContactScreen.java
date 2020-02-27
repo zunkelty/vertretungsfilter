@@ -55,12 +55,11 @@ public class ContactScreen extends Screen {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.open(
+				Window.Location.assign(
 						" mailto:zunkelty@gmx.de?subject=Fragen,%20Wünsche,%20Bedenken%20oder%20Verbesserungsvorschläge%20zum%20Vertretungsfilter&body=%0D%0A%0D%0AGeräteinformationen%20für%20den%20Entwickler:%0D%0ABildschirm:%20"
 								+ Window.getClientHeight() + "%20x%20" + Window.getClientWidth() + "%0D%0A"
 								+ Navigator.getPlatform() + "%0D%0A" + Navigator.getUserAgent() + "%0D%0A"
-								+ Vertretungsalarm.getClientStorage().getItem("schoolClass"),
-						"Kontakt zum Entwickler", "");
+								+ Vertretungsalarm.getClientStorage().getItem("schoolClass"));
 			}
 		});
 		mailBox.add(sendMailButton);

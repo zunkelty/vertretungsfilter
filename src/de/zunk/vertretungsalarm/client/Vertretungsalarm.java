@@ -37,31 +37,42 @@ public class Vertretungsalarm implements EntryPoint {
 					+ " qualifiziert!\nSag doch einem Admin Bescheid. \n(Grund: Storage.isLocalStorageSupported == false)");
 		}
 
-		// Weiterleiten zur richtigen Stelle der W***REMOVED***ite
+		if (isDeviceAllowed()) {
 
-		if (client_storage.getItem("schoolClass") == null) {
-			RegistrationScreen screen = new RegistrationScreen();
-			RootPanel.get().add(screen, 0, 0);
-		} else if (client_storage.getItem("hasAcceptedImportantNotice") == null) {
-			ImportantNoticeScreen screen = new ImportantNoticeScreen();
-			RootPanel.get().add(screen, 0, 0);
-		} else if (Location.getParameter("page") == "about") {
-			AboutScreen screen = new AboutScreen();
-			RootPanel.get().add(screen, 0, 0);
-		} else if (Location.getParameter("page") == "settings") {
-			SettingsScreen screen = new SettingsScreen();
-			RootPanel.get().add(screen, 0, 0);
-		} else if (Location.getParameter("page") == "contact") {
-			ContactScreen screen = new ContactScreen();
-			RootPanel.get().add(screen, 0, 0);
-		} else if (Location.getParameter("page") == "legal") {
-			LegalScreen screen = new LegalScreen();
-			RootPanel.get().add(screen, 0, 0);
+			// Weiterleiten zur richtigen Stelle der W***REMOVED***ite
+
+			if (client_storage.getItem("schoolClass") == null) {
+				RegistrationScreen screen = new RegistrationScreen();
+				RootPanel.get().add(screen, 0, 0);
+			} else if (client_storage.getItem("hasAcceptedImportantNotice") == null) {
+				ImportantNoticeScreen screen = new ImportantNoticeScreen();
+				RootPanel.get().add(screen, 0, 0);
+			} else if (Location.getParameter("page") == "about") {
+				AboutScreen screen = new AboutScreen();
+				RootPanel.get().add(screen, 0, 0);
+			} else if (Location.getParameter("page") == "settings") {
+				SettingsScreen screen = new SettingsScreen();
+				RootPanel.get().add(screen, 0, 0);
+			} else if (Location.getParameter("page") == "contact") {
+				ContactScreen screen = new ContactScreen();
+				RootPanel.get().add(screen, 0, 0);
+			} else if (Location.getParameter("page") == "legal") {
+				LegalScreen screen = new LegalScreen();
+				RootPanel.get().add(screen, 0, 0);
+			} else {
+
+				VertretungsalarmScreen screen = new VertretungsalarmScreen();
+				RootPanel.get().add(screen, 0, 0);
+			}
 		} else {
-
-			VertretungsalarmScreen screen = new VertretungsalarmScreen();
-			RootPanel.get().add(screen, 0, 0);
+			RootPanel.get().getElement().getStyle().setProperty("background", "#F0C267");
+			LockScreen screen = new LockScreen();
+			RootPanel.get().add(screen);
 		}
+	}
+
+	private boolean isDeviceAllowed() {
+		return true;
 	}
 
 	public static String getW***REMOVED***iteName() {

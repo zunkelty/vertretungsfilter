@@ -20,7 +20,9 @@ public class VertretungsplanView extends AbsolutePanel {
 	Button noEventsImage;
 	Label noEventsLabel;
 
-	public VertretungsplanView(ArrayList<VertretungsEvent> userEvents, ArrayList<DayInfo> dayInfos) {
+	Label timeLabel;
+
+	public VertretungsplanView(ArrayList<VertretungsEvent> userEvents, ArrayList<DayInfo> dayInfos, String time) {
 
 		getElement().getStyle().setProperty("display", "flex");
 		getElement().getStyle().setProperty("flexDirection", "column");
@@ -64,6 +66,12 @@ public class VertretungsplanView extends AbsolutePanel {
 			add(dV);
 			dayEvents.clear();
 		}
+
+		timeLabel = new Label("Daten von " + time);
+		timeLabel.getElement().getStyle().setProperty("font", "300 13px Ubuntu");
+		timeLabel.getElement().getStyle().setProperty("color", "#3E4158");
+		timeLabel.getElement().getStyle().setProperty("textAlign", "center");
+		add(timeLabel);
 
 	}
 

@@ -78,7 +78,7 @@ public class VertretungsalarmScreen extends Screen {
 					}
 				}
 
-				infoView = new VertretungsplanView(userEvents, vertretungs_day_infos);
+				infoView = new VertretungsplanView(userEvents, vertretungs_day_infos, vertretungsplan.getTime());
 
 				add(header);
 				add(infoView);

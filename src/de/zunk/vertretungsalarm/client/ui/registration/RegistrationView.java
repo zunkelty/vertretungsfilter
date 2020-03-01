@@ -9,11 +9,15 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.RootPanel;
 
 import de.zunk.vertretungsalarm.client.Vertretungsalarm;
 import de.zunk.vertretungsalarm.client.ui.VertretungsalarmBox;
 import de.zunk.vertretungsalarm.client.ui.VertretungsalarmButton;
 import de.zunk.vertretungsalarm.client.ui.VertretungsalarmTextField;
+import de.zunk.vertretungsalarm.client.ui.messagebox.ButtonLayoutOption;
+import de.zunk.vertretungsalarm.client.ui.messagebox.CloseAction;
+import de.zunk.vertretungsalarm.client.ui.messagebox.Message;
 
 public class RegistrationView extends AbsolutePanel {
 
@@ -48,7 +52,15 @@ public class RegistrationView extends AbsolutePanel {
 			public void onClick(ClickEvent event) {
 				Vertretungsalarm.getClientStorage().removeItem("schoolClass");
 				Vertretungsalarm.getClientStorage().setItem("schoolClass", textField.getText().toUpperCase());
-				Location.reload();
+				if (Vertretungsalarm.getClientStorage().getItem("schoolClass").contains("12")
+						|| Vertretungsalarm.getClientStorage().getItem("schoolClass").contains("13")) {
+					RootPanel.get().add(new Message("Einschränkungen für deinen Jahrgang",
+							"Bitte beachte, dass der Vertretungsfilter für die Klassenstufen 5-11 optimiert ist, sodass nicht nach deinen Kursen gefiltert werden kann. Dir werden vom Vertretungsfilter alle Informationen für deinen Jahrgang angezeigt.",
+							ButtonLayoutOption.TAP_TO_CLOSE, CloseAction.RELOAD));
+				} else {
+					Location.reload();
+				}
+
 			}
 		});
 		add(submit);
@@ -57,7 +69,7 @@ public class RegistrationView extends AbsolutePanel {
 
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
-				if (isSchoolClassName(textField.getText())) {
+				if (isSchoolClassNameOrSchoolYear(textField.getText())) {
 					submit.enable();
 				} else {
 					submit.disable();
@@ -68,7 +80,7 @@ public class RegistrationView extends AbsolutePanel {
 
 	}
 
-	public static boolean isSchoolClassName(String possibleSchoolClassName) {
+	public static boolean isSchoolClassNameOrSchoolYear(String possibleSchoolClassName) {
 		try {
 			if (!possibleSchoolClassName.matches("[a-zA-Z0-9]*")) {
 				return false;
@@ -88,8 +100,13 @@ public class RegistrationView extends AbsolutePanel {
 			}
 
 			if (parts.size() == 2 && parts.get(0).matches("[0-9]+") && parts.get(0).length() <= 2
-					&& Integer.parseInt(parts.get(0)) <= 13 && parts.get(1).matches("[a-zA-Z]+")
+					&& Integer.parseInt(parts.get(0)) <= 11 && parts.get(1).matches("[a-zA-Z]+")
 					&& parts.get(1).length() == 1) {
+				return true;
+			}
+
+			if ((possibleSchoolClassName.contains("12") || possibleSchoolClassName.contains("13"))
+					&& possibleSchoolClassName.length() == 2) {
 				return true;
 			}
 

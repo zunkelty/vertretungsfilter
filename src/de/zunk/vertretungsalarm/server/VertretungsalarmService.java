@@ -3,7 +3,9 @@ package de.zunk.vertretungsalarm.server;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -34,12 +36,6 @@ public class VertretungsalarmService implements Serializable {
 
 	String scraped_content_example;
 
-	public static String[] schoolClasses = { "5A", "5B", "5C", "5F", "6A", "6B", "6C", "6F", "7A", "7B", "7C", "7F",
-			"8A", "8B", "8C", "8F", "9A", "9B", "9C", "9F", "10A", "10B", "10C", "10D", "10S", "11A", "11B", "11C",
-			"11D" };
-
-	private static String[] lessons = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14" };
-
 	private static VertretungsDate dateForEvents = new VertretungsDate(16, 10, 2002);
 	private static String dayInfoForEvents = "";
 
@@ -62,7 +58,7 @@ public class VertretungsalarmService implements Serializable {
 				}
 
 			}
-		}, 0, 5 * 60 * 1000);
+		}, 0, 1 * 60 * 1000);
 	}
 
 	public Vertretungsplan getVertretungsplan() {
@@ -167,8 +163,8 @@ public class VertretungsalarmService implements Serializable {
 						j++;
 					}
 
-					// Speichern der genannten Schulklasse / -n
-					while (isSchoolClassName(snippets[j])) {
+					// Speichern der genannten Schulklasse / -n / des genannten Jahrgangs
+					while (isSchoolClassName(snippets[j]) || isSchoolYearName(snippets[j])) {
 						schoolClasses.add(snippets[j]);
 						j++;
 					}
@@ -181,7 +177,9 @@ public class VertretungsalarmService implements Serializable {
 
 					if (snippets[j + 3].contains("Freis.") || snippets[j + 3].contains("Entfall")
 							|| type == VERTRETUNGS_EVENT_TYPE.CANCELED || type == VERTRETUNGS_EVENT_TYPE.FREE) {
-						isHappening = false;
+						if (snippets[j].indexOf("?") <= 0) {
+							isHappening = false;
+						}
 					}
 
 					// Speichern der genannten Lehrer
@@ -259,6 +257,8 @@ public class VertretungsalarmService implements Serializable {
 
 						DayInfo dayInfo = new DayInfo(dayInfoForEvents, date);
 						allDayInfos.add(dayInfo);
+
+						System.out.println(e.toString());
 					}
 
 				} catch (Exception e) {
@@ -268,7 +268,9 @@ public class VertretungsalarmService implements Serializable {
 			}
 		}
 
-		vertretungsplan = new Vertretungsplan(allVertretungsEvents, allDayInfos);
+		Date now = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+		vertretungsplan = new Vertretungsplan(allVertretungsEvents, allDayInfos, sdf.format(now));
 	}
 
 	public static boolean isEventType(String s) {
@@ -348,6 +350,20 @@ public class VertretungsalarmService implements Serializable {
 					&& Integer.parseInt(output.get(0)) <= 13 && output.get(1).matches("[a-zA-Z]+")
 					&& output.get(1).length() == 1) {
 				return true;
+			}
+			return false;
+		} catch (Exception e) {
+			return false;
+		}
+
+	}
+
+	public static boolean isSchoolYearName(String possibleSchoolYearName) {
+		try {
+			if (possibleSchoolYearName.contains("12") || possibleSchoolYearName.contains("13")) {
+				if (possibleSchoolYearName.length() == 2) {
+					return true;
+				}
 			}
 			return false;
 		} catch (Exception e) {

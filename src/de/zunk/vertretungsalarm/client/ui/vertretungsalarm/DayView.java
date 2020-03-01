@@ -64,7 +64,7 @@ public class DayView extends AbsolutePanel {
 			break;
 
 		default:
-			break;
+			;
 		}
 
 		add(dateLabel);

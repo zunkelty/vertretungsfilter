@@ -35,28 +35,28 @@ public class BottomBar extends AbsolutePanel {
 		legal = new Label("Rechtliches");
 		legal.getElement().getStyle().setProperty("font", "300 15px Ubuntu");
 		legal.getElement().getStyle().setProperty("color", "#3E4158");
-		legal.getElement().getStyle().setProperty("padding", "4px");
+		legal.getElement().getStyle().setProperty("padding", "5px");
 		legal.addClickHandler(
 				event -> Location.replace(Location.createUrlBuilder().setParameter("page", "legal").buildString()));
 
 		about = new Label("Über");
 		about.getElement().getStyle().setProperty("font", "300 15px Ubuntu");
 		about.getElement().getStyle().setProperty("color", "#3E4158");
-		about.getElement().getStyle().setProperty("padding", "4px");
+		about.getElement().getStyle().setProperty("padding", "5px");
 		about.addClickHandler(
 				event -> Location.replace(Location.createUrlBuilder().setParameter("page", "about").buildString()));
 
 		settings = new Label("Einstellungen");
 		settings.getElement().getStyle().setProperty("font", "300 15px Ubuntu");
 		settings.getElement().getStyle().setProperty("color", "#3E4158");
-		settings.getElement().getStyle().setProperty("padding", "4px");
+		settings.getElement().getStyle().setProperty("padding", "5px");
 		settings.addClickHandler(
 				event -> Location.replace(Location.createUrlBuilder().setParameter("page", "settings").buildString()));
 
 		contact = new Label("Kontakt");
 		contact.getElement().getStyle().setProperty("font", "300 15px Ubuntu");
 		contact.getElement().getStyle().setProperty("color", "#3E4158");
-		contact.getElement().getStyle().setProperty("padding", "4px");
+		contact.getElement().getStyle().setProperty("padding", "5px");
 		contact.addClickHandler(
 				event -> Location.replace(Location.createUrlBuilder().setParameter("page", "contact").buildString()));
 

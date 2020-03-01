@@ -47,7 +47,7 @@ public class VertretungsEvent implements Serializable {
 
 	@Override
 	public String toString() {
-		return ("----------------Neues Event:----------------" + "\nKlasse/-n: " + getSchoolClassesAsString()
+		return ("----------------Neues Event:----------------" + "\nKlasse/-n / Jahrgang: " + getSchoolClassesAsString()
 				+ "\nStunde: " + getLessonsAsString() + "\nTyp: " + getType() + "\nEigentlich Lehrer: "
 				+ getPlannedTeacher() + "\nVertretungslehrer: " + getActualTeacher() + "\nEigentlich Raum: "
 				+ getPlannedRoom() + "\nVertretungsraum: " + getActualRoom() + "\nEigentliches Fach: "

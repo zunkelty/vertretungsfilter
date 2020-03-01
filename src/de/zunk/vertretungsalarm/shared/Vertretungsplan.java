@@ -10,15 +10,18 @@ public class Vertretungsplan implements Serializable {
 	private ArrayList<VertretungsEvent> events;
 	private ArrayList<DayInfo> dayInfos;
 
+	private String time;
+
 	private String vertretungsplanAsString;
 
 	public Vertretungsplan() {
 		super();
 	}
 
-	public Vertretungsplan(ArrayList<VertretungsEvent> events, ArrayList<DayInfo> dayInfos) {
+	public Vertretungsplan(ArrayList<VertretungsEvent> events, ArrayList<DayInfo> dayInfos, String time) {
 		this.events = events;
 		this.dayInfos = dayInfos;
+		this.time = time;
 	}
 
 	public Vertretungsplan(String s) {
@@ -38,4 +41,7 @@ public class Vertretungsplan implements Serializable {
 		return vertretungsplanAsString;
 	}
 
+	public String getTime() {
+		return time;
+	}
 }

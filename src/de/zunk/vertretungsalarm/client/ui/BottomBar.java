@@ -23,6 +23,7 @@ public class BottomBar extends AbsolutePanel {
 		getElement().getStyle().setProperty("minHeight", "130px");
 		getElement().getStyle().setProperty("flexShrink", "0");
 		getElement().getStyle().setProperty("background", "#F0C267");
+		getElement().getStyle().setProperty("order", "2");
 
 		credits = new Label("Vertretungsfilter von Sönke Peters".toUpperCase());
 		credits.getElement().getStyle().setProperty("font", "500 15px Ubuntu");

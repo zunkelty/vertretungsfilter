@@ -13,4 +13,6 @@ public interface GreetingService extends RemoteService {
 	Vertretungsplan getVertretungsplan() throws IllegalArgumentException;
 
 	Boolean reloadVertretungsplan() throws IllegalArgumentException;
+
+	Boolean validateLogin(String username, String password) throws IllegalArgumentException;
 }

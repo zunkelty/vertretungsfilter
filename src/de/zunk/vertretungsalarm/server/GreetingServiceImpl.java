@@ -27,4 +27,9 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		VertretungsalarmService.loadVertretungsplan();
 		return true;
 	}
+
+	@Override
+	public Boolean validateLogin(String username, String password) throws IllegalArgumentException {
+		return AuthService.validateLogin(username, password);
+	}
 }

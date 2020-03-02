@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -32,6 +34,7 @@ public class VertretungsalarmScreen extends Screen {
 
 	Header header;
 	VertretungsplanView infoView;
+	LoadingView loadingView;
 	BottomBar bottom;
 
 	public VertretungsalarmScreen() {
@@ -43,6 +46,15 @@ public class VertretungsalarmScreen extends Screen {
 		// }
 		// };
 		// timer.schedule(5 * 60 * 1000);
+
+		Window.addResizeHandler(new ResizeHandler() {
+
+			@Override
+			public void onResize(ResizeEvent event) {
+				RootPanel.get().remove(VertretungsalarmScreen.this.asWidget());
+				RootPanel.get().add(new VertretungsalarmScreen());
+			}
+		});
 
 		setPixelSize(Window.getClientWidth(), Window.getClientHeight());
 		getElement().getStyle().setProperty("overflowX", "hidden");
@@ -61,10 +73,25 @@ public class VertretungsalarmScreen extends Screen {
 
 		bottom = new BottomBar();
 
+		loadingView = new LoadingView();
+
+		infoView = new VertretungsplanView();
+
+		add(header);
+		add(loadingView);
+		add(bottom);
+
+		header.getElement().getStyle().setProperty("alignSelf", "stretch");
+		loadingView.getElement().getStyle().setProperty("alignSelf", "stretch");
+		bottom.getElement().getStyle().setProperty("alignSelf", "stretch");
+
+		resizeComponents();
+
 		greetingService.getVertretungsplan(new AsyncCallback<Vertretungsplan>() {
 
 			@Override
 			public void onSuccess(Vertretungsplan vertretungsplan) {
+				remove(loadingView);
 
 				ArrayList<VertretungsEvent> vertretungs_events = new ArrayList<>();
 				vertretungs_events = vertretungsplan.getVertretungsEvents();
@@ -79,14 +106,11 @@ public class VertretungsalarmScreen extends Screen {
 				}
 
 				infoView = new VertretungsplanView(userEvents, vertretungs_day_infos, vertretungsplan.getTime());
+				infoView.getElement().getStyle().setProperty("alignSelf", "stretch");
 
 				add(header);
 				add(infoView);
 				add(bottom);
-
-				header.getElement().getStyle().setProperty("alignSelf", "stretch");
-				infoView.getElement().getStyle().setProperty("alignSelf", "stretch");
-				bottom.getElement().getStyle().setProperty("alignSelf", "stretch");
 
 				resizeComponents();
 
@@ -116,6 +140,8 @@ public class VertretungsalarmScreen extends Screen {
 
 	private void resizeComponents() {
 		infoView.getElement().getStyle().setProperty("minHeight",
+				Window.getClientHeight() - header.getOffsetHeight() + "px");
+		loadingView.getElement().getStyle().setProperty("minHeight",
 				Window.getClientHeight() - header.getOffsetHeight() + "px");
 	}
 

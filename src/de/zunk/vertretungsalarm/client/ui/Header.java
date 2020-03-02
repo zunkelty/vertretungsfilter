@@ -18,6 +18,7 @@ public class Header extends AbsolutePanel {
 		getElement().getStyle().setProperty("alignItems", "flex-start");
 		getElement().getStyle().setProperty("justifyContent", "flex-start");
 		getElement().getStyle().setProperty("overflow", "hidden");
+		getElement().getStyle().setProperty("order", "0");
 
 		getElement().getStyle().setProperty("animationName", "fadeIn");
 		getElement().getStyle().setProperty("animationDuration", "0.3s");

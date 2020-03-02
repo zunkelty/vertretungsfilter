@@ -177,7 +177,7 @@ public class VertretungsalarmService implements Serializable {
 
 					if (snippets[j + 3].contains("Freis.") || snippets[j + 3].contains("Entfall")
 							|| type == VERTRETUNGS_EVENT_TYPE.CANCELED || type == VERTRETUNGS_EVENT_TYPE.FREE) {
-						if (snippets[j].indexOf("?") <= 0) {
+						if (snippets[j].indexOf("?") <= 0 && snippets[j + 1].contains("---")) {
 							isHappening = false;
 						}
 					}

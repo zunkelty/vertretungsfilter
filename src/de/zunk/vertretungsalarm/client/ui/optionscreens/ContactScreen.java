@@ -2,9 +2,12 @@ package de.zunk.vertretungsalarm.client.ui.optionscreens;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.RootPanel;
 
 import de.zunk.vertretungsalarm.client.Vertretungsalarm;
 import de.zunk.vertretungsalarm.client.ui.BottomBar;
@@ -28,6 +31,15 @@ public class ContactScreen extends Screen {
 
 	public ContactScreen() {
 
+		Window.addResizeHandler(new ResizeHandler() {
+
+			@Override
+			public void onResize(ResizeEvent event) {
+				RootPanel.get().remove(ContactScreen.this.asWidget());
+				RootPanel.get().add(new ContactScreen());
+			}
+		});
+
 		setPixelSize(Window.getClientWidth(), Window.getClientHeight());
 		getElement().getStyle().setProperty("overflowX", "hidden");
 		getElement().getStyle().setProperty("overflowY", "scroll");
@@ -47,7 +59,7 @@ public class ContactScreen extends Screen {
 		schoolInfo = new VertretungsalarmBox("In der Schule:<br><br>Klasse: 11B<br>Klassenraum: N2");
 		schoolInfo.getElement().getStyle().setProperty("padding", "0px 15px");
 
-		mailBox = new VertretungsalarmBox("<b>Per Mail:</b><br><br>zunkelty@gmx.de");
+		mailBox = new VertretungsalarmBox("<b>Per Mail:</b><br><br>kontakt@vertretungsfilter.de");
 		mailBox.getElement().getStyle().setProperty("padding", "0px 15px");
 
 		sendMailButton = new VertretungsalarmButton("E-Mail schreiben");
@@ -56,7 +68,7 @@ public class ContactScreen extends Screen {
 			@Override
 			public void onClick(ClickEvent event) {
 				Window.Location.assign(
-						" mailto:zunkelty@gmx.de?subject=Fragen,%20Wünsche,%20Bedenken%20oder%20Verbesserungsvorschläge%20zum%20Vertretungsfilter&body=%0D%0A%0D%0AGeräteinformationen%20für%20den%20Entwickler:%0D%0ABildschirm:%20"
+						" mailto:kontakt@vertretungsfilter.de?subject=Fragen,%20Wünsche,%20Bedenken%20oder%20Verbesserungsvorschläge%20zum%20Vertretungsfilter&body=%0D%0A%0D%0AGeräteinformationen%20für%20den%20Entwickler:%0D%0ABildschirm:%20"
 								+ Window.getClientHeight() + "%20x%20" + Window.getClientWidth() + "%0D%0A"
 								+ Navigator.getPlatform() + "%0D%0A" + Navigator.getUserAgent() + "%0D%0A"
 								+ Vertretungsalarm.getClientStorage().getItem("schoolClass"));

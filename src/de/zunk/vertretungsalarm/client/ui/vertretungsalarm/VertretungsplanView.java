@@ -22,6 +22,10 @@ public class VertretungsplanView extends AbsolutePanel {
 
 	Label timeLabel;
 
+	public VertretungsplanView() {
+
+	}
+
 	public VertretungsplanView(ArrayList<VertretungsEvent> userEvents, ArrayList<DayInfo> dayInfos, String time) {
 
 		getElement().getStyle().setProperty("display", "flex");

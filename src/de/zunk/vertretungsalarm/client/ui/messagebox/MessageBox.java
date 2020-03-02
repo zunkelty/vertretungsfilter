@@ -120,8 +120,7 @@ public class MessageBox extends AbsolutePanel {
 					if (closeAction == CloseAction.RESET_EVERYTHING) {
 						Vertretungsalarm.getClientStorage().clear();
 						RootPanel.get().add(new Message("Schade, dass du gehst!", "Du bist jederzeit wieder wilkommen.",
-								ButtonLayoutOption.TAP_TO_CLOSE, CloseAction.CLOSE));
-						Location.replace(Location.createUrlBuilder().removeParameter("page").buildString());
+								ButtonLayoutOption.TAP_TO_CLOSE, CloseAction.RELOAD));
 					}
 					RootPanel.get().remove(MessageBox.this.getParent().asWidget());
 				}

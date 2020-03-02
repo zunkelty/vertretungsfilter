@@ -3,6 +3,8 @@ package de.zunk.vertretungsalarm.client.ui.optionscreens;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.AbsolutePanel;
@@ -37,6 +39,15 @@ public class SettingsScreen extends Screen {
 	VertretungsalarmButton resetAll;
 
 	public SettingsScreen() {
+
+		Window.addResizeHandler(new ResizeHandler() {
+
+			@Override
+			public void onResize(ResizeEvent event) {
+				RootPanel.get().remove(SettingsScreen.this.asWidget());
+				RootPanel.get().add(new SettingsScreen());
+			}
+		});
 
 		setPixelSize(Window.getClientWidth(), Window.getClientHeight());
 		getElement().getStyle().setProperty("overflowX", "hidden");

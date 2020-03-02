@@ -11,4 +11,6 @@ public interface GreetingServiceAsync {
 	void getVertretungsplan(AsyncCallback<Vertretungsplan> callback);
 
 	void reloadVertretungsplan(AsyncCallback<Boolean> callback);
+
+	void validateLogin(String username, String password, AsyncCallback<Boolean> callback);
 }

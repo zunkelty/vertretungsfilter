@@ -2,8 +2,11 @@ package de.zunk.vertretungsalarm.client.ui.optionscreens;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.RootPanel;
 
 import de.zunk.vertretungsalarm.client.ui.BottomBar;
 import de.zunk.vertretungsalarm.client.ui.Header;
@@ -24,10 +27,18 @@ public class AboutScreen extends Screen {
 	VertretungsalarmButton show;
 	VertretungsalarmBox techStackBox;
 
-	VertretungsalarmBox igBox;
 	VertretungsalarmButton igButton;
 
 	public AboutScreen() {
+
+		Window.addResizeHandler(new ResizeHandler() {
+
+			@Override
+			public void onResize(ResizeEvent event) {
+				RootPanel.get().remove(AboutScreen.this.asWidget());
+				RootPanel.get().add(new AboutScreen());
+			}
+		});
 
 		setPixelSize(Window.getClientWidth(), Window.getClientHeight());
 		getElement().getStyle().setProperty("overflowX", "hidden");
@@ -44,15 +55,6 @@ public class AboutScreen extends Screen {
 		aboutBox = new VertretungsalarmBox(
 				"<b>Wieso solltest du jeden Tag auf den Vertretungsplan schauen, wenn es den Vertretungsfilter gibt?</b><br><br>Jede Minute checkt der Vertretungsfilter den Vertretungsplan und sucht alles Wichtige raus. Am Ende siehst du nur noch was dich wirklich interessiert, nämlich alle Meldungen zu deiner Schulklasse.<br><br><b>Entwickelt von Sönke Peters");
 		aboutBox.getElement().getStyle().setProperty("padding", "0px 15px");
-
-		igBox = new VertretungsalarmBox("Social Media:");
-		igBox.getElement().getStyle().setProperty("padding", "0px 15px");
-
-		igButton = new VertretungsalarmButton("Sönke auf Instagram");
-		igButton.getElement().getStyle().setProperty("justifySelf", "stretch");
-		igButton.addClickHandler(e -> Window.open("https://www.instagram.com/zunk.p/", "Sönke auf Instagram", ""));
-
-		igBox.add(igButton);
 
 		specsBox = new VertretungsalarmBox("Wie viele Zeilen JAVA, HTML & CSS umfasst der Vertretungsfilter?");
 		specsBox.getElement().getStyle().setProperty("padding", "0px 15px");
@@ -78,7 +80,6 @@ public class AboutScreen extends Screen {
 		settingsView.getElement().getStyle().setProperty("padding", " 30px 25px 12px 25px");
 		settingsView.getElement().getStyle().setProperty("paddingRight", "25px");
 		settingsView.add(aboutBox);
-		settingsView.add(igBox);
 		settingsView.add(specsBox);
 		settingsView.add(techStackBox);
 

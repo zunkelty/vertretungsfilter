@@ -56,18 +56,11 @@ public class Vertretungsalarm implements EntryPoint {
 		} else if (Vertretungsalarm.getClientStorage().getItem("username") != null
 				&& Vertretungsalarm.getClientStorage().getItem("password") != null) {
 
-			Message msg = new Message("Gleich geht es weiter...",
-					"Der Vertretungsfilter überprüft gerade, dass du berechtigt bist auf den Vertretungsfilter zuzugreifen.",
-					ButtonLayoutOption.NONE, CloseAction.NONE);
-
-			RootPanel.get().add(msg);
-
 			greetingService.validateLogin(Vertretungsalarm.getClientStorage().getItem("username"),
 					Vertretungsalarm.getClientStorage().getItem("password"), new AsyncCallback<Boolean>() {
 
 						@Override
 						public void onSuccess(Boolean success) {
-							RootPanel.get().remove(msg);
 							if (success) {
 
 								// Weiterleiten zur richtigen Stelle der W***REMOVED***ite
@@ -100,7 +93,6 @@ public class Vertretungsalarm implements EntryPoint {
 
 						@Override
 						public void onFailure(Throwable caught) {
-							RootPanel.get().remove(msg);
 							RootPanel.get().add(new Message("Fehler",
 									"Die Logindaten konnten nicht überprüft werden. Bitte versuche es später erneut."
 											+ caught,

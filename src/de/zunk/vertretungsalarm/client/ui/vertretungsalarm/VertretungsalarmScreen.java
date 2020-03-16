@@ -67,7 +67,6 @@ public class VertretungsalarmScreen extends Screen {
 		getElement().getStyle().setProperty("height", Window.getClientHeight() + "px");
 
 		ArrayList<VertretungsEvent> userEvents = new ArrayList<VertretungsEvent>();
-		ArrayList<DayInfo> dayInfos = new ArrayList<DayInfo>();
 
 		header = new Header("Dein<br><p style=\"font-family: Ubuntu:700\"><b>Vertretungsplan</b>", false);
 

@@ -25,9 +25,9 @@ public class AboutScreen extends Screen {
 	VertretungsalarmBox aboutBox;
 	VertretungsalarmBox specsBox;
 	VertretungsalarmButton show;
-	VertretungsalarmBox techStackBox;
 
-	VertretungsalarmButton igButton;
+	VertretungsalarmBox instaBox;
+	VertretungsalarmButton gotoInsta;
 
 	public AboutScreen() {
 
@@ -70,9 +70,12 @@ public class AboutScreen extends Screen {
 		});
 		specsBox.add(show);
 
-		techStackBox = new VertretungsalarmBox(
-				"<b>Was steckt im Vertretungsfilter?</b><br><br><br<br>GWT (Google Web Toolkit), <br>HTML Unit,<br> JAVA,<br> HTML,<br> CSS");
-		techStackBox.getElement().getStyle().setProperty("padding", "0px 15px");
+		instaBox = new VertretungsalarmBox("Der Vertretungsfilter ist 100% kostenlos. Zeige, dass er dir gefällt!");
+		instaBox.getElement().getStyle().setProperty("padding", "0px 15px");
+
+		gotoInsta = new VertretungsalarmButton("Dem Entwickler auf Instagram folgen");
+		gotoInsta.addClickHandler(e -> Window.open("https://www.instagram.com/zunk.p/", "Sönke auf Instagram", ""));
+		instaBox.add(gotoInsta);
 
 		settingsView = new AbsolutePanel();
 		settingsView.getElement().getStyle().setProperty("marginBottom", "20px");
@@ -81,7 +84,7 @@ public class AboutScreen extends Screen {
 		settingsView.getElement().getStyle().setProperty("paddingRight", "25px");
 		settingsView.add(aboutBox);
 		settingsView.add(specsBox);
-		settingsView.add(techStackBox);
+		settingsView.add(instaBox);
 
 		bottom = new BottomBar();
 

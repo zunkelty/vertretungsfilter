@@ -11,6 +11,7 @@ import com.google.gwt.user.datepicker.client.CalendarUtil;
 import de.zunk.vertretungsalarm.client.Vertretungsalarm;
 import de.zunk.vertretungsalarm.client.ui.VertretungsalarmBox;
 import de.zunk.vertretungsalarm.shared.DayInfo;
+import de.zunk.vertretungsalarm.shared.VertretungsDate;
 import de.zunk.vertretungsalarm.shared.VertretungsEvent;
 
 public class DayView extends AbsolutePanel {
@@ -29,7 +30,9 @@ public class DayView extends AbsolutePanel {
 		getElement().getStyle().setProperty("paddingLeft", "25px");
 		getElement().getStyle().setProperty("paddingRight", "25px");
 
-		dateLabel = new Label(dayInfo.getDate().toString());
+		VertretungsDate dayDate = dayInfo != null ? dayInfo.getDate() : dayEvents.get(0).getDate();
+
+		dateLabel = new Label(dayDate.toString());
 		dateLabel.getElement().getStyle().setProperty("font", "15px Ubuntu");
 		dateLabel.getElement().getStyle().setProperty("fontWeight", "300");
 		dateLabel.getElement().getStyle().setProperty("color", "#3E4158");
@@ -44,21 +47,21 @@ public class DayView extends AbsolutePanel {
 
 		switch (CalendarUtil.getDaysBetween(now, date)) {
 		case -1: {
-			dateLabel.setText("Gestern, " + dayInfo.getDate().getDay() + "." + dayInfo.getDate().getMonth() + ".");
+			dateLabel.setText("Gestern, " + dayDate.getDay() + "." + dayDate.getMonth() + ".");
 		}
 			break;
 		case 0: {
-			dateLabel.setText("Heute, " + dayInfo.getDate().getDay() + "." + dayInfo.getDate().getMonth() + ".");
+			dateLabel.setText("Heute, " + dayDate.getDay() + "." + dayDate.getMonth() + ".");
 		}
 
 			break;
 		case 1: {
-			dateLabel.setText("Morgen, " + dayInfo.getDate().getDay() + "." + dayInfo.getDate().getMonth() + ".");
+			dateLabel.setText("Morgen, " + dayDate.getDay() + "." + dayDate.getMonth() + ".");
 		}
 
 			break;
 		case 2: {
-			dateLabel.setText("Übermorgen, " + dayInfo.getDate().getDay() + "." + dayInfo.getDate().getMonth() + ".");
+			dateLabel.setText("Übermorgen, " + dayDate.getDay() + "." + dayDate.getMonth() + ".");
 		}
 
 			break;
@@ -69,13 +72,15 @@ public class DayView extends AbsolutePanel {
 
 		add(dateLabel);
 
-		dayInfoBox = new VertretungsalarmBox(dayInfo.getInfo());
-		dayInfoBox.getWidget(0).getElement().getStyle().setProperty("font", "300 15px Ubuntu");
-		dayInfoBox.getElement().getStyle().setProperty("boxShadow", "0px 3px 6px 0px rgba(203,203,203,0.5)");
-		dayInfoBox.getElement().getStyle().setProperty("opacity", "0.8");
-		dayInfoBox.getElement().getStyle().setProperty("filter", "brightness(87%)");
-		dayInfoBox.getElement().getStyle().setProperty("marginBottom", "20px");
-		add(dayInfoBox);
+		if (dayInfo != null && dayInfo.getInfo().trim() != "") {
+			dayInfoBox = new VertretungsalarmBox(dayInfo.getInfo());
+			dayInfoBox.getWidget(0).getElement().getStyle().setProperty("font", "300 15px Ubuntu");
+			dayInfoBox.getElement().getStyle().setProperty("boxShadow", "0px 3px 6px 0px rgba(203,203,203,0.5)");
+			dayInfoBox.getElement().getStyle().setProperty("opacity", "0.8");
+			dayInfoBox.getElement().getStyle().setProperty("filter", "brightness(87%)");
+			dayInfoBox.getElement().getStyle().setProperty("marginBottom", "20px");
+			add(dayInfoBox);
+		}
 
 		for (VertretungsEvent vertretungsEvent : dayEvents) {
 			EventBox e = new EventBox(vertretungsEvent);
@@ -86,6 +91,8 @@ public class DayView extends AbsolutePanel {
 			VertretungsalarmBox box = new VertretungsalarmBox(
 					"Keine Vertretungen für die " + Vertretungsalarm.getClientStorage().getItem("schoolClass"));
 			box.getWidget(0).getElement().getStyle().setProperty("fontWeight", "300");
+			box.getElement().getStyle().setProperty("marginBottom", "20px");
+
 			add(box);
 		}
 

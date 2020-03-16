@@ -1,11 +1,7 @@
 package de.zunk.vertretungsalarm.client;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.logical.shared.ResizeEvent;
-import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.AbsolutePanel;
-import com.google.gwt.user.client.ui.RootPanel;
 
 import de.zunk.vertretungsalarm.client.ui.BottomBar;
 import de.zunk.vertretungsalarm.client.ui.Header;
@@ -20,18 +16,9 @@ public class LockScreen extends Screen {
 	Header header;
 	BottomBar bottom;
 
-	AbsolutePanel lockView;
+	LockView lockView;
 
 	public LockScreen() {
-
-		Window.addResizeHandler(new ResizeHandler() {
-
-			@Override
-			public void onResize(ResizeEvent event) {
-				RootPanel.get().remove(LockScreen.this.asWidget());
-				RootPanel.get().add(new LockScreen());
-			}
-		});
 
 		setPixelSize(Window.getClientWidth(), Window.getClientHeight());
 		getElement().getStyle().setProperty("overflowX", "hidden");

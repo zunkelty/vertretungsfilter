@@ -42,7 +42,7 @@ public class ImportantNoticeView extends AbsolutePanel {
 						.add(new Message("Herzlich Willkommen zum Vertretungsfilter!",
 								"Der Vertretungsfilter zeigt dir hier ab sofort immer alles, was die "
 										+ Vertretungsalarm.getClientStorage().getItem("schoolClass") + " betrifft.",
-								ButtonLayoutOption.TAP_TO_CLOSE, CloseAction.RELOAD));
+								ButtonLayoutOption.TAP_TO_CLOSE, CloseAction.RELOAD_WITHOUT_PAGE_PARAM));
 			}
 		});
 		add(accept);

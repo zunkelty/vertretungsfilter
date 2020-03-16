@@ -10,7 +10,7 @@ public class VertretungsEvent implements Serializable {
 	ArrayList<String> schoolClasses;
 	ArrayList<String> lessons;
 
-	VERTRETUNGS_EVENT_TYPE type;
+	VertretungsEventType type;
 	String plannedTeacher;
 	String actualTeacher;
 	String plannedRoom;
@@ -26,7 +26,7 @@ public class VertretungsEvent implements Serializable {
 		super();
 	}
 
-	public VertretungsEvent(ArrayList<String> schoolClasses, ArrayList<String> lessons, VERTRETUNGS_EVENT_TYPE type,
+	public VertretungsEvent(ArrayList<String> schoolClasses, ArrayList<String> lessons, VertretungsEventType type,
 			String plannedTeacher, String actualTeacher, String plannedRoom, String actualRoom, String plannedSubject,
 			String actualSubject, String additionalText, VertretungsDate date, Boolean isHappening) {
 
@@ -91,7 +91,7 @@ public class VertretungsEvent implements Serializable {
 		return lessons;
 	}
 
-	public VERTRETUNGS_EVENT_TYPE getType() {
+	public VertretungsEventType getType() {
 		return type;
 	}
 

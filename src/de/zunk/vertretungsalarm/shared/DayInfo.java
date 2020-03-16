@@ -35,4 +35,9 @@ public class DayInfo implements IsSerializable {
 		return date;
 	}
 
+	@Override
+	public String toString() {
+		return dayInfo + " " + date.toString();
+	}
+
 }

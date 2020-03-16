@@ -5,6 +5,8 @@
          version="2.5"
          xmlns="http://java.sun.com/xml/ns/javaee">
 
+  <display-name>Vertretungsfilter</display-name>
+
   <!-- Servlets -->
   <servlet>
     <servlet-name>greetServlet</servlet-name>

@@ -23,9 +23,9 @@ import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
 import de.zunk.vertretungsalarm.shared.DayInfo;
-import de.zunk.vertretungsalarm.shared.VERTRETUNGS_EVENT_TYPE;
 import de.zunk.vertretungsalarm.shared.VertretungsDate;
 import de.zunk.vertretungsalarm.shared.VertretungsEvent;
+import de.zunk.vertretungsalarm.shared.VertretungsEventType;
 import de.zunk.vertretungsalarm.shared.Vertretungsplan;
 
 public class VertretungsalarmService implements Serializable {
@@ -84,10 +84,10 @@ public class VertretungsalarmService implements Serializable {
 
 		}
 
-		// for (String string : snippets) {
-		// System.out.println("Snippets:");
-		// System.out.println("-->" + string + "<--");
-		// }
+		for (String string : snippets) {
+			System.out.println("Snippets:");
+			System.out.println("-->" + string + "<--");
+		}
 
 		// Einzelne Schnipsel werden ausgelesen, verstanden und als VertretungsEvents
 		// abgespeichert
@@ -110,10 +110,15 @@ public class VertretungsalarmService implements Serializable {
 				i += 3;
 
 				dayInfoForEvents = "";
-				while (!snippets[i].contains("Vtr-Nr.")) {
+
+				while (!snippets[i].contains("Vtr-Nr.") && !snippets[i].contains("Keine")
+						&& !snippets[i + 1].contains("Vertretungen")) {
 					dayInfoForEvents += " " + snippets[i];
 					i++;
 				}
+				DayInfo dayInfo = new DayInfo(dayInfoForEvents,
+						new VertretungsDate(dateForEvents.getDay(), dateForEvents.getMonth(), dateForEvents.getYear()));
+				allDayInfos.add(dayInfo);
 
 			} else if (isEventId(snippets[i])) {
 				try {
@@ -123,7 +128,7 @@ public class VertretungsalarmService implements Serializable {
 					ArrayList<String> schoolClasses = new ArrayList<String>();
 					ArrayList<String> lessons = new ArrayList<String>();
 
-					VERTRETUNGS_EVENT_TYPE type = VERTRETUNGS_EVENT_TYPE.UNDEFINED;
+					VertretungsEventType type = VertretungsEventType.UNDEFINED;
 					String plannedTeacher = "ZUNK";
 					String actualTeacher = "ZUNK";
 					String plannedRoom = "ZUNK";
@@ -138,7 +143,7 @@ public class VertretungsalarmService implements Serializable {
 
 					String type_s = "";
 					while (isEventType(snippets[j])) {
-						if (type == VERTRETUNGS_EVENT_TYPE.UNDEFINED) {
+						if (type == VertretungsEventType.UNDEFINED) {
 							type_s = snippets[j];
 						} else {
 							type_s = type_s + " " + snippets[j];
@@ -176,7 +181,7 @@ public class VertretungsalarmService implements Serializable {
 					boolean isHappening = true;
 
 					if (snippets[j + 3].contains("Freis.") || snippets[j + 3].contains("Entfall")
-							|| type == VERTRETUNGS_EVENT_TYPE.CANCELED || type == VERTRETUNGS_EVENT_TYPE.FREE) {
+							|| type == VertretungsEventType.CANCELED || type == VertretungsEventType.FREE) {
 						if (snippets[j].indexOf("?") <= 0 && snippets[j + 1].contains("---")) {
 							isHappening = false;
 						}
@@ -254,9 +259,6 @@ public class VertretungsalarmService implements Serializable {
 								actualTeacher, plannedRoom, actualRoom, plannedSubject, actualSubject, additionalText,
 								date, isHappening);
 						allVertretungsEvents.add(e);
-
-						DayInfo dayInfo = new DayInfo(dayInfoForEvents, date);
-						allDayInfos.add(dayInfo);
 
 						System.out.println(e.toString());
 					}
@@ -372,37 +374,37 @@ public class VertretungsalarmService implements Serializable {
 
 	}
 
-	public static VERTRETUNGS_EVENT_TYPE getEventTypeFromString(String type_s) {
+	public static VertretungsEventType getEventTypeFromString(String type_s) {
 		switch (type_s) {
 		case "Entfall": {
-			return VERTRETUNGS_EVENT_TYPE.CANCELED;
+			return VertretungsEventType.CANCELED;
 		}
 		case "Raum-Vtr.": {
-			return VERTRETUNGS_EVENT_TYPE.ROOM_CHANGE;
+			return VertretungsEventType.ROOM_CHANGE;
 		}
 		case "Statt-Vertretung": {
-			return VERTRETUNGS_EVENT_TYPE.INSTEAD_OF;
+			return VertretungsEventType.INSTEAD_OF;
 		}
 		case "Trotz Absenz": {
-			return VERTRETUNGS_EVENT_TYPE.DESPITE_ABSENSE;
+			return VertretungsEventType.DESPITE_ABSENSE;
 		}
 		case "Verlegung": {
-			return VERTRETUNGS_EVENT_TYPE.MOVING;
+			return VertretungsEventType.MOVING;
 		}
 		case "Lehrertausch": {
-			return VERTRETUNGS_EVENT_TYPE.TEACHER_CHANGE;
+			return VertretungsEventType.TEACHER_CHANGE;
 		}
 		case "Vertretung": {
-			return VERTRETUNGS_EVENT_TYPE.SUBSTITUTE;
+			return VertretungsEventType.SUBSTITUTE;
 		}
 		case "Betreuung": {
-			return VERTRETUNGS_EVENT_TYPE.CARE;
+			return VertretungsEventType.CARE;
 		}
 		case "Freisetzung": {
-			return VERTRETUNGS_EVENT_TYPE.FREE;
+			return VertretungsEventType.FREE;
 		}
 		default:
-			return VERTRETUNGS_EVENT_TYPE.UNDEFINED;
+			return VertretungsEventType.UNDEFINED;
 		}
 	}
 
@@ -434,7 +436,7 @@ public class VertretungsalarmService implements Serializable {
 			textFieldPw.type("***REMOVED***-han");
 
 			// Now submit the form by clicking the button and get back the second page.
-			final HtmlPage pageThree = button.click();
+			final HtmlPage pageThree = (HtmlPage) button.click();
 
 			// System.out.println("Ausgelesen! --> " + pageThree.asText() + " <--");
 

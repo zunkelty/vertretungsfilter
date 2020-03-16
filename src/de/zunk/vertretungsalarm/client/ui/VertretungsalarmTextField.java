@@ -31,24 +31,6 @@ public class VertretungsalarmTextField extends AbsolutePanel {
 		textBox.getElement().getStyle().setProperty("border", "0");
 		textBox.getElement().setPropertyString("placeholder", hint);
 
-		// textBox.addClickHandler(new ClickHandler() {
-		// @Override
-		// public void onClick(ClickEvent event) {
-		// if (textBox.getText() == hint) {
-		// textBox.setText("");
-		// }
-		// }
-		// });
-		//
-		// textBox.addBlurHandler(new BlurHandler() {
-		//
-		// @Override
-		// public void onBlur(BlurEvent event) {
-		// if (textBox.getText().trim().isEmpty()) {
-		// textBox.setText(hint);
-		// }
-		// }
-		// });
 		add(textBox);
 
 	}

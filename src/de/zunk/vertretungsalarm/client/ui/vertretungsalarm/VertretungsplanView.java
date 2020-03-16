@@ -37,11 +37,18 @@ public class VertretungsplanView extends AbsolutePanel {
 		getElement().getStyle().setProperty("flexShrink", "0");
 
 		ArrayList<String> dates = new ArrayList<String>();
-		for (VertretungsEvent vE : userEvents) {
-			// dates.add(vE.getDateAsText());
+
+		LinkedHashSet<DayInfo> dayInfosHasSet = new LinkedHashSet<>(dayInfos);
+		dayInfos.clear();
+		dayInfos = new ArrayList<>(dayInfosHasSet);
+
+		for (VertretungsEvent event : userEvents) {
+			dates.add(event.getDate().toString());
 		}
 		for (DayInfo dayInfo : dayInfos) {
-			dates.add(dayInfo.getDate().toString());
+			if (!dates.contains(dayInfo.getDate().toString())) {
+				dates.add(dayInfo.getDate().toString());
+			}
 		}
 
 		LinkedHashSet<String> datesHashSet = new LinkedHashSet<>(dates);
@@ -58,7 +65,7 @@ public class VertretungsplanView extends AbsolutePanel {
 				}
 			}
 
-			DayInfo dayInfo = new DayInfo();
+			DayInfo dayInfo = null;
 			for (DayInfo info : dayInfos) {
 				if (info.getDate().toString() == date) {
 					dayInfo = info;

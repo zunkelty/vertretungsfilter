@@ -11,8 +11,8 @@ public class EventTranslator {
 			return matchAbbreviationWithSubject(e.getActualSubject()) + " in Raum " + e.getActualRoom() + " statt "
 					+ e.getPlannedRoom();
 		} else if (e.getPlannedTeacher() != e.getActualTeacher()) {
-			return matchAbbreviationWithSubject(e.getActualSubject()) + " bei " + e.getActualTeacher() + " statt bei "
-					+ e.getPlannedTeacher();
+			return matchAbbreviationWithSubject(e.getActualSubject()) + " bei " + e.getActualTeacher() + " statt "
+					+ e.getPlannedSubject();
 		}
 		return matchAbbreviationWithSubject(e.getPlannedSubject()) + " bei " + e.getActualTeacher();
 	}

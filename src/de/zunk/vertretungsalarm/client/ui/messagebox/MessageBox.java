@@ -64,6 +64,8 @@ public class MessageBox extends AbsolutePanel {
 			addDomHandler(e -> {
 				if (closeAction == CloseAction.RELOAD || closeAction == CloseAction.CLOSE_AFTER_1_SECOND) {
 					Location.reload();
+				} else if (closeAction == CloseAction.RELOAD_WITHOUT_PAGE_PARAM) {
+					Location.replace(Location.createUrlBuilder().removeParameter("page").buildString());
 				}
 
 				RootPanel.get().remove(MessageBox.this.getParent().asWidget());

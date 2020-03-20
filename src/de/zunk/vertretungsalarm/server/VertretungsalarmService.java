@@ -242,8 +242,8 @@ public class VertretungsalarmService implements Serializable {
 
 					// Speichern der Zusatzinformationen
 
-					while (!isEventId(snippets[j]) && !snippets[j].contains("Untis") && !snippets[j].contains("x")
-							&& j < snippets.length - 1) {
+					while (!isEventId(snippets[j]) && !snippets[j].contains("Untis") && !snippets[i].contains("DSB")
+							&& !snippets[j].contains("x") && j < snippets.length - 1) {
 						additionalText = additionalText + " " + snippets[j];
 						j++;
 					}
@@ -436,7 +436,8 @@ public class VertretungsalarmService implements Serializable {
 			textFieldPw.type("***REMOVED***-han");
 
 			// Now submit the form by clicking the button and get back the second page.
-			final HtmlPage pageThree = (HtmlPage) button.click();
+			final com.gargoylesoftware.htmlunit.html.HtmlPage pageThree = (com.gargoylesoftware.htmlunit.html.HtmlPage) button
+					.click();
 
 			// System.out.println("Ausgelesen! --> " + pageThree.asText() + " <--");
 
@@ -452,7 +453,8 @@ public class VertretungsalarmService implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+
+		return "";
 
 	}
 

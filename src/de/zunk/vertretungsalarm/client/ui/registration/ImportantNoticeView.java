@@ -29,7 +29,15 @@ public class ImportantNoticeView extends AbsolutePanel {
 		getElement().getStyle().setProperty("padding", "20px 25px 20px 25px");
 
 		importantNotice = new VertretungsalarmBox(
-				"<b>Durch Klicken auf \"Nutzungsbedingungen akzeptieren\" erklärst Du dich mit Folgendem einverstanden:</b><br><br>Diese W***REMOVED***ite / WebApp versteht sich als privat und nicht geschäftlich, da Sie nur durch Freischaltung zugänglich ist und keine Einnahmen generiert. Somi	t benötigt sie kein Impressum oder eine Datenschutzerklärung. Trotzdem findest Du unter \"Rechtliches\" Kontaktdaten vom W***REMOVED***ite-/WebApp-Betreiber.<br><br>Auf dieser W***REMOVED***ite / WebApp werden Analysedaten durch Google Analytics erhoben und von Google gespeichert. Dieses Tool findet man auf vielen W***REMOVED***ites und es ermöglicht dem W***REMOVED***itebetreiber die Nutzeranzahl und weitere Analysedaten der W***REMOVED***ite zu verfolgen. <br><br><b>Wenn Du Fragen oder Bedenken zum Vertretungsfilter hast, sprich gerne jederzeit Sönke (11B) an.");
+				"<b>Durch Klicken auf \"Nutzungsbedingungen akzeptieren\" erklärst Du dich mit Folgendem einverstanden:</b><br><br>"
+						+ "Diese W***REMOVED***ite / WebApp versteht sich als privat und nicht geschäftlich, da Sie nur durch Freischaltung zugänglich "
+						+ "ist und keine Einnahmen generiert. Somit benötigt sie kein Impressum oder eine Datenschutzerklärung. "
+						+ "Trotzdem findest Du unter \"Rechtliches\" Kontaktdaten vom W***REMOVED***ite-/WebApp-Betreiber."
+
+						+ "<br><br>Auf dieser W***REMOVED***ite / WebApp werden Analysedaten durch Google Analytics erhoben und von Google gespeichert. "
+						+ "Dieses Tool findet man auf vielen W***REMOVED***ites und es ermöglicht dem W***REMOVED***itebetreiber die Nutzeranzahl und weitere Analysedaten"
+						+ "der W***REMOVED***ite zu verfolgen. <br><br><b>Wenn Du Fragen oder Bedenken zum Vertretungsfilter hast, sprich gerne jederzeit Sönke (11B) an.");
+
 		add(importantNotice);
 
 		accept = new VertretungsalarmButton("Nutzungsbedingungen akzeptieren");

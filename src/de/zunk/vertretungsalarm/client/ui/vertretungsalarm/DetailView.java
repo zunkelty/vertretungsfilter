@@ -62,7 +62,7 @@ public class DetailView extends AbsolutePanel {
 
 		DetailViewBox plannedBox = new DetailViewBox();
 
-		Label plannedTitle = new Label("Geplant:");
+		Label plannedTitle = new Label("Ursprüngliche Planung:");
 		plannedTitle.getElement().getStyle().setProperty("font", "200 16px Ubuntu");
 		plannedTitle.getElement().getStyle().setProperty("color", "#3E4158");
 
@@ -80,7 +80,7 @@ public class DetailView extends AbsolutePanel {
 
 		DetailViewBox actualBox = new DetailViewBox();
 
-		Label actualTitle = new Label("Jetzt:");
+		Label actualTitle = new Label("Änderung:");
 		actualTitle.getElement().getStyle().setProperty("font", "200 16px Ubuntu");
 		actualTitle.getElement().getStyle().setProperty("color", "#3E4158");
 

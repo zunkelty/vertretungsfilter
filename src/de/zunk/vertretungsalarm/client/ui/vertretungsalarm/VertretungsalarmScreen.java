@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import de.zunk.vertretungsalarm.client.GreetingService;
 import de.zunk.vertretungsalarm.client.GreetingServiceAsync;
 import de.zunk.vertretungsalarm.client.Vertretungsalarm;
+import de.zunk.vertretungsalarm.client.ui.BackOption;
 import de.zunk.vertretungsalarm.client.ui.BottomBar;
 import de.zunk.vertretungsalarm.client.ui.Header;
 import de.zunk.vertretungsalarm.client.ui.Screen;
@@ -63,7 +64,8 @@ public class VertretungsalarmScreen extends Screen {
 
 		ArrayList<VertretungsEvent> userEvents = new ArrayList<VertretungsEvent>();
 
-		header = new Header("Dein<br><p style=\"font-family: Ubuntu:700\"><b>Vertretungsplan</b>", false);
+		header = new Header("Dein<br><p style=\"font-family: Ubuntu:700\"><b>Vertretungsplan</b>", false,
+				BackOption.PAGE_BACK);
 
 		bottom = new BottomBar();
 

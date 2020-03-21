@@ -13,6 +13,8 @@ import de.zunk.vertretungsalarm.client.ui.messagebox.CloseAction;
 import de.zunk.vertretungsalarm.client.ui.messagebox.Message;
 import de.zunk.vertretungsalarm.client.ui.optionscreens.AboutScreen;
 import de.zunk.vertretungsalarm.client.ui.optionscreens.ContactScreen;
+import de.zunk.vertretungsalarm.client.ui.optionscreens.ExceptionScreen;
+import de.zunk.vertretungsalarm.client.ui.optionscreens.ExceptionSettingsType;
 import de.zunk.vertretungsalarm.client.ui.optionscreens.LegalScreen;
 import de.zunk.vertretungsalarm.client.ui.optionscreens.SettingsScreen;
 import de.zunk.vertretungsalarm.client.ui.registration.ImportantNoticeScreen;
@@ -72,8 +74,18 @@ public class Vertretungsalarm implements EntryPoint {
 									ImportantNoticeScreen screen = new ImportantNoticeScreen();
 									RootPanel.get().add(screen, 0, 0);
 								} else if (Location.getParameter("page") == "settings") {
-									SettingsScreen screen = new SettingsScreen();
-									RootPanel.get().add(screen, 0, 0);
+									if (Location.getParameter("subpage") == "teacherExceptions") {
+										ExceptionScreen screen = new ExceptionScreen(
+												ExceptionSettingsType.TEACHER_EXCEPTION);
+										RootPanel.get().add(screen, 0, 0);
+									} else if (Location.getParameter("subpage") == "subjectExceptions") {
+										ExceptionScreen screen = new ExceptionScreen(
+												ExceptionSettingsType.SUBJECT_EXCEPTION);
+										RootPanel.get().add(screen, 0, 0);
+									} else {
+										SettingsScreen screen = new SettingsScreen();
+										RootPanel.get().add(screen, 0, 0);
+									}
 								} else {
 
 									VertretungsalarmScreen screen = new VertretungsalarmScreen();

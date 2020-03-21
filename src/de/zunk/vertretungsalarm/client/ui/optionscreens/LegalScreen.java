@@ -9,6 +9,7 @@ import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import de.zunk.vertretungsalarm.client.ui.BackOption;
 import de.zunk.vertretungsalarm.client.ui.BottomBar;
 import de.zunk.vertretungsalarm.client.ui.Header;
 import de.zunk.vertretungsalarm.client.ui.Screen;
@@ -49,7 +50,7 @@ public class LegalScreen extends Screen {
 		getElement().getStyle().setProperty("justifyContent", "flex-start");
 		getElement().getStyle().setProperty("height", Window.getClientHeight() + "px");
 
-		header = new Header("<b>Rechtliches<b>", true);
+		header = new Header("<b>Rechtliches<b>", true, BackOption.PAGE_BACK);
 
 		nutzungsbedingungenBox = new VertretungsalarmBox(
 				"Diese W***REMOVED***ite / WebApp versteht sich als privat und nicht geschäftlich, da Sie nur durch Freischaltung zugänglich ist und keine Einnahmen generiert. Somit benötigt sie kein Impressum oder eine Datenschutzerklärung.<br><br>Auf dieser W***REMOVED***ite / WebApp werden Analysedaten durch Google Analytics erhoben und von Google gespeichert. Dieses Tool findet man auf vielen W***REMOVED***ites und es ermöglicht dem W***REMOVED***itebetreiber die Nutzeranzahl und weitere Analysedaten der W***REMOVED***ite zu verfolgen.");

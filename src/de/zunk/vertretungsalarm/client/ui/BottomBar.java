@@ -30,9 +30,9 @@ public class BottomBar extends AbsolutePanel {
 		credits.getElement().getStyle().setProperty("color", "#F0C267");
 		credits.getElement().getStyle().setProperty("background", "#FDFCFE");
 		credits.getElement().getStyle().setProperty("borderRadius", "10px");
-		credits.getElement().getStyle().setProperty("padding", "6px");
-		credits.getElement().getStyle().setProperty("marginBottom", "10px");
-		credits.getElement().getStyle().setProperty("marginTop", "10px");
+		credits.getElement().getStyle().setProperty("padding", "5px");
+		credits.getElement().getStyle().setProperty("marginBottom", "9px");
+		credits.getElement().getStyle().setProperty("marginTop", "9px");
 
 		legal = new Label("Rechtliches");
 		legal.getElement().getStyle().setProperty("font", "300 15px Ubuntu");

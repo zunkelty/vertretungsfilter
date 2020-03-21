@@ -5,6 +5,7 @@ import com.google.gwt.user.client.Window;
 
 import de.zunk.vertretungsalarm.client.GreetingService;
 import de.zunk.vertretungsalarm.client.GreetingServiceAsync;
+import de.zunk.vertretungsalarm.client.ui.BackOption;
 import de.zunk.vertretungsalarm.client.ui.BottomBar;
 import de.zunk.vertretungsalarm.client.ui.Header;
 import de.zunk.vertretungsalarm.client.ui.Screen;
@@ -40,7 +41,7 @@ public class SettingsScreen extends Screen {
 		getElement().getStyle().setProperty("justifyContent", "flex-start");
 		getElement().getStyle().setProperty("height", Window.getClientHeight() + "px");
 
-		header = new Header("<b>Einstellungen<b>", true);
+		header = new Header("<b>Einstellungen<b>", true, BackOption.PAGE_BACK);
 
 		settingsView = new SettingsView();
 

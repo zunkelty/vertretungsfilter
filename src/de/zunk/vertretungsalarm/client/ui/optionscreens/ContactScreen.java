@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.zunk.vertretungsalarm.client.Vertretungsalarm;
+import de.zunk.vertretungsalarm.client.ui.BackOption;
 import de.zunk.vertretungsalarm.client.ui.BottomBar;
 import de.zunk.vertretungsalarm.client.ui.Header;
 import de.zunk.vertretungsalarm.client.ui.Screen;
@@ -50,7 +51,7 @@ public class ContactScreen extends Screen {
 		getElement().getStyle().setProperty("justifyContent", "flex-start");
 		getElement().getStyle().setProperty("height", Window.getClientHeight() + "px");
 
-		header = new Header("<b>Kontakt<b>", true);
+		header = new Header("<b>Kontakt<b>", true, BackOption.PAGE_BACK);
 
 		infoBox = new VertretungsalarmBox(
 				"<b>Hast du Fragen, Wünsche, Bedenken oder Verbesserungsvorschläge?<br>Dann melde dich bei Sönke!");

@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 public class Header extends AbsolutePanel {
 
-	public Header(String htmlTitleText, boolean hasPageBackOption) {
+	public Header(String htmlTitleText, boolean hasPageBackOption, BackOption backOption) {
 		getElement().getStyle().setProperty("display", "flex");
 		getElement().getStyle().setProperty("flexDirection", "row");
 		getElement().getStyle().setProperty("background", "#AFE09C");
@@ -48,8 +48,8 @@ public class Header extends AbsolutePanel {
 			goBack.getElement().getStyle().setProperty("border", "0px");
 			goBack.getElement().getStyle().setProperty("paddingTop", "23px");
 			goBack.getElement().getStyle().setProperty("order", "-1");
-			goBack.addClickHandler(
-					event -> Location.replace(Location.createUrlBuilder().removeParameter("page").buildString()));
+
+			goBack.addClickHandler(event -> goBack(backOption));
 
 			add(goBack);
 
@@ -62,6 +62,18 @@ public class Header extends AbsolutePanel {
 			}, ClickEvent.getType());
 		}
 
+	}
+
+	public void goBack(BackOption option) {
+		switch (option) {
+		case PAGE_BACK:
+			Location.replace(Location.createUrlBuilder().removeParameter("page").buildString());
+			break;
+		case SUBPAGE_BACK:
+			Location.replace(Location.createUrlBuilder().removeParameter("subpage").buildString());
+			break;
+
+		}
 	}
 
 }

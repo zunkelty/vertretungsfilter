@@ -23,7 +23,6 @@ public class VertretungsalarmButton extends Button {
 
 		getElement().getStyle().setProperty("font", "500 17px Ubuntu");
 		getElement().getStyle().setProperty("background", "#F0C267");
-
 	}
 
 	public void disable() {

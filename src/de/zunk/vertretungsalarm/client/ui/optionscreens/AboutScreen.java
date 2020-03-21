@@ -8,6 +8,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import de.zunk.vertretungsalarm.client.ui.BackOption;
 import de.zunk.vertretungsalarm.client.ui.BottomBar;
 import de.zunk.vertretungsalarm.client.ui.Header;
 import de.zunk.vertretungsalarm.client.ui.Screen;
@@ -50,7 +51,7 @@ public class AboutScreen extends Screen {
 		getElement().getStyle().setProperty("justifyContent", "flex-start");
 		getElement().getStyle().setProperty("height", Window.getClientHeight() + "px");
 
-		header = new Header("<b>Über den Vertretungsfilter<b>", true);
+		header = new Header("<b>Über den Vertretungsfilter<b>", true, BackOption.PAGE_BACK);
 
 		aboutBox = new VertretungsalarmBox(
 				"<b>Wieso solltest du jeden Tag auf den Vertretungsplan schauen, wenn es den Vertretungsfilter gibt?</b><br><br>Jede Minute checkt der Vertretungsfilter den Vertretungsplan und sucht alles Wichtige raus. Am Ende siehst du nur noch was dich wirklich interessiert, nämlich alle Meldungen zu deiner Schulklasse.<br><br><b>Entwickelt von Sönke Peters");

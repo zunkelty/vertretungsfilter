@@ -1,4 +1,4 @@
-package de.zunk.vertretungsalarm.client.ui.vertretungsalarm;
+package de.zunk.vertretungsalarm.client.ui.optionscreens;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -8,7 +8,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.zunk.vertretungsalarm.client.Vertretungsalarm;
-import de.zunk.vertretungsalarm.client.ui.optionscreens.ExceptionSettingsType;
 
 public class ExceptionBox extends AbsolutePanel {
 
@@ -31,8 +30,7 @@ public class ExceptionBox extends AbsolutePanel {
 
 		getElement().getStyle().setProperty("background", "#FDFCFE");
 
-		getElement().getStyle().setProperty("boxShadow", "0px 3px 6px 0px rgba(203,203,203,0.4)");
-
+		getElement().getStyle().setProperty("boxShadow", "0px 3px 6px 0px rgba(203, 203, 203, 0.9)");
 		if (isNewBox) {
 
 			Image submit = new Image("icons/done-24px.svg");

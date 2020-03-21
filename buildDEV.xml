@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="Vertretungsalarm" default="war" basedir=".">
+
+	<property name="src" location="src" />
+	<property name="web" location="war/WEB-INF" />
+	<property name="bin" location="${web}/classes" />
+	<property name="lib" location="${web}/lib" />
+
+	<property name="gwt" location="C:\Users\soenk\.p2\pool\plugins\com.gwtplugins.gwt.eclipse.sdkbundle.gwt28_2.8.0.201710131939\gwt-2.8.1" />
+
+	<path id="project.class.path">
+		<pathelement location="${bin}" />
+		<pathelement location="${gwt}/gwt-user.jar" />
+		<fileset dir="${gwt}" includes="**/*.jar" />
+		<fileset dir="${lib}" includes="**/*.jar" />
+	</path>
+
+	<target name="javac" description="Compile java source">
+		<mkdir dir="${bin}" />
+		<javac srcdir="${src}" includes="**" encoding="utf-8" destdir="${bin}"
+			source="1.8" target="1.8" debug="true" debuglevel="lines,vars,source"
+			nowarn="false" includeantruntime="false" fork="yes">
+			<classpath refid="project.class.path" />
+		</javac>
+		<copy todir="${bin}">
+			<fileset dir="${src}" excludes="**/*.java" />
+		</copy>
+	</target>
+
+	<taskdef name="incver" classname="IncVer" classpath="${bin}"/>
+
+	<target name="gwtc" depends="javac" description="GWT compile to JavaScript">
+		<java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
+			<classpath>
+				<pathelement location="${src}" />
+				<path refid="project.class.path" />
+			</classpath>
+			<jvmarg value="-Xmx256M" />
+			<!-- <arg line="-strict" /> -->
+			<arg line="-style OBFUSCATED" />
+			<arg value="de.zunk.vertretungsalarm.Vertretungsalarm" />
+		</java>
+	</target>
+
+	<target name="build" depends="gwtc" description="Build this project" />
+
+	<target name="war" depends="build" description="Create a war file">
+		<incver name="vertretungsalarm" file="war/Vertretungsalarm.html" />  
+		<war basedir="war" destfile="dev.war" webxml="${web}/web.xml">
+			<exclude name="*.bak" />
+			<exclude name="*.tmp" />
+			<exclude name="WEB-INF/**" />
+			<webinf dir="${web}/">
+				<include name="**/*.jar" />
+			</webinf>
+			<classes dir="${bin}" />
+		</war>
+	</target>
+
+	<target name="clean" description="Cleans this project">
+		<delete dir="${bin}" failonerror="false" />
+	</target>
+
+</project>

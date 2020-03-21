@@ -2,7 +2,6 @@ package de.zunk.vertretungsalarm.client.ui.optionscreens;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.storage.client.Storage;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -36,48 +35,19 @@ public class SettingsView extends AbsolutePanel {
 		getElement().getStyle().setProperty("padding", " 30px 25px 12px 25px");
 		getElement().getStyle().setProperty("paddingRight", "25px");
 
-		editSubjectExceptions = new VertretungsalarmButton("Bearbeiten");
-		editSubjectExceptions.addClickHandler(
-				e -> RootPanel.get().add(new EditExceptionView(ExceptionSettingsType.SUBJECT_EXCEPTION, false)));
-		editTeacherExceptions = new VertretungsalarmButton("Bearbeiten");
-		editTeacherExceptions.addClickHandler(
-				e -> RootPanel.get().add(new EditExceptionView(ExceptionSettingsType.TEACHER_EXCEPTION, false)));
-
-		exceptionSubjectView = new VertretungsalarmBox(
-				Vertretungsalarm.getClientStorage().getItem("subjectExceptions") != null
-						? ("Fächer: " + Vertretungsalarm.getClientStorage().getItem("subjectExceptions"))
-						: ("Fächer:"));
-		exceptionSubjectView.getElement().getStyle().setProperty("padding", "0px 15px");
-		exceptionSubjectView.getElement().getStyle().setProperty("boxShadow",
-				"0px 3px 6px 0px rgba(203, 203, 203, 0.9)");
-		exceptionSubjectView.add(editSubjectExceptions);
-
-		exceptionTeacherView = new VertretungsalarmBox(
-				Vertretungsalarm.getClientStorage().getItem("teacherExceptions") != null
-						? ("Lehrer: " + Vertretungsalarm.getClientStorage().getItem("teacherExceptions"))
-						: ("Lehrer:"));
-		exceptionTeacherView.getElement().getStyle().setProperty("padding", "0px 15px");
-		exceptionTeacherView.getElement().getStyle().setProperty("boxShadow",
-				"0px 3px 6px 0px rgba(203, 203, 203, 0.9)");
-		exceptionTeacherView.add(editTeacherExceptions);
+		editSubjectExceptions = new VertretungsalarmButton("Fächer bearbeiten");
+		editSubjectExceptions.addClickHandler(e -> Location
+				.replace(Location.createUrlBuilder().setParameter("subpage", "subjectExceptions").buildString()));
+		editSubjectExceptions.getElement().getStyle().setProperty("marginBottom", "15px");
+		editTeacherExceptions = new VertretungsalarmButton("Lehrer bearbeiten");
+		editTeacherExceptions.addClickHandler(e -> Location
+				.replace(Location.createUrlBuilder().setParameter("subpage", "teacherExceptions").buildString()));
 
 		exceptionSettingsBox = new VertretungsalarmBox(
-				"<b>Füge Lehrer und Fächer hinzu, die du nicht hast, dann zeigt dir der Vertretungsfilter diese nicht mehr an.");
+				"<b>Lasse den Vertretungsfilter einzelne Fächer oder Lehrer ausblenden.</b><br> Zum Beispiel Fächer, die du nicht hast.");
 		exceptionSettingsBox.getElement().getStyle().setProperty("padding", "0px 15px");
-		exceptionSettingsBox.add(exceptionSubjectView);
-		exceptionSettingsBox.add(exceptionTeacherView);
-
-		Storage.addStorageEventHandler(e -> {
-			if (e.getKey() == "subjectExceptions") {
-				exceptionSubjectView.setHTML(Vertretungsalarm.getClientStorage().getItem("subjectExceptions") != null
-						? ("Fächer: " + Vertretungsalarm.getClientStorage().getItem("subjectExceptions"))
-						: ("Fächer:"));
-			} else if (e.getKey() == "teacherExceptions") {
-				exceptionTeacherView.setHTML(Vertretungsalarm.getClientStorage().getItem("teacherExceptions") != null
-						? ("Lehrer: " + Vertretungsalarm.getClientStorage().getItem("teacherExceptions"))
-						: ("Lehrer:"));
-			}
-		});
+		exceptionSettingsBox.add(editSubjectExceptions);
+		exceptionSettingsBox.add(editTeacherExceptions);
 
 		changeClassBox = new VertretungsalarmBox(
 				"<b>Ändere die Schulklasse, für die dir der Vertretungsfilter den Vertretungsplan anzeigen soll.</b><br>");
@@ -95,7 +65,7 @@ public class SettingsView extends AbsolutePanel {
 		changeClassBox.add(changeClass);
 
 		resetAllBox = new VertretungsalarmBox(
-				"<b>Lösche deine Zugangsberechtigung und alle anderen Daten, die im Zusammenhang mit dem Vertretungsfilter auf deinem Gerät stehen.</b><br><br>Achtung: Dies bedeutet, dass du keinen Zugriff mehr auf den Vertretungsfilter haben wirst!");
+				"<b>Setzte den Vertretungsfilter zurück und lösche alle persönlichen Daten.</b><br><br>Achtung: Dies bedeutet, dass du ohne erneute Anmeldung keinen Zugriff mehr auf den Vertretungsfilter haben wirst!");
 		resetAllBox.getElement().getStyle().setProperty("padding", "0px 15px");
 		resetAll = new VertretungsalarmButton("Zurücksetzen");
 		resetAll.addClickHandler(e -> RootPanel.get()

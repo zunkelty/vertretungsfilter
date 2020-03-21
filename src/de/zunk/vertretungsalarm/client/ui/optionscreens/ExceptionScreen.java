@@ -1,25 +1,30 @@
-package de.zunk.vertretungsalarm.client;
+package de.zunk.vertretungsalarm.client.ui.optionscreens;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 
 import de.zunk.vertretungsalarm.client.ui.BackOption;
 import de.zunk.vertretungsalarm.client.ui.BottomBar;
 import de.zunk.vertretungsalarm.client.ui.Header;
 import de.zunk.vertretungsalarm.client.ui.Screen;
+import de.zunk.vertretungsalarm.client.ui.VertretungsalarmBox;
+import de.zunk.vertretungsalarm.client.ui.VertretungsalarmButton;
 
-public class LockScreen extends Screen {
+public class ExceptionScreen extends Screen {
 
 	private static final long serialVersionUID = 1L;
-
-	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
 	Header header;
 	BottomBar bottom;
 
-	LockView lockView;
+	VertretungsalarmBox changeClassBox;
+	VertretungsalarmBox resetAllBox;
 
-	public LockScreen() {
+	VertretungsalarmButton changeClass;
+	VertretungsalarmButton resetAll;
+
+	ExceptionView exceptionView;
+
+	public ExceptionScreen(ExceptionSettingsType type) {
 
 		setPixelSize(Window.getClientWidth(), Window.getClientHeight());
 		getElement().getStyle().setProperty("overflowX", "hidden");
@@ -31,12 +36,16 @@ public class LockScreen extends Screen {
 		getElement().getStyle().setProperty("justifyContent", "flex-start");
 		getElement().getStyle().setProperty("height", Window.getClientHeight() + "px");
 
-		header = new Header("<b>Willkommen zum Vertretungsfilter<b>", false, BackOption.PAGE_BACK);
-		lockView = new LockView();
+		header = new Header(
+				"<b>" + (type == ExceptionSettingsType.SUBJECT_EXCEPTION ? "Fächer" : "Lehrer") + "<br>ausblenden<b>",
+				true, BackOption.SUBPAGE_BACK);
+
+		exceptionView = new ExceptionView(type);
+
 		bottom = new BottomBar();
 
 		add(header);
-		add(lockView);
+		add(exceptionView);
 		add(bottom);
 
 		resizeComponents();
@@ -44,7 +53,7 @@ public class LockScreen extends Screen {
 	}
 
 	public void resizeComponents() {
-		lockView.getElement().getStyle().setProperty("minHeight",
+		exceptionView.getElement().getStyle().setProperty("minHeight",
 				Window.getClientHeight() - header.getOffsetHeight() + "px");
 	}
 }

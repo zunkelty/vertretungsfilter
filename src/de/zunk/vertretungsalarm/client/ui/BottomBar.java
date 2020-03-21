@@ -32,6 +32,7 @@ public class BottomBar extends AbsolutePanel {
 		credits.getElement().getStyle().setProperty("borderRadius", "10px");
 		credits.getElement().getStyle().setProperty("padding", "6px");
 		credits.getElement().getStyle().setProperty("marginBottom", "10px");
+		credits.getElement().getStyle().setProperty("marginTop", "10px");
 
 		legal = new Label("Rechtliches");
 		legal.getElement().getStyle().setProperty("font", "300 15px Ubuntu");
@@ -61,11 +62,11 @@ public class BottomBar extends AbsolutePanel {
 		contact.addClickHandler(
 				event -> Location.replace(Location.createUrlBuilder().setParameter("page", "contact").buildString()));
 
-		add(credits);
 		add(about);
 		add(settings);
 		add(contact);
 		add(legal);
+		add(credits);
 
 	}
 

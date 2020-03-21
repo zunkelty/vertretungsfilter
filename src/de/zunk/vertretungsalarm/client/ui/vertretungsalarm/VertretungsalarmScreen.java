@@ -1,16 +1,14 @@
 package de.zunk.vertretungsalarm.client.ui.vertretungsalarm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.zunk.vertretungsalarm.client.GreetingService;
@@ -19,9 +17,6 @@ import de.zunk.vertretungsalarm.client.Vertretungsalarm;
 import de.zunk.vertretungsalarm.client.ui.BottomBar;
 import de.zunk.vertretungsalarm.client.ui.Header;
 import de.zunk.vertretungsalarm.client.ui.Screen;
-import de.zunk.vertretungsalarm.client.ui.messagebox.ButtonLayoutOption;
-import de.zunk.vertretungsalarm.client.ui.messagebox.CloseAction;
-import de.zunk.vertretungsalarm.client.ui.messagebox.Message;
 import de.zunk.vertretungsalarm.shared.DayInfo;
 import de.zunk.vertretungsalarm.shared.VertretungsEvent;
 import de.zunk.vertretungsalarm.shared.Vertretungsplan;
@@ -81,10 +76,69 @@ public class VertretungsalarmScreen extends Screen {
 		add(bottom);
 
 		header.getElement().getStyle().setProperty("alignSelf", "stretch");
+		header.getElement().getStyle().setProperty("order", "0");
 		loadingView.getElement().getStyle().setProperty("alignSelf", "stretch");
 		bottom.getElement().getStyle().setProperty("alignSelf", "stretch");
+		bottom.getElement().getStyle().setProperty("order", "2");
 
 		resizeComponents();
+
+		Timer t = new Timer() {
+
+			@Override
+			public void run() {
+				greetingService.getVertretungsplan(new AsyncCallback<Vertretungsplan>() {
+
+					@Override
+					public void onSuccess(Vertretungsplan vertretungsplan) {
+
+						ArrayList<VertretungsEvent> vertretungs_events = new ArrayList<VertretungsEvent>();
+						vertretungs_events = vertretungsplan.getVertretungsEvents();
+
+						ArrayList<DayInfo> vertretungs_day_infos = new ArrayList<DayInfo>();
+						vertretungs_day_infos = vertretungsplan.getDayInfos();
+
+						userEvents.clear();
+
+						String[] singleSubjectExceptions = Vertretungsalarm.getClientStorage()
+								.getItem("subjectExceptions").trim().split(",");
+
+						String[] singleTeacherExceptions = Vertretungsalarm.getClientStorage()
+								.getItem("teacherExceptions").trim().split(",");
+
+						for (VertretungsEvent event : vertretungs_events) {
+							if (event.getSchoolClasses()
+									.contains(Vertretungsalarm.getClientStorage().getItem("schoolClass"))
+									&& !Arrays.asList(singleSubjectExceptions).contains(event.getPlannedSubject())
+									&& !Arrays.asList(singleTeacherExceptions).contains(event.getPlannedTeacher())) {
+								userEvents.add(event);
+							}
+						}
+
+						infoView = new VertretungsplanView(userEvents, vertretungs_day_infos,
+								vertretungsplan.getTime());
+						infoView.getElement().getStyle().setProperty("alignSelf", "stretch");
+						infoView.getElement().getStyle().setProperty("order", "1");
+
+						for (int j = 0; j < getWidgetCount(); j++) {
+							if (getWidget(j).getClass() == VertretungsplanView.class) {
+								remove(getWidget(j));
+							}
+						}
+
+						add(infoView);
+						resizeComponents();
+
+					}
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+			}
+		};
 
 		greetingService.getVertretungsplan(new AsyncCallback<Vertretungsplan>() {
 
@@ -98,8 +152,16 @@ public class VertretungsalarmScreen extends Screen {
 				ArrayList<DayInfo> vertretungs_day_infos = new ArrayList<>();
 				vertretungs_day_infos = vertretungsplan.getDayInfos();
 
+				String[] singleSubjectExceptions = Vertretungsalarm.getClientStorage().getItem("subjectExceptions")
+						.trim().split(",");
+
+				String[] singleTeacherExceptions = Vertretungsalarm.getClientStorage().getItem("teacherExceptions")
+						.trim().split(",");
+
 				for (VertretungsEvent event : vertretungs_events) {
-					if (event.getSchoolClasses().contains(Vertretungsalarm.getClientStorage().getItem("schoolClass"))) {
+					if (event.getSchoolClasses().contains(Vertretungsalarm.getClientStorage().getItem("schoolClass"))
+							&& !Arrays.asList(singleSubjectExceptions).contains(event.getPlannedSubject())
+							&& !Arrays.asList(singleTeacherExceptions).contains(event.getPlannedTeacher())) {
 						userEvents.add(event);
 					}
 				}
@@ -117,23 +179,10 @@ public class VertretungsalarmScreen extends Screen {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Label reload = new Label("Neu laden");
-				add(reload);
-
-				reload.addClickHandler(new ClickHandler() {
-
-					@Override
-					public void onClick(ClickEvent event) {
-						Location.reload();
-					}
-				});
-
-				RootPanel.get()
-						.add(new Message(
-								"Der Vertretungsplan kann im Moment nicht geladen werden! Versuche es später erneut.",
-								"Error: " + caught, ButtonLayoutOption.OK, CloseAction.CLOSE));
 			}
 		});
+
+		t.scheduleRepeating(1 * 30 * 1000);
 
 	}
 

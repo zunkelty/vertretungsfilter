@@ -35,4 +35,8 @@ public class VertretungsalarmBox extends AbsolutePanel {
 		title.setHTML(html);
 	}
 
+	public String getHTML() {
+		return title.getHTML();
+	}
+
 }

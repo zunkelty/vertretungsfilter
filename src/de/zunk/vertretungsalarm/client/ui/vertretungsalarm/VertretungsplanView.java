@@ -8,6 +8,8 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 
+import de.zunk.vertretungsalarm.client.Vertretungsalarm;
+import de.zunk.vertretungsalarm.client.ui.VertretungsalarmBox;
 import de.zunk.vertretungsalarm.shared.DayInfo;
 import de.zunk.vertretungsalarm.shared.VertretungsEvent;
 
@@ -76,6 +78,16 @@ public class VertretungsplanView extends AbsolutePanel {
 			dV = new DayView(dayEvents, dayInfo);
 			add(dV);
 			dayEvents.clear();
+		}
+
+		if (userEvents.isEmpty() && dayInfos.isEmpty()) {
+			VertretungsalarmBox nothingToShowBox = new VertretungsalarmBox("Aktuell steht nichts für die "
+					+ Vertretungsalarm.getClientStorage().getItem("schoolClass") + " auf dem Vertretungsplan");
+			nothingToShowBox.getElement().getStyle().setProperty("marginLeft", "25px");
+			nothingToShowBox.getElement().getStyle().setProperty("marginRight", "25px");
+			nothingToShowBox.getElement().getStyle().setProperty("marginTop", "30px");
+			nothingToShowBox.getElement().getStyle().setProperty("marginBottom", "12px");
+			add(nothingToShowBox);
 		}
 
 		timeLabel = new Label("Daten von " + time);

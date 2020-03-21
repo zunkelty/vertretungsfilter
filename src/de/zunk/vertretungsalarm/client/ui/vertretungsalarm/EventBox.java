@@ -38,7 +38,7 @@ public class EventBox extends AbsolutePanel {
 		title.getElement().getStyle().setProperty("color", "#3E4158");
 		title.getElement().getStyle().setProperty("padding", "15px 0px 0px 15px");
 		title.getElement().getStyle().setProperty("marginRight", "10px");
-		title.getElement().getStyle().setProperty("width", "90%");
+		title.getElement().getStyle().setProperty("width", "100%");
 
 		Image icon = new Image("icons/vectorpaint.svg");
 		icon.getElement().getStyle().setProperty("paddingRight", "20px");

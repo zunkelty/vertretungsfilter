@@ -27,21 +27,22 @@ public class EventDetailView extends AbsolutePanel {
 		DetailView detailView = new DetailView(event);
 
 		addDomHandler(e -> {
+			if (e.getClientY() < Window.getClientHeight() - detailView.getOffsetHeight()) {
 
-			getElement().getStyle().setProperty("animation",
-					"fade-out 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both");
-			detailView.getElement().getStyle().setProperty("animation",
-					"slide-out-bottom 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both");
+				getElement().getStyle().setProperty("animation",
+						"fade-out 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both");
+				detailView.getElement().getStyle().setProperty("animation",
+						"slide-out-bottom 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both");
 
-			// Short delay to wait for animations to finish
-			Timer timer = new Timer() {
-				@Override
-				public void run() {
-					RootPanel.get().remove(EventDetailView.this.asWidget());
-				}
-			};
-			timer.schedule(500);
-
+				// Short delay to wait for animations to finish
+				Timer timer = new Timer() {
+					@Override
+					public void run() {
+						RootPanel.get().remove(EventDetailView.this.asWidget());
+					}
+				};
+				timer.schedule(500);
+			}
 		}, MouseDownEvent.getType());
 
 		add(detailView);

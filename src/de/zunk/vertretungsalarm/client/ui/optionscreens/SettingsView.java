@@ -2,6 +2,7 @@ package de.zunk.vertretungsalarm.client.ui.optionscreens;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -36,13 +37,19 @@ public class SettingsView extends AbsolutePanel {
 		getElement().getStyle().setProperty("paddingRight", "25px");
 
 		editSubjectExceptions = new VertretungsalarmButton("Bearbeiten");
+		editSubjectExceptions.addClickHandler(
+				e -> RootPanel.get().add(new EditExceptionView(ExceptionSettingsType.SUBJECT_EXCEPTION, false)));
 		editTeacherExceptions = new VertretungsalarmButton("Bearbeiten");
+		editTeacherExceptions.addClickHandler(
+				e -> RootPanel.get().add(new EditExceptionView(ExceptionSettingsType.TEACHER_EXCEPTION, false)));
 
 		exceptionSubjectView = new VertretungsalarmBox(
 				Vertretungsalarm.getClientStorage().getItem("subjectExceptions") != null
 						? ("Fächer: " + Vertretungsalarm.getClientStorage().getItem("subjectExceptions"))
 						: ("Fächer:"));
 		exceptionSubjectView.getElement().getStyle().setProperty("padding", "0px 15px");
+		exceptionSubjectView.getElement().getStyle().setProperty("boxShadow",
+				"0px 3px 6px 0px rgba(203, 203, 203, 0.9)");
 		exceptionSubjectView.add(editSubjectExceptions);
 
 		exceptionTeacherView = new VertretungsalarmBox(
@@ -50,6 +57,8 @@ public class SettingsView extends AbsolutePanel {
 						? ("Lehrer: " + Vertretungsalarm.getClientStorage().getItem("teacherExceptions"))
 						: ("Lehrer:"));
 		exceptionTeacherView.getElement().getStyle().setProperty("padding", "0px 15px");
+		exceptionTeacherView.getElement().getStyle().setProperty("boxShadow",
+				"0px 3px 6px 0px rgba(203, 203, 203, 0.9)");
 		exceptionTeacherView.add(editTeacherExceptions);
 
 		exceptionSettingsBox = new VertretungsalarmBox(
@@ -57,6 +66,18 @@ public class SettingsView extends AbsolutePanel {
 		exceptionSettingsBox.getElement().getStyle().setProperty("padding", "0px 15px");
 		exceptionSettingsBox.add(exceptionSubjectView);
 		exceptionSettingsBox.add(exceptionTeacherView);
+
+		Storage.addStorageEventHandler(e -> {
+			if (e.getKey() == "subjectExceptions") {
+				exceptionSubjectView.setHTML(Vertretungsalarm.getClientStorage().getItem("subjectExceptions") != null
+						? ("Fächer: " + Vertretungsalarm.getClientStorage().getItem("subjectExceptions"))
+						: ("Fächer:"));
+			} else if (e.getKey() == "teacherExceptions") {
+				exceptionTeacherView.setHTML(Vertretungsalarm.getClientStorage().getItem("teacherExceptions") != null
+						? ("Lehrer: " + Vertretungsalarm.getClientStorage().getItem("teacherExceptions"))
+						: ("Lehrer:"));
+			}
+		});
 
 		changeClassBox = new VertretungsalarmBox(
 				"<b>Ändere die Schulklasse, für die dir der Vertretungsfilter den Vertretungsplan anzeigen soll.</b><br>");
@@ -83,7 +104,7 @@ public class SettingsView extends AbsolutePanel {
 						ButtonLayoutOption.YES_NO, CloseAction.RESET_EVERYTHING)));
 		resetAllBox.add(resetAll);
 
-		// add(exceptionSettingsBox);
+		add(exceptionSettingsBox);
 		add(changeClassBox);
 		add(resetAllBox);
 

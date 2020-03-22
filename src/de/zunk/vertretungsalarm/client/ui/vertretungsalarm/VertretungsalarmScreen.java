@@ -108,12 +108,20 @@ public class VertretungsalarmScreen extends Screen {
 						String[] singleTeacherExceptions = Vertretungsalarm.getClientStorage()
 								.getItem("teacherExceptions").trim().split(",");
 
+						Window.alert((singleTeacherExceptions) + "");
+
 						for (VertretungsEvent event : vertretungs_events) {
 							if (event.getSchoolClasses()
-									.contains(Vertretungsalarm.getClientStorage().getItem("schoolClass"))
-									&& !Arrays.asList(singleSubjectExceptions).contains(event.getPlannedSubject())
-									&& !Arrays.asList(singleTeacherExceptions).contains(event.getPlannedTeacher())) {
-								userEvents.add(event);
+									.contains(Vertretungsalarm.getClientStorage().getItem("schoolClass"))) {
+								if (singleSubjectExceptions != null && !Arrays.asList(singleSubjectExceptions)
+										.contains(event.getPlannedTeacher())) {
+									userEvents.add(event);
+								} else if (singleTeacherExceptions != null && !Arrays.asList(singleSubjectExceptions)
+										.contains(event.getPlannedTeacher())) {
+									userEvents.add(event);
+								} else {
+									userEvents.add(event);
+								}
 							}
 						}
 
@@ -154,17 +162,28 @@ public class VertretungsalarmScreen extends Screen {
 				ArrayList<DayInfo> vertretungs_day_infos = new ArrayList<>();
 				vertretungs_day_infos = vertretungsplan.getDayInfos();
 
-				String[] singleSubjectExceptions = Vertretungsalarm.getClientStorage().getItem("subjectExceptions")
-						.trim().split(",");
-
-				String[] singleTeacherExceptions = Vertretungsalarm.getClientStorage().getItem("teacherExceptions")
-						.trim().split(",");
+				String[] singleSubjectExceptions = Vertretungsalarm.getClientStorage()
+						.getItem("subjectExceptions") == null ? null
+								: Vertretungsalarm.getClientStorage().getItem("subjectExceptions").trim().split(",");
+				String[] singleTeacherExceptions = Vertretungsalarm.getClientStorage()
+						.getItem("teacherExceptions") == null ? null
+								: Vertretungsalarm.getClientStorage().getItem("teacherExceptions").trim().split(",");
 
 				for (VertretungsEvent event : vertretungs_events) {
-					if (event.getSchoolClasses().contains(Vertretungsalarm.getClientStorage().getItem("schoolClass"))
-							&& !Arrays.asList(singleSubjectExceptions).contains(event.getPlannedSubject())
-							&& !Arrays.asList(singleTeacherExceptions).contains(event.getPlannedTeacher())) {
-						userEvents.add(event);
+					if (event.getSchoolClasses().contains(Vertretungsalarm.getClientStorage().getItem("schoolClass"))) {
+						boolean passedExceptionChecks = true;
+
+						if (singleSubjectExceptions != null
+								&& Arrays.asList(singleSubjectExceptions).contains(event.getPlannedSubject())) {
+							passedExceptionChecks = false;
+						}
+						if (singleTeacherExceptions != null
+								&& Arrays.asList(singleTeacherExceptions).contains(event.getPlannedTeacher())) {
+							passedExceptionChecks = false;
+						}
+						if (passedExceptionChecks) {
+							userEvents.add(event);
+						}
 					}
 				}
 

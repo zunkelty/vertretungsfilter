@@ -49,9 +49,16 @@ public class ExceptionView extends AbsolutePanel {
 		String exceptions = Vertretungsalarm.getClientStorage()
 				.getItem(type == ExceptionSettingsType.SUBJECT_EXCEPTION ? "subjectExceptions" : "teacherExceptions");
 
-		String[] singleExceptions = exceptions.trim().split(",");
+		String[] singleExceptions = (exceptions == null) ? new String[0] : exceptions.trim().split(",");
 
-		if (exceptions.trim() != "") {
+		if (exceptions == null || exceptions.trim() == "") {
+			nothingToShowBox = new VertretungsalarmBox("Du hast keine "
+					+ (type == ExceptionSettingsType.SUBJECT_EXCEPTION ? "Fächer" : "Lehrer") + " hinzugefügt");
+			nothingToShowBox.getElement().getStyle().setProperty("boxShadow",
+					"0px 3px 6px 0px rgba(203, 203, 203, 0.9)");
+
+			add(nothingToShowBox);
+		} else if (exceptions != null) {
 			for (String exception : singleExceptions) {
 
 				ExceptionBox exceptionBox = new ExceptionBox(exception, type, false);
@@ -60,17 +67,6 @@ public class ExceptionView extends AbsolutePanel {
 
 				add(exceptionBox);
 			}
-
-		} else
-
-		{
-
-			nothingToShowBox = new VertretungsalarmBox("Du hast keine "
-					+ (type == ExceptionSettingsType.SUBJECT_EXCEPTION ? "Fächer" : "Lehrer") + " hinzugefügt");
-			nothingToShowBox.getElement().getStyle().setProperty("boxShadow",
-					"0px 3px 6px 0px rgba(203, 203, 203, 0.9)");
-
-			add(nothingToShowBox);
 		}
 
 		Storage.addStorageEventHandler(e -> {
@@ -101,14 +97,25 @@ public class ExceptionView extends AbsolutePanel {
 			@Override
 			public void onClick(ClickEvent event) {
 
-				newException = new ExceptionBox("", type, true);
-				newException.getElement().getStyle().setProperty("order", "-1");
-				add(newException);
+				String exceptions = Vertretungsalarm.getClientStorage().getItem(
+						type == ExceptionSettingsType.SUBJECT_EXCEPTION ? "subjectExceptions" : "teacherExceptions");
 
-				if (exceptions.trim() == "") {
-					remove(nothingToShowBox);
+				String[] singleExceptions = (exceptions == null) ? new String[0] : exceptions.trim().split(",");
+
+				int exceptionBoxes = 0;
+				for (int i = 0; i < getWidgetCount(); i++) {
+					if (getWidget(i).getClass() == ExceptionBox.class) {
+						exceptionBoxes++;
+					}
 				}
 
+				if (singleExceptions.length == exceptionBoxes) {
+					newException = new ExceptionBox("", type, true);
+					newException.getElement().getStyle().setProperty("order", "-1");
+					add(newException);
+
+					remove(nothingToShowBox);
+				}
 			}
 		});
 

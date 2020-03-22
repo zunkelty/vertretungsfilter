@@ -58,6 +58,11 @@ public class ExceptionBox extends AbsolutePanel {
 						String exceptions = Vertretungsalarm.getClientStorage()
 								.getItem(type == ExceptionSettingsType.SUBJECT_EXCEPTION ? "subjectExceptions"
 										: "teacherExceptions");
+
+						if (exceptions == null) {
+							exceptions = "";
+						}
+
 						Vertretungsalarm.getClientStorage()
 								.removeItem(type == ExceptionSettingsType.SUBJECT_EXCEPTION ? "subjectExceptions"
 										: "teacherExceptions");
@@ -65,7 +70,7 @@ public class ExceptionBox extends AbsolutePanel {
 								.setItem(
 										type == ExceptionSettingsType.SUBJECT_EXCEPTION ? "subjectExceptions"
 												: "teacherExceptions",
-										exceptions + input.getText().toUpperCase() + ", ");
+										exceptions + input.getText().toUpperCase() + ",");
 
 						remove(input);
 						remove(submit);
@@ -82,6 +87,8 @@ public class ExceptionBox extends AbsolutePanel {
 	}
 
 	private void setStandardLayout(String exception, ExceptionSettingsType type) {
+		getElement().getStyle().setProperty("order", "0");
+
 		title = new HTML(exception);
 		title.getElement().getStyle().setProperty("font", "500 17px Ubuntu");
 		title.getElement().getStyle().setProperty("color", "#3E4158");
@@ -104,15 +111,17 @@ public class ExceptionBox extends AbsolutePanel {
 							.getItem(type == ExceptionSettingsType.SUBJECT_EXCEPTION ? "subjectExceptions"
 									: "teacherExceptions");
 
-					Vertretungsalarm.getClientStorage()
-							.removeItem(type == ExceptionSettingsType.SUBJECT_EXCEPTION ? "subjectExceptions"
-									: "teacherExceptions");
-
 					exceptions = exceptions.replace(exception + ",", "");
 
-					Vertretungsalarm.getClientStorage().setItem(
-							type == ExceptionSettingsType.SUBJECT_EXCEPTION ? "subjectExceptions" : "teacherExceptions",
-							exceptions);
+					if (exceptions != "") {
+						Vertretungsalarm.getClientStorage()
+								.setItem(type == ExceptionSettingsType.SUBJECT_EXCEPTION ? "subjectExceptions"
+										: "teacherExceptions", exceptions);
+					} else {
+						Vertretungsalarm.getClientStorage()
+								.removeItem(type == ExceptionSettingsType.SUBJECT_EXCEPTION ? "subjectExceptions"
+										: "teacherExceptions");
+					}
 
 					removeFromParent();
 				} catch (Exception e) {

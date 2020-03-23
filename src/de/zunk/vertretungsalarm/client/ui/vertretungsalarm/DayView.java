@@ -8,7 +8,6 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.datepicker.client.CalendarUtil;
 
-import de.zunk.vertretungsalarm.client.Vertretungsalarm;
 import de.zunk.vertretungsalarm.client.ui.VertretungsalarmBox;
 import de.zunk.vertretungsalarm.shared.DayInfo;
 import de.zunk.vertretungsalarm.shared.VertretungsDate;
@@ -88,8 +87,7 @@ public class DayView extends AbsolutePanel {
 		}
 
 		if (dayEvents.isEmpty()) {
-			VertretungsalarmBox box = new VertretungsalarmBox(
-					"Keine Vertretungen für die " + Vertretungsalarm.getClientStorage().getItem("schoolClass"));
+			VertretungsalarmBox box = new VertretungsalarmBox("Keine Vertretungen für Dich");
 			box.getWidget(0).getElement().getStyle().setProperty("fontWeight", "300");
 			box.getElement().getStyle().setProperty("marginBottom", "20px");
 

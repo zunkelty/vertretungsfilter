@@ -42,7 +42,7 @@ public class DayView extends AbsolutePanel {
 		Date now = new Date();
 		Date date;
 		DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat("dd.MM.yyyy");
-		date = dateTimeFormat.parse(dateLabel.getText());
+		date = dateTimeFormat.parse(dayDate.toString());
 
 		switch (CalendarUtil.getDaysBetween(now, date)) {
 		case -1: {

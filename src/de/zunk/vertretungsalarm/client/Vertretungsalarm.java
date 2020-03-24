@@ -8,6 +8,7 @@ import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import de.zunk.vertretungsalarm.client.ui.guide.GuideScreen;
 import de.zunk.vertretungsalarm.client.ui.messagebox.ButtonLayoutOption;
 import de.zunk.vertretungsalarm.client.ui.messagebox.CloseAction;
 import de.zunk.vertretungsalarm.client.ui.messagebox.Message;
@@ -87,9 +88,13 @@ public class Vertretungsalarm implements EntryPoint {
 										RootPanel.get().add(screen, 0, 0);
 									}
 								} else {
-
-									VertretungsalarmScreen screen = new VertretungsalarmScreen();
-									RootPanel.get().add(screen, 0, 0);
+									if (Vertretungsalarm.getClientStorage().getItem("hasCompletedGuide") != "yes") {
+										GuideScreen screen = new GuideScreen();
+										RootPanel.get().add(screen, 0, 0);
+									} else {
+										VertretungsalarmScreen screen = new VertretungsalarmScreen();
+										RootPanel.get().add(screen, 0, 0);
+									}
 								}
 
 							} else {

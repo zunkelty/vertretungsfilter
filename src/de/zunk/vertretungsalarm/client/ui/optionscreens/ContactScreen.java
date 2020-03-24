@@ -57,7 +57,7 @@ public class ContactScreen extends Screen {
 				"<b>Hast du Fragen, Wünsche, Bedenken oder Verbesserungsvorschläge?<br>Dann melde dich bei Sönke!");
 		infoBox.getElement().getStyle().setProperty("padding", "0px 15px");
 
-		schoolInfo = new VertretungsalarmBox("In der Schule:<br><br>Klasse: 11B<br>Klassenraum: N2");
+		schoolInfo = new VertretungsalarmBox("In der Schule:<br><br>Sönke Peters<br>Klasse: 11B<br>Klassenraum: N2");
 		schoolInfo.getElement().getStyle().setProperty("padding", "0px 15px");
 
 		mailBox = new VertretungsalarmBox("<b>Per Mail:</b><br><br>kontakt@vertretungsfilter.de");

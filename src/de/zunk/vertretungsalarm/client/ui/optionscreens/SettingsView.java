@@ -1,12 +1,9 @@
 package de.zunk.vertretungsalarm.client.ui.optionscreens;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import de.zunk.vertretungsalarm.client.Vertretungsalarm;
 import de.zunk.vertretungsalarm.client.ui.VertretungsalarmBox;
 import de.zunk.vertretungsalarm.client.ui.VertretungsalarmButton;
 import de.zunk.vertretungsalarm.client.ui.messagebox.ButtonLayoutOption;
@@ -17,13 +14,14 @@ public class SettingsView extends AbsolutePanel {
 
 	VertretungsalarmBox changeClassBox;
 	VertretungsalarmBox resetAllBox;
+	VertretungsalarmBox exceptionSettingsBox;
+
+	VertretungsalarmBox exceptionSubjectView;
+	VertretungsalarmBox exceptionTeacherView;
+	VertretungsalarmBox addSchoolClassView;
 
 	VertretungsalarmButton changeClass;
 	VertretungsalarmButton resetAll;
-
-	VertretungsalarmBox exceptionSettingsBox;
-	VertretungsalarmBox exceptionSubjectView;
-	VertretungsalarmBox exceptionTeacherView;
 
 	VertretungsalarmButton editSubjectExceptions;
 	VertretungsalarmButton editTeacherExceptions;
@@ -49,18 +47,11 @@ public class SettingsView extends AbsolutePanel {
 		exceptionSettingsBox.add(editSubjectExceptions);
 		exceptionSettingsBox.add(editTeacherExceptions);
 
-		changeClassBox = new VertretungsalarmBox(
-				"<b>Ändere die Schulklasse, für die dir der Vertretungsfilter den Vertretungsplan anzeigen soll.</b><br>");
+		changeClassBox = new VertretungsalarmBox("<b>Ändere deine Schulklasse oder füge weitere hinzu.</b><br>");
 		changeClassBox.getElement().getStyle().setProperty("padding", "0px 15px");
-		changeClass = new VertretungsalarmButton("Klasse ändern");
-		changeClass.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				Vertretungsalarm.getClientStorage().removeItem("schoolClass");
-				Location.replace(Location.createUrlBuilder().removeParameter("page").buildString());
-			}
-		});
+		changeClass = new VertretungsalarmButton("Klassen bearbeiten");
+		changeClass.addClickHandler(e -> Location
+				.replace(Location.createUrlBuilder().setParameter("subpage", "editSchoolClasses").buildString()));
 
 		changeClassBox.add(changeClass);
 

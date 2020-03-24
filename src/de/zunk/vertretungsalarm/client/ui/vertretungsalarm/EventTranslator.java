@@ -1,10 +1,49 @@
 package de.zunk.vertretungsalarm.client.ui.vertretungsalarm;
 
+import java.util.ArrayList;
+
+import de.zunk.vertretungsalarm.client.Vertretungsalarm;
 import de.zunk.vertretungsalarm.shared.VertretungsEvent;
 
 public class EventTranslator {
 
 	public static String getEventTitle(VertretungsEvent e) {
+
+		String title = getEventTitleBody(e);
+
+		ArrayList<String> userSchoolClasses = new ArrayList<String>();
+		String userSchoolClass = Vertretungsalarm.getClientStorage().getItem("schoolClass");
+
+		if (userSchoolClass.indexOf(",") <= 0) {
+			userSchoolClasses.add(userSchoolClass.trim());
+		} else {
+			String[] parts = userSchoolClass.split(",");
+			for (String schoolClass : parts) {
+				userSchoolClasses.add(schoolClass);
+			}
+		}
+
+		if (userSchoolClasses.size() > 1) {
+			ArrayList<String> matchingSchoolClasses = new ArrayList<String>();
+			for (String schoolClass : userSchoolClasses) {
+				if (e.getSchoolClasses().contains(schoolClass.trim())) {
+					matchingSchoolClasses.add(schoolClass.trim());
+				}
+			}
+			String temp = title;
+			title = "";
+			for (String match : matchingSchoolClasses) {
+				title += (title == "" ? "" : ", ") + match;
+			}
+			title += ": " + temp;
+		}
+
+		return title;
+
+	}
+
+	public static String getEventTitleBody(VertretungsEvent e) {
+
 		if (!e.getIsHappening()) {
 			return matchAbbreviationWithSubject(e.getPlannedSubject()) + " bei " + e.getPlannedTeacher() + " entfällt";
 		} else if (e.getPlannedRoom() != e.getActualRoom() && e.getPlannedTeacher() == e.getActualTeacher()) {
@@ -14,12 +53,13 @@ public class EventTranslator {
 			if (e.getPlannedSubject() != e.getActualSubject()) {
 				return matchAbbreviationWithSubject(e.getActualSubject()) + " bei " + e.getActualTeacher() + " statt "
 						+ e.getPlannedSubject();
-			} else {
+			} else if (e.getPlannedTeacher() != e.getActualTeacher()) {
 				return matchAbbreviationWithSubject(e.getActualSubject()) + " bei " + e.getActualTeacher()
 						+ " statt bei " + e.getPlannedTeacher();
 			}
 		}
 		return matchAbbreviationWithSubject(e.getPlannedSubject()) + " bei " + e.getActualTeacher();
+
 	}
 
 	public static String getEventSubtitle(VertretungsEvent e) {

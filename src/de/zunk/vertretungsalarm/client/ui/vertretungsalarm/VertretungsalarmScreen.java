@@ -85,6 +85,18 @@ public class VertretungsalarmScreen extends Screen {
 
 		resizeComponents();
 
+		ArrayList<String> userSchoolClasses = new ArrayList<String>();
+		String userSchoolClass = Vertretungsalarm.getClientStorage().getItem("schoolClass");
+
+		if (userSchoolClass.indexOf(",") <= 0) {
+			userSchoolClasses.add(userSchoolClass.trim());
+		} else {
+			String[] parts = userSchoolClass.split(",");
+			for (String schoolClass : parts) {
+				userSchoolClasses.add(schoolClass);
+			}
+		}
+
 		Timer t = new Timer() {
 
 			@Override
@@ -94,35 +106,43 @@ public class VertretungsalarmScreen extends Screen {
 					@Override
 					public void onSuccess(Vertretungsplan vertretungsplan) {
 
-						ArrayList<VertretungsEvent> vertretungs_events = new ArrayList<VertretungsEvent>();
+						ArrayList<VertretungsEvent> vertretungs_events = new ArrayList<>();
 						vertretungs_events = vertretungsplan.getVertretungsEvents();
 
-						ArrayList<DayInfo> vertretungs_day_infos = new ArrayList<DayInfo>();
+						ArrayList<DayInfo> vertretungs_day_infos = new ArrayList<>();
 						vertretungs_day_infos = vertretungsplan.getDayInfos();
+
+						String[] singleSubjectExceptions = Vertretungsalarm.getClientStorage()
+								.getItem("subjectExceptions") == null ? null
+										: Vertretungsalarm.getClientStorage().getItem("subjectExceptions").trim()
+												.split(",");
+
+						String[] singleTeacherExceptions = Vertretungsalarm.getClientStorage()
+								.getItem("teacherExceptions") == null ? null
+										: Vertretungsalarm.getClientStorage().getItem("teacherExceptions").trim()
+												.split(",");
 
 						userEvents.clear();
 
-						String[] singleSubjectExceptions = Vertretungsalarm.getClientStorage()
-								.getItem("subjectExceptions").trim().split(",");
+						for (String schoolClass : userSchoolClasses) {
+							for (VertretungsEvent event : vertretungs_events) {
+								if (event.getSchoolClasses().contains(schoolClass.trim())) {
+									boolean passedExceptionChecks = true;
 
-						String[] singleTeacherExceptions = Vertretungsalarm.getClientStorage()
-								.getItem("teacherExceptions").trim().split(",");
-
-						Window.alert((singleTeacherExceptions) + "");
-
-						for (VertretungsEvent event : vertretungs_events) {
-							if (event.getSchoolClasses()
-									.contains(Vertretungsalarm.getClientStorage().getItem("schoolClass"))) {
-								if (singleSubjectExceptions != null && !Arrays.asList(singleSubjectExceptions)
-										.contains(event.getPlannedTeacher())) {
-									userEvents.add(event);
-								} else if (singleTeacherExceptions != null && !Arrays.asList(singleSubjectExceptions)
-										.contains(event.getPlannedTeacher())) {
-									userEvents.add(event);
-								} else {
-									userEvents.add(event);
+									if (singleSubjectExceptions != null && Arrays.asList(singleSubjectExceptions)
+											.contains(event.getPlannedSubject())) {
+										passedExceptionChecks = false;
+									}
+									if (singleTeacherExceptions != null && Arrays.asList(singleTeacherExceptions)
+											.contains(event.getPlannedTeacher())) {
+										passedExceptionChecks = false;
+									}
+									if (passedExceptionChecks) {
+										userEvents.add(event);
+									}
 								}
 							}
+
 						}
 
 						infoView = new VertretungsplanView(userEvents, vertretungs_day_infos,
@@ -169,22 +189,25 @@ public class VertretungsalarmScreen extends Screen {
 						.getItem("teacherExceptions") == null ? null
 								: Vertretungsalarm.getClientStorage().getItem("teacherExceptions").trim().split(",");
 
-				for (VertretungsEvent event : vertretungs_events) {
-					if (event.getSchoolClasses().contains(Vertretungsalarm.getClientStorage().getItem("schoolClass"))) {
-						boolean passedExceptionChecks = true;
+				for (String schoolClass : userSchoolClasses) {
+					for (VertretungsEvent event : vertretungs_events) {
+						if (event.getSchoolClasses().contains(schoolClass.trim())) {
+							boolean passedExceptionChecks = true;
 
-						if (singleSubjectExceptions != null
-								&& Arrays.asList(singleSubjectExceptions).contains(event.getPlannedSubject())) {
-							passedExceptionChecks = false;
-						}
-						if (singleTeacherExceptions != null
-								&& Arrays.asList(singleTeacherExceptions).contains(event.getPlannedTeacher())) {
-							passedExceptionChecks = false;
-						}
-						if (passedExceptionChecks) {
-							userEvents.add(event);
+							if (singleSubjectExceptions != null
+									&& Arrays.asList(singleSubjectExceptions).contains(event.getPlannedSubject())) {
+								passedExceptionChecks = false;
+							}
+							if (singleTeacherExceptions != null
+									&& Arrays.asList(singleTeacherExceptions).contains(event.getPlannedTeacher())) {
+								passedExceptionChecks = false;
+							}
+							if (passedExceptionChecks) {
+								userEvents.add(event);
+							}
 						}
 					}
+
 				}
 
 				infoView = new VertretungsplanView(userEvents, vertretungs_day_infos, vertretungsplan.getTime());

@@ -6,6 +6,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.zunk.vertretungsalarm.client.Vertretungsalarm;
@@ -22,6 +23,7 @@ public class GuideView extends AbsolutePanel {
 	DayView sampleDayView;
 
 	VertretungsEvent sampleEvent;
+	Label timeLabel;
 
 	int step;
 
@@ -57,6 +59,11 @@ public class GuideView extends AbsolutePanel {
 		sampleEvents.add(sampleEvent);
 
 		sampleDayView = new DayView(sampleEvents, new DayInfo("Beispielinformationen zum Tag", date));
+
+		timeLabel = new Label("Daten von 00:00 - Neu laden");
+		timeLabel.getElement().getStyle().setProperty("font", "300 13px Ubuntu");
+		timeLabel.getElement().getStyle().setProperty("color", "#3E4158");
+		timeLabel.getElement().getStyle().setProperty("textAlign", "center");
 
 		step = 0;
 
@@ -119,6 +126,8 @@ public class GuideView extends AbsolutePanel {
 			break;
 		case 3: {
 			add(sampleDayView);
+			add(timeLabel);
+			timeLabel.getElement().getStyle().setProperty("animation", "fade-in 1s linear");
 			sampleDayView.getElement().getStyle().setProperty("animation", "fade-in 1s linear");
 			explanationBox.setHTML(
 					"Das Wichtigste zuerst: <br><b>Das große Kästchen stellt hier eine Beispielmeldung des Vertretungsplans dar.");
@@ -160,8 +169,10 @@ public class GuideView extends AbsolutePanel {
 		}
 			break;
 		case 8: {
+			timeLabel.getElement().getStyle().setProperty("animation",
+					"scale-up-center 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) infinite alternate both");
 			explanationBox.setHTML(
-					"Da der Vertretungsfilter auf dem Schulvertretungsplan basiert, sollten alle Informationen verlässlich sein. Falls Du trotzdem einen Fehler finden solltest, melde dich bitte bei dem Entwickler. Kontaktinformationen findest Du unter Kontakt unten auf der W***REMOVED***ite.");
+					"Wenn Du die angezeigten Informationen aktualisieren möchtest, kannst Du dies über einen Klick auf \"Neu laden\" unter den angezeigten Meldungen tun.");
 			EventBox eventBox = (EventBox) sampleDayView.getWidget(2);
 			AbsolutePanel topPart = (AbsolutePanel) eventBox.getWidget(0);
 			topPart.getWidget(1).getElement().getStyle().setProperty("animation", "");
@@ -169,17 +180,22 @@ public class GuideView extends AbsolutePanel {
 			break;
 		case 9: {
 			explanationBox.setHTML(
+					"Da der Vertretungsfilter auf dem Schulvertretungsplan basiert, sollten alle Informationen verlässlich sein. Falls Du trotzdem einen Fehler finden solltest, melde dich bitte bei dem Entwickler. Kontaktinformationen findest Du unter Kontakt unten auf der W***REMOVED***ite.");
+		}
+			break;
+		case 10: {
+			explanationBox.setHTML(
 					"Wenn Du die Einstellungen oder Kontaktinformationen suchst, findest Du sie indem Du nach dieser Erklärung nach unten scrollst.");
 			EventBox eventBox = (EventBox) sampleDayView.getWidget(2);
 			AbsolutePanel topPart = (AbsolutePanel) eventBox.getWidget(0);
 			topPart.getWidget(1).getElement().getStyle().setProperty("animation", "");
 		}
 			break;
-		case 10: {
+		case 11: {
 			explanationBox.setHTML("Jetzt weißt Du Bescheid! Viel Spaß mit dem Vertretungsfilter.");
 		}
 			break;
-		case 11: {
+		case 12: {
 			Vertretungsalarm.getClientStorage().setItem("hasCompletedGuide", "yes");
 			Location.reload();
 		}

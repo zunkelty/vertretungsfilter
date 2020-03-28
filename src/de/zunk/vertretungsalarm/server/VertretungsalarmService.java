@@ -242,10 +242,13 @@ public class VertretungsalarmService implements Serializable {
 
 					// Speichern der Zusatzinformationen
 
-					while (!isEventId(snippets[j]) && !snippets[j].contains("Untis") && !snippets[i].contains("DSB")
-							&& !snippets[j].contains("x") && j < snippets.length - 1) {
-						additionalText = additionalText + " " + snippets[j];
+					while (!isEventId(snippets[j]) && !snippets[j].contains("Untis") && !snippets[j].contains("x")
+							&& j < snippets.length - 1) {
+						additionalText = additionalText.trim() + " " + snippets[j].trim();
 						j++;
+					}
+					if (additionalText.contains("DSB")) {
+						additionalText = additionalText.replace("DSB", "");
 					}
 
 					date.setDate(dateForEvents.getDay(), dateForEvents.getMonth(), dateForEvents.getYear());

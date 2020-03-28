@@ -3,12 +3,19 @@ package de.zunk.vertretungsalarm.client.ui.vertretungsalarm;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 
 import de.zunk.vertretungsalarm.client.ui.VertretungsalarmBox;
+import de.zunk.vertretungsalarm.client.ui.messagebox.ButtonLayoutOption;
+import de.zunk.vertretungsalarm.client.ui.messagebox.CloseAction;
+import de.zunk.vertretungsalarm.client.ui.messagebox.Message;
 import de.zunk.vertretungsalarm.shared.DayInfo;
 import de.zunk.vertretungsalarm.shared.VertretungsEvent;
 
@@ -89,11 +96,20 @@ public class VertretungsplanView extends AbsolutePanel {
 			add(nothingToShowBox);
 		}
 
-		timeLabel = new Label("Daten von " + time);
+		timeLabel = new Label("Daten von " + time + " - Neu laden");
 		timeLabel.getElement().getStyle().setProperty("font", "300 13px Ubuntu");
 		timeLabel.getElement().getStyle().setProperty("color", "#3E4158");
 		timeLabel.getElement().getStyle().setProperty("textAlign", "center");
 		add(timeLabel);
+
+		timeLabel.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				RootPanel.get().add(new Message("Wird neu geladen...", "", ButtonLayoutOption.NONE, CloseAction.NONE));
+				Location.reload();
+			}
+		});
 
 	}
 

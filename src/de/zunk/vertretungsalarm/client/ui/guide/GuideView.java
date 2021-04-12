@@ -180,7 +180,7 @@ public class GuideView extends AbsolutePanel {
 			break;
 		case 9: {
 			explanationBox.setHTML(
-					"Da der Vertretungsfilter auf dem Schulvertretungsplan basiert, sollten alle Informationen verlässlich sein. Falls Du trotzdem einen Fehler finden solltest, melde dich bitte bei dem Entwickler. Kontaktinformationen findest Du unter Kontakt unten auf der W***REMOVED***ite.");
+					"Da der Vertretungsfilter auf dem Schulvertretungsplan basiert, sollten alle Informationen verlässlich sein. Falls Du trotzdem einen Fehler finden solltest, melde dich bitte bei dem Entwickler. Kontaktinformationen findest Du unter Kontakt unten auf der Website.");
 		}
 			break;
 		case 10: {

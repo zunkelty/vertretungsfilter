@@ -44,7 +44,7 @@ public class Vertretungsalarm implements EntryPoint {
 		client_storage = Storage.getLocalStorageIfSupported();
 
 		if (client_storage == null) {
-			Window.alert("Leider ist dein Gerät nicht für den " + getW***REMOVED***iteName()
+			Window.alert("Leider ist dein Gerät nicht für den " + getWebsiteName()
 					+ " qualifiziert!\nSag doch einem Admin Bescheid. \n(Grund: Storage.isLocalStorageSupported == false)");
 		}
 
@@ -67,7 +67,7 @@ public class Vertretungsalarm implements EntryPoint {
 						public void onSuccess(Boolean success) {
 							if (success) {
 
-								// Weiterleiten zur richtigen Stelle der W***REMOVED***ite
+								// Weiterleiten zur richtigen Stelle der Website
 
 								if (client_storage.getItem("schoolClass") == null) {
 									RegistrationScreen screen = new RegistrationScreen();
@@ -131,7 +131,7 @@ public class Vertretungsalarm implements EntryPoint {
 		}
 	}
 
-	public static String getW***REMOVED***iteName() {
+	public static String getWebsiteName() {
 		return name;
 	}
 

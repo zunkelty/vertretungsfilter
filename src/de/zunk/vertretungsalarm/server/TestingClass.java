@@ -29,7 +29,7 @@ public class TestingClass implements Serializable {
 
 		try (final WebClient webClient = new WebClient()) {
 			final HtmlPage page = webClient.getPage(
-					"http://light.dsbcontrol.de/DSBlightW***REMOVED***ite/(S(yfwrenszkxbcbu2142ouknij))/Homepage/Player.aspx?ID=caba86fb-3351-463a-ac8f-165a210dc702&MaxWidth=1380&MaxHeight=760&MyDate=0");
+					"http://light.dsbcontrol.de/DSBlightWebsite/(S(yfwrenszkxbcbu2142ouknij))/Homepage/Player.aspx?ID=caba86fb-3351-463a-ac8f-165a210dc702&MaxWidth=1380&MaxHeight=760&MyDate=0");
 
 			// System.out.println(page.getDocumentElement().asXml());
 
@@ -46,8 +46,8 @@ public class TestingClass implements Serializable {
 			final HtmlTextInput textFieldUser = form1.getInputByName("ctl02$txtBenutzername");
 			final HtmlPasswordInput textFieldPw = form1.getInputByName("ctl02$txtPasswort");
 
-			textFieldUser.type("***REMOVED***");
-			textFieldPw.type("***REMOVED***-han");
+			textFieldUser.type("ebs");
+			textFieldPw.type("ebs-han");
 
 			HtmlPage resultPage = submit.click();
 

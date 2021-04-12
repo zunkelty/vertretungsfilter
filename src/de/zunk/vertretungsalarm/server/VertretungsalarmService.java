@@ -419,7 +419,7 @@ public class VertretungsalarmService implements Serializable {
 			HtmlPage page = null;
 
 			page = client.getPage(
-					"***REMOVED***");
+					"<URL_TO_PLAN_GOES_HERE>");
 
 			final List<FrameWindow> window = page.getFrames();
 			final HtmlPage pageTwo = (HtmlPage) window.get(0).getEnclosedPage();
@@ -435,8 +435,8 @@ public class VertretungsalarmService implements Serializable {
 			final HtmlPasswordInput textFieldPw = form.getInputByName("ctl02$txtPasswort");
 
 			// Change the value of the text field
-			textFieldUser.type("***REMOVED***");
-			textFieldPw.type("***REMOVED***-han");
+			textFieldUser.type("<USERNAME_GOES_HERE>");
+			textFieldPw.type("<PASSWORD_GOES_HERE>");
 
 			// Now submit the form by clicking the button and get back the second page.
 			final com.gargoylesoftware.htmlunit.html.HtmlPage pageThree = (com.gargoylesoftware.htmlunit.html.HtmlPage) button

@@ -53,7 +53,7 @@ public class LegalScreen extends Screen {
 		header = new Header("<b>Rechtliches<b>", true, BackOption.PAGE_BACK);
 
 		nutzungsbedingungenBox = new VertretungsalarmBox(
-				"Diese W***REMOVED***ite / WebApp versteht sich als privat und nicht geschäftlich, da Sie nur durch Freischaltung zugänglich ist und keine Einnahmen generiert. Somit benötigt sie kein Impressum oder eine Datenschutzerklärung.<br><br>Auf dieser W***REMOVED***ite / WebApp werden Analysedaten durch Google Analytics erhoben und von Google gespeichert. Dieses Tool findet man auf vielen W***REMOVED***ites und es ermöglicht dem W***REMOVED***itebetreiber die Nutzeranzahl und weitere Analysedaten der W***REMOVED***ite zu verfolgen.");
+				"Diese Website / WebApp versteht sich als privat und nicht geschäftlich, da Sie nur durch Freischaltung zugänglich ist und keine Einnahmen generiert. Somit benötigt sie kein Impressum oder eine Datenschutzerklärung.<br><br>Auf dieser Website / WebApp werden Analysedaten durch Google Analytics erhoben und von Google gespeichert. Dieses Tool findet man auf vielen Websites und es ermöglicht dem Websitebetreiber die Nutzeranzahl und weitere Analysedaten der Website zu verfolgen.");
 		nutzungsbedingungenBox.getElement().getStyle().setProperty("padding", "0px 15px");
 
 		nameBox = new VertretungsalarmBox(
@@ -61,7 +61,7 @@ public class LegalScreen extends Screen {
 		nameBox.getElement().getStyle().setProperty("padding", "0px 15px");
 
 		contactBox = new VertretungsalarmBox(
-				"<b>Wie du den W***REMOVED***ite / WebApp-Betreiber erreichen kannst siehst du auf der Kontaktseite");
+				"<b>Wie du den Website / WebApp-Betreiber erreichen kannst siehst du auf der Kontaktseite");
 		contactBox.getElement().getStyle().setProperty("padding", "0px 15px");
 
 		goToContact = new VertretungsalarmButton("Zur Kontaktseite");

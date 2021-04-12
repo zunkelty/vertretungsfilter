@@ -39,7 +39,7 @@ public class LockView extends AbsolutePanel {
 		getElement().getStyle().setProperty("paddingRight", "25px");
 
 		messageBox = new VertretungsalarmBox(
-				"<b>Dies ist eine W***REMOVED***ite, die nur für Schüler und Schülerinnen der Elsa-Brändström-Schule, deren Eltern und für Lehrer und Lehrerinnen zugänglich ist. <br><br>Bitte melde Dich mit den Logindaten des Schulvertretungsplans an.");
+				"<b>Dies ist eine Website, die nur für Schüler und Schülerinnen der Elsa-Brändström-Schule, deren Eltern und für Lehrer und Lehrerinnen zugänglich ist. <br><br>Bitte melde Dich mit den Logindaten des Schulvertretungsplans an.");
 		messageBox.getElement().getStyle().setProperty("padding", "0px 15px");
 
 		infoBox = new VertretungsalarmBox(

@@ -11,7 +11,7 @@ public class AuthService implements Serializable {
 	}
 
 	public static boolean validateLogin(String username, String password) {
-		// if (username.contains("***REMOVED***") && password.contains("***REMOVED***-han")) {
+		// if (username.contains("ebs") && password.contains("ebs-han")) {
 		// return true;
 		// }
 		if (username.contains("beta") && password.contains("vertretungsfilter2020")) {

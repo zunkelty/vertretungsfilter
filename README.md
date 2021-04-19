@@ -10,7 +10,7 @@ In the class *VertretungsalarmService.java* which can be found under [/src/de/zu
 
 1. The link to your substitude plan
 2. The username for the plan that is able to access all available information
-3. The password for the username
+3. The password
 
 ## Build
 
